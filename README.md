@@ -107,13 +107,6 @@ sudo reboot
 
 That avoids restarting active mounts such as `/home` inside the running session.
 
-## Gated Features
-
-- `workstation.secureBoot.enable` turns on Lanzaboote. Leave it disabled until
-  Secure Boot keys exist under `/etc/secureboot`.
-- `sops-nix` is wired to the host SSH key, but this repo does not commit
-  encrypted secrets yet.
-
 ## Niri And Noctalia
 
 Niri is enabled through `sodiboo/niri-flake`. The Home Manager config is split
@@ -167,7 +160,7 @@ nix flake init -t path:$HOME/Documents/nixos-workstation#local-services
 More notes:
 
 - `docs/desktop.md`: Niri, Noctalia, SDDM, portals, cursor handling.
-- `docs/system.md`: boot, storage, Secure Boot, secrets.
+- `docs/system.md`: boot, storage, secrets.
 - `docs/dev-workflows.md`: daily development workflow.
 - `docs/dev-templates.md`: project templates.
 
