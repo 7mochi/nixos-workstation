@@ -51,10 +51,7 @@
             "/etc/ssh/ssh_host_ed25519_key"
             "/etc/ssh/ssh_host_ed25519_key.pub"
           ];
-          users = {
-            admin.directories = persistedUserDirectories;
-            v.directories = persistedUserDirectories;
-          };
+          users.nanamochi.directories = persistedUserDirectories;
         };
       };
     };

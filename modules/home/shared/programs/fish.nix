@@ -71,7 +71,7 @@ _:
       functions = {
         tpl = ''
           if test (count $argv) -lt 1
-            echo "usage: tpl <node|bun|python|rust|fullstack|nextjs|tanstack-start|local-services> [directory]"
+            echo "usage: tpl <node|bun|python|rust|local-services> [directory]"
             return 1
           end
 
@@ -98,28 +98,6 @@ _:
 
         trustproj = ''
           tpl rust $argv
-        '';
-
-        tfull = ''
-          tpl fullstack $argv
-        '';
-
-        tnext = ''
-          if test (count $argv) -ne 1
-            echo "usage: tnext <directory>"
-            return 1
-          end
-
-          tpl nextjs $argv
-        '';
-
-        tstart = ''
-          if test (count $argv) -ne 1
-            echo "usage: tstart <directory>"
-            return 1
-          end
-
-          tpl tanstack-start $argv
         '';
 
         tservices = ''

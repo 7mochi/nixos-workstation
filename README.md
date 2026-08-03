@@ -163,9 +163,10 @@ Project templates are exposed by the flake:
 
 ```sh
 nix flake init -t path:$HOME/nixos-config#node
-nix flake init -t path:$HOME/nixos-config#fullstack
-nix flake init -t path:$HOME/nixos-config#nextjs
-nix flake init -t path:$HOME/nixos-config#tanstack-start
+nix flake init -t path:$HOME/nixos-config#bun
+nix flake init -t path:$HOME/nixos-config#python
+nix flake init -t path:$HOME/nixos-config#rust
+nix flake init -t path:$HOME/nixos-config#local-services
 ```
 
 More notes:

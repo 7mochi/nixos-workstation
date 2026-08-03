@@ -51,7 +51,7 @@
           pkgs.runCommand "check-niri-no-app-workflows"
             {
               niriConfig =
-                config.flake.nixosConfigurations."7mochi-vm".config.home-manager.users.admin.programs.niri.finalConfig;
+                config.flake.nixosConfigurations."7mochi-vm".config.home-manager.users.nanamochi.programs.niri.finalConfig;
               passAsFile = [ "niriConfig" ];
             }
             ''

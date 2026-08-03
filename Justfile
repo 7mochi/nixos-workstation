@@ -24,7 +24,7 @@ diff:
     nvd diff /run/current-system result
 
 doctor: check dry-build
-    nix eval --raw {{flake}}#nixosConfigurations.{{host}}.config.home-manager.users.admin.programs.fish.enable
+    nix eval --raw {{flake}}#nixosConfigurations.{{host}}.config.home-manager.users.nanamochi.programs.fish.enable
 
 outputs:
     niri msg outputs
