@@ -13,6 +13,7 @@ _:
         package = pkgs.bibata-cursors;
         name = cursorTheme;
         size = cursorSize;
+        enable = true;
         gtk.enable = true;
         x11.enable = true;
       };
