@@ -15,7 +15,7 @@ _:
         ];
 
         shellHook = ''
-          echo "nixos-config dev shell"
+          echo "nixos-workstation dev shell"
           echo "  nix fmt          format Nix files"
           echo "  nix flake check  run system and lint checks"
         '';

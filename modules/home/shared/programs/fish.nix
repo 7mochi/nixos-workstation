@@ -24,14 +24,14 @@ _:
       '';
 
       shellAliases = {
-        rebuild = "nh os switch path:$HOME/nixos-config#7mochi-vm";
-        update = "nix flake update --flake path:$HOME/nixos-config && nh os switch path:$HOME/nixos-config#7mochi-vm";
-        check = "nix flake check --no-build path:$HOME/nixos-config";
-        drybuild = "nix build path:$HOME/nixos-config#nixosConfigurations.7mochi-vm.config.system.build.toplevel --dry-run";
-        diff = "nix build path:$HOME/nixos-config#nixosConfigurations.7mochi-vm.config.system.build.toplevel && nvd diff /run/current-system result";
+        rebuild = "nh os switch path:$HOME/Documents/nixos-workstation#7mochi-vm";
+        update = "nix flake update --flake path:$HOME/Documents/nixos-workstation && nh os switch path:$HOME/Documents/nixos-workstation#7mochi-vm";
+        check = "nix flake check --no-build path:$HOME/Documents/nixos-workstation";
+        drybuild = "nix build path:$HOME/Documents/nixos-workstation#nixosConfigurations.7mochi-vm.config.system.build.toplevel --dry-run";
+        diff = "nix build path:$HOME/Documents/nixos-workstation#nixosConfigurations.7mochi-vm.config.system.build.toplevel && nvd diff /run/current-system result";
         doctor = "check && drybuild";
         ports = "lsof -Pan -iTCP -sTCP:LISTEN";
-        nc = "cd $HOME/nixos-config";
+        nc = "cd $HOME/Documents/nixos-workstation";
         work = "cd $HOME/Work";
         c = "clear";
         cat = "bat";
@@ -78,9 +78,9 @@ _:
           set template $argv[1]
 
           if test (count $argv) -ge 2
-            nix flake new -t "path:$HOME/nixos-config#$template" -- $argv[2]
+            nix flake new -t "path:$HOME/Documents/nixos-workstation#$template" -- $argv[2]
           else
-            nix flake init -t "path:$HOME/nixos-config#$template"
+            nix flake init -t "path:$HOME/Documents/nixos-workstation#$template"
           end
         '';
 

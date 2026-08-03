@@ -78,7 +78,7 @@ mount -o subvol=nix,compress=zstd,noatime /dev/disk/by-uuid/<root-uuid> /mnt/nix
 Install:
 
 ```sh
-sudo nixos-install --flake /mnt/path/to/nixos-config#7mochi-vm
+sudo nixos-install --flake /mnt/path/to/Documents/nixos-workstation#7mochi-vm
 ```
 
 The root UUID is committed in `modules/hosts/7mochi-vm/hardware.nix`. After
@@ -93,15 +93,15 @@ blkid -o value -s UUID <root-partition>
 Normal rebuild:
 
 ```sh
-nix flake check --no-build path:$HOME/nixos-config
-sudo nixos-rebuild switch --flake path:$HOME/nixos-config#7mochi-vm
+nix flake check --no-build path:$HOME/Documents/nixos-workstation
+sudo nixos-rebuild switch --flake path:$HOME/Documents/nixos-workstation#7mochi-vm
 ```
 
 When changing filesystems or mount options, build the next generation for boot
 and reboot into it:
 
 ```sh
-sudo nixos-rebuild boot --flake path:$HOME/nixos-config#7mochi-vm
+sudo nixos-rebuild boot --flake path:$HOME/Documents/nixos-workstation#7mochi-vm
 sudo reboot
 ```
 
@@ -162,11 +162,11 @@ direnv allow
 Project templates are exposed by the flake:
 
 ```sh
-nix flake init -t path:$HOME/nixos-config#node
-nix flake init -t path:$HOME/nixos-config#bun
-nix flake init -t path:$HOME/nixos-config#python
-nix flake init -t path:$HOME/nixos-config#rust
-nix flake init -t path:$HOME/nixos-config#local-services
+nix flake init -t path:$HOME/Documents/nixos-workstation#node
+nix flake init -t path:$HOME/Documents/nixos-workstation#bun
+nix flake init -t path:$HOME/Documents/nixos-workstation#python
+nix flake init -t path:$HOME/Documents/nixos-workstation#rust
+nix flake init -t path:$HOME/Documents/nixos-workstation#local-services
 ```
 
 More notes:
@@ -188,5 +188,5 @@ git add path/to/new-file.nix
 For quick checks without staging, use an explicit path flake reference:
 
 ```sh
-nix flake check --no-build path:$HOME/nixos-config
+nix flake check --no-build path:$HOME/Documents/nixos-workstation
 ```

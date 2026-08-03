@@ -5,7 +5,7 @@ _:
     { pkgs, ... }:
     {
       formatter = pkgs.writeShellApplication {
-        name = "nixos-config-fmt";
+        name = "nixos-workstation-fmt";
         runtimeInputs = [
           pkgs.findutils
           pkgs.nixfmt

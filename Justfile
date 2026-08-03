@@ -1,6 +1,6 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
-flake := "path:$HOME/nixos-config"
+flake := "path:$HOME/Documents/nixos-workstation"
 host := "7mochi-vm"
 
 fmt:

@@ -28,7 +28,7 @@ Fish shell integration needed for them to load automatically.
 For one-off databases and mail testing, use the `local-services` template:
 
 ```sh
-nix flake new -t path:$HOME/nixos-config#local-services -- services
+nix flake new -t path:$HOME/Documents/nixos-workstation#local-services -- services
 cd services
 docker compose up -d postgres redis mailpit
 ```
