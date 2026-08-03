@@ -34,7 +34,8 @@ Runtime state can still be written by the shell UI:
 ~/Pictures/Wallpapers
 ```
 
-Persist those paths before enabling impermanence.
+Noctalia runtime state lives under the home directory. `/home` is its own btrfs
+subvolume, so these paths persist across reboots on their own:
 
 Noctalia starts from Niri:
 

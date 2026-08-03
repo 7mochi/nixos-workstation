@@ -111,8 +111,6 @@ That avoids restarting active mounts such as `/home` inside the running session.
 
 - `workstation.secureBoot.enable` turns on Lanzaboote. Leave it disabled until
   Secure Boot keys exist under `/etc/secureboot`.
-- `workstation.impermanence.enable` turns on impermanence. Leave it disabled
-  until `/persist` exists and the persistence list covers the real state you use.
 - `sops-nix` is wired to the host SSH key, but this repo does not commit
   encrypted secrets yet.
 
@@ -138,9 +136,6 @@ Noctalia has declarative config and runtime state:
 - Declarative settings: `modules/home/shared/desktop/noctalia.nix`
 - Runtime settings: `~/.local/state/noctalia/settings.toml`
 - Wallpaper choice cache: `~/.cache/noctalia/wallpapers.json`
-
-Before enabling impermanence, persist Noctalia state and the wallpaper directory:
-`~/Pictures/Wallpapers`.
 
 ## Development
 
@@ -172,7 +167,7 @@ nix flake init -t path:$HOME/Documents/nixos-workstation#local-services
 More notes:
 
 - `docs/desktop.md`: Niri, Noctalia, SDDM, portals, cursor handling.
-- `docs/system.md`: boot, storage, Secure Boot, impermanence, secrets.
+- `docs/system.md`: boot, storage, Secure Boot, secrets.
 - `docs/dev-workflows.md`: daily development workflow.
 - `docs/dev-templates.md`: project templates.
 
