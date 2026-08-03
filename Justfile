@@ -1,7 +1,7 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
 flake := "path:$HOME/nixos-config"
-host := "nixos"
+host := "7mochi-vm"
 
 fmt:
     nix fmt

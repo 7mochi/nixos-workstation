@@ -105,8 +105,6 @@
       home.packages =
         (with pkgs; [
           # Desktop
-          chromium
-          firefox
           obsidian
           vscode
           zed-editor
@@ -127,8 +125,6 @@
           mission-center
 
           # Games
-          heroic
-          lutris
           gamescope
           mangohud
 
@@ -167,11 +163,7 @@
           zoxide
 
           # Infra
-          k9s
-          kubectl
-          kubernetes-helm
           lazydocker
-          opentofu
         ])
         ++ [
           noticeNow

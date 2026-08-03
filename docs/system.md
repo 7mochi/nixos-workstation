@@ -7,12 +7,9 @@ the workstation.
 
 Boot modules live under `modules/nixos/boot/`.
 
-- `systemd-boot.nix` enables systemd-boot and the CachyOS BORE kernel.
-- `secure-boot.nix` defines `workstation.secureBoot.enable`, which switches the
-  bootloader to Lanzaboote when enabled.
-
-Do not enable Secure Boot until keys are enrolled and available under
-`/etc/secureboot`.
+- `kernel.nix` enables the shared CachyOS BORE kernel. The bootloader is set
+  per-host in `modules/hosts/*/hardware.nix`; the VM uses GRUB in legacy mode
+  (no ESP).
 
 ## Storage
 
@@ -21,11 +18,10 @@ Storage modules live under `modules/nixos/storage/`.
 - `btrfs.nix` adds compression, `noatime`, scrub, and fstrim.
 - `impermanence.nix` is gated behind `workstation.impermanence.enable`.
 
-The host hardware module expects:
+The host hardware module expects a single btrfs volume mounted by disk UUID:
 
 ```text
-NIXBOOT  vfat mounted at /boot
-NIXROOT  btrfs with @ mounted at / and @home mounted at /home
+<root-uuid>  btrfs mounted at / (top-level), /home (subvol home), /nix (subvol nix)
 ```
 
 Use `nixos-rebuild boot` and reboot when changing mount options or filesystem
@@ -52,7 +48,7 @@ covers the state you actually use. Pay special attention to:
 ~/Pictures/Wallpapers
 ```
 
-The user directory list is shared between `admin` and `v` to avoid drift.
+The user directory list is shared between `nanamochi` and future users to avoid drift.
 
 ## Secrets
 

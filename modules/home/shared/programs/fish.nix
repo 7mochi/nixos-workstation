@@ -24,11 +24,11 @@ _:
       '';
 
       shellAliases = {
-        rebuild = "nh os switch path:$HOME/nixos-config#nixos";
-        update = "nix flake update --flake path:$HOME/nixos-config && nh os switch path:$HOME/nixos-config#nixos";
+        rebuild = "nh os switch path:$HOME/nixos-config#7mochi-vm";
+        update = "nix flake update --flake path:$HOME/nixos-config && nh os switch path:$HOME/nixos-config#7mochi-vm";
         check = "nix flake check --no-build path:$HOME/nixos-config";
-        drybuild = "nix build path:$HOME/nixos-config#nixosConfigurations.nixos.config.system.build.toplevel --dry-run";
-        diff = "nix build path:$HOME/nixos-config#nixosConfigurations.nixos.config.system.build.toplevel && nvd diff /run/current-system result";
+        drybuild = "nix build path:$HOME/nixos-config#nixosConfigurations.7mochi-vm.config.system.build.toplevel --dry-run";
+        diff = "nix build path:$HOME/nixos-config#nixosConfigurations.7mochi-vm.config.system.build.toplevel && nvd diff /run/current-system result";
         doctor = "check && drybuild";
         ports = "lsof -Pan -iTCP -sTCP:LISTEN";
         nc = "cd $HOME/nixos-config";

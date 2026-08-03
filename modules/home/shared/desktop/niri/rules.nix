@@ -16,7 +16,6 @@ _:
         matches = [
           { app-id = "^zen$"; }
           { app-id = "^zen-browser$"; }
-          { app-id = "^firefox$"; }
         ];
         draw-border-with-background = false;
       }
@@ -24,8 +23,6 @@ _:
         matches = [
           { app-id = "^steam$"; }
           { app-id = "^Steam$"; }
-          { app-id = "^com\\.heroicgameslauncher\\.hgl$"; }
-          { app-id = "^net\\.lutris\\.Lutris$"; }
         ];
         variable-refresh-rate = true;
       }

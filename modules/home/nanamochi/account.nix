@@ -1,14 +1,14 @@
 { config, ... }:
 
 {
-  flake.modules.homeManager.v = {
+  flake.modules.homeManager.nanamochi = {
     imports = [
       config.flake.modules.homeManager.shared
     ];
 
     home = {
-      username = "v";
-      homeDirectory = "/home/v";
+      username = "nanamochi";
+      homeDirectory = "/home/nanamochi";
       stateVersion = "26.05";
     };
 

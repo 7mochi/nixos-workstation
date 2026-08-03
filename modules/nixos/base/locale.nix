@@ -2,9 +2,12 @@ _:
 
 {
   flake.modules.nixos.workstation = {
-    time.timeZone = "Europe/Warsaw";
+    time.timeZone = "America/Lima";
     i18n.defaultLocale = "en_US.UTF-8";
 
-    console.keyMap = "pl2";
+    console = {
+        font = "Lat2-Terminus16";
+        keymap = "us";
+    };
   };
 }

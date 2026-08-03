@@ -14,7 +14,6 @@ _:
       };
 
       flatpak.enable = true;
-      printing.enable = true;
       tumbler.enable = true;
     };
   };

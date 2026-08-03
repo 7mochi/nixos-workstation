@@ -1,19 +1,18 @@
 { config, inputs, ... }:
 
 {
-  flake.nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations."7mochi-vm" = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
 
     modules = [
       inputs.niri.nixosModules.niri
-      inputs.lanzaboote.nixosModules.lanzaboote
       inputs.sops-nix.nixosModules.sops
       inputs.home-manager.nixosModules.home-manager
       config.flake.modules.nixos.nixosHardware
       config.flake.modules.nixos.workstation
 
       {
-        networking.hostName = "nixos";
+        networking.hostName = "7mochi-vm";
         system.stateVersion = "26.05";
 
         nixpkgs.overlays = [
@@ -27,8 +26,7 @@
           sharedModules = [
             inputs.noctalia.homeModules.default
           ];
-          users.admin = config.flake.modules.homeManager.admin;
-          users.v = config.flake.modules.homeManager.v;
+          users.nanamochi = config.flake.modules.homeManager.nanamochi;
         };
       }
     ];

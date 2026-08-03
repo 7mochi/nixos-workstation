@@ -15,12 +15,12 @@ _:
             lg = "log --graph --pretty=format:'%C(auto)%h%Creset %C(cyan)%ad%Creset %C(auto)%d%Creset %s %C(dim white)- %an%Creset' --date=short";
             st = "status --short --branch";
           };
-          init.defaultBranch = "main";
+          init.defaultBranch = "master";
           pull.rebase = true;
           push.autoSetupRemote = true;
           rebase.autoStash = true;
           rerere.enabled = true;
-          core.editor = "nvim";
+          core.editor = "nano";
           merge.conflictStyle = "zdiff3";
           diff.algorithm = "histogram";
           column.ui = "auto";

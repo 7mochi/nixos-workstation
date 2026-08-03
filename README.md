@@ -2,21 +2,18 @@
 
 Personal NixOS config for a Niri desktop with Noctalia.
 
-![NixOS Niri Noctalia desktop preview](assets/preview.png)
-
 ## What Is Here
 
 ```text
-flake.nix             flake inputs and the import-tree entry point
-modules/flake/        flake-parts outputs, checks, formatter, templates
-modules/hosts/        host definitions and hardware config
-modules/nixos/        system modules for boot, hardware, desktop, storage, dev tools
-modules/home/shared/  shared Home Manager profile for the desktop and CLI
-modules/home/admin/   admin account module
-modules/home/v/       secondary user account module
-templates/            project templates exposed by the flake
-docs/                 workflow and template notes
-secrets/              sops-nix notes, no plaintext secrets
+flake.nix               flake inputs and the import-tree entry point
+modules/flake/          flake-parts outputs, checks, formatter, templates
+modules/hosts/          host definitions and hardware config
+modules/nixos/          system modules for boot, hardware, desktop, storage, dev tools
+modules/home/shared/    shared Home Manager profile for the desktop and CLI
+modules/home/nanamochi/ personal user account module
+templates/              project templates exposed by the flake
+docs/                   workflow and template notes
+secrets/                sops-nix notes, no plaintext secrets
 ```
 
 The config uses a dendritic flake layout: files under `modules/` are imported by
@@ -50,43 +47,46 @@ commands live in `Justfile`.
 
 ## Fresh Install
 
-This host expects filesystem labels, not disk UUIDs:
+This host mounts a single btrfs volume by disk UUID. `/` lives on the btrfs
+top-level, `/home` and `/nix` are subvolumes, and there is no separate boot
+partition, GRUB runs in legacy mode (no ESP):
 
 ```text
-NIXBOOT  /boot, vfat
-NIXROOT  / and /home, btrfs subvolumes @ and @home
+<root-partition>  btrfs, mounted at / (top-level), /home (subvol home), /nix (subvol nix)
 ```
 
-Create the labels while formatting:
+Format the root partition and create the subvolumes:
 
 ```sh
-mkfs.vfat -n NIXBOOT <efi-partition>
-mkfs.btrfs -L NIXROOT <root-partition>
+mkfs.btrfs <root-partition>
 
-mount /dev/disk/by-label/NIXROOT /mnt
-btrfs subvolume create /mnt/@
-btrfs subvolume create /mnt/@home
+mount /dev/disk/by-uuid/<root-uuid> /mnt
+btrfs subvolume create /mnt/home
+btrfs subvolume create /mnt/nix
 umount /mnt
 ```
 
 Mount the target:
 
 ```sh
-mount -o subvol=@,compress=zstd,noatime /dev/disk/by-label/NIXROOT /mnt
-mkdir -p /mnt/home /mnt/boot
-mount -o subvol=@home,compress=zstd,noatime /dev/disk/by-label/NIXROOT /mnt/home
-mount /dev/disk/by-label/NIXBOOT /mnt/boot
+mount -o compress=zstd,noatime /dev/disk/by-uuid/<root-uuid> /mnt
+mkdir -p /mnt/home /mnt/nix
+mount -o subvol=home,compress=zstd,noatime /dev/disk/by-uuid/<root-uuid> /mnt/home
+mount -o subvol=nix,compress=zstd,noatime /dev/disk/by-uuid/<root-uuid> /mnt/nix
 ```
 
 Install:
 
 ```sh
-sudo nixos-install --flake /mnt/path/to/nixos-config#nixos
+sudo nixos-install --flake /mnt/path/to/nixos-config#7mochi-vm
 ```
 
-`modules/hosts/nixos/hardware.nix` is intentionally generic. Put machine-local
-changes such as swap, LUKS, kernel modules, or different labels in a private
-branch rather than committing disk UUIDs here.
+The root UUID is committed in `modules/hosts/7mochi-vm/hardware.nix`. After
+formatting a new disk, capture its UUID with `blkid` and update that file:
+
+```sh
+blkid -o value -s UUID <root-partition>
+```
 
 ## Safe Rebuilds
 
@@ -94,14 +94,14 @@ Normal rebuild:
 
 ```sh
 nix flake check --no-build path:$HOME/nixos-config
-sudo nixos-rebuild switch --flake path:$HOME/nixos-config#nixos
+sudo nixos-rebuild switch --flake path:$HOME/nixos-config#7mochi-vm
 ```
 
-When changing filesystems, labels, or mount options, build the next generation
-for boot and reboot into it:
+When changing filesystems or mount options, build the next generation for boot
+and reboot into it:
 
 ```sh
-sudo nixos-rebuild boot --flake path:$HOME/nixos-config#nixos
+sudo nixos-rebuild boot --flake path:$HOME/nixos-config#7mochi-vm
 sudo reboot
 ```
 

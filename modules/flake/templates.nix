@@ -22,21 +22,6 @@ _:
       description = "Rust binary project with cargo, rustfmt, clippy, rust-analyzer, and a Nix dev shell";
     };
 
-    fullstack = {
-      path = ../../templates/fullstack;
-      description = "TypeScript full-stack starter with Hono, PostgreSQL, Redis, Mailpit, and Docker Compose";
-    };
-
-    nextjs = {
-      path = ../../templates/nextjs;
-      description = "Next.js generator workspace with Nix dev shell and official create-next-app bootstrap command";
-    };
-
-    tanstack-start = {
-      path = ../../templates/tanstack-start;
-      description = "TanStack Start generator workspace with Nix dev shell and official TanStack bootstrap commands";
-    };
-
     local-services = {
       path = ../../templates/local-services;
       description = "Docker Compose recipes for PostgreSQL, Redis, MySQL, Valkey, and Mailpit";

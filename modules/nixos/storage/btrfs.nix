@@ -16,6 +16,13 @@ _:
           "noatime"
         ];
       };
+
+      "/nix" = {
+        options = [
+          "compress=zstd"
+          "noatime"
+        ];
+      };
     };
 
     services = {

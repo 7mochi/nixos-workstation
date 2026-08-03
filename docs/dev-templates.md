@@ -18,8 +18,5 @@ nix develop
 - `tbun`: TypeScript Bun service with Bun test.
 - `tpython`: Python 3.13 project with uv, pytest, ruff, and pyright.
 - `trustproj`: Rust binary with cargo, rustfmt, and clippy.
-- `tfulls`: Hono service with PostgreSQL, Redis, Mailpit, and Docker Compose.
-- `tnext`: workspace for `create-next-app`.
-- `tstart`: workspace for the TanStack CLI.
 - `tservices`: Docker Compose recipes for PostgreSQL, Redis, Valkey, MySQL,
   and Mailpit.

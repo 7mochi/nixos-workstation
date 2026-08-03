@@ -1,14 +1,12 @@
 {
-  description = "NixOS Niri Noctalia setup";
+  description = "7mochi's Niri Noctalia setup";
 
   nixConfig = {
     extra-substituters = [
       "https://noctalia.cachix.org"
-      "https://attic.xuyh0120.win/lantian"
     ];
     extra-trusted-public-keys = [
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
     ];
   };
 
@@ -38,11 +36,6 @@
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

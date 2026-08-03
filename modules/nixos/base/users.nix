@@ -9,17 +9,17 @@ _:
         isNormalUser = true;
         description = name;
         extraGroups = [
-          "wheel"
-          "networkmanager"
           "docker"
+          "networkmanager"
+          "users"
+          "wheel"
         ];
         shell = pkgs.fish;
       };
     in
     {
       users.users = {
-        admin = normalUser "admin";
-        v = normalUser "v";
+        nanamochi = normalUser "nanamochi";
       };
 
       programs.fish.enable = true;
