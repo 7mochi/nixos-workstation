@@ -108,7 +108,6 @@
           adw-gtk3
           obsidian
           zed-editor
-          vesktop
           bruno
           dbeaver-bin
 
