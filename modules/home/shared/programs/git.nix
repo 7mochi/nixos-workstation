@@ -7,6 +7,9 @@ _:
         enable = true;
 
         settings = {
+          user.name = "7mochi";
+          user.email = "flyingcatdm@gmail.com";
+
           alias = {
             a = "add";
             br = "branch";
