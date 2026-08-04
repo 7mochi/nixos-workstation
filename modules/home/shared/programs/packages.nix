@@ -106,7 +106,6 @@
         (with pkgs; [
           # Desktop
           obsidian
-          vscode
           zed-editor
           vesktop
           bruno
