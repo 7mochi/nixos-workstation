@@ -57,6 +57,24 @@
             "dmask=0077"
           ];
         };
+
+        "/media/ssd" = {
+          device = "/dev/disk/by-uuid/e85bdfb5-4835-4a02-a2e6-cc58b2b123e8";
+          fsType = "btrfs";
+          options = [
+            "compress=zstd"
+            "noatime"
+          ];
+        };
+
+        "/media/hdd" = {
+          device = "/dev/disk/by-uuid/7ca58179-89f1-4d63-977d-cd5c2e8a9950";
+          fsType = "btrfs";
+          options = [
+            "compress=zstd"
+            "noatime"
+          ];
+        };
       };
 
       swapDevices = [

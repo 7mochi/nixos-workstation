@@ -28,7 +28,11 @@ _:
     services = {
       btrfs.autoScrub = {
         enable = true;
-        fileSystems = [ "/" ];
+        fileSystems = [
+          "/"
+          "/media/ssd"
+          "/media/hdd"
+        ];
         interval = "weekly";
       };
 
