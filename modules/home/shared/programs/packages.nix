@@ -105,6 +105,7 @@
       home.packages =
         (with pkgs; [
           # Desktop
+          adw-gtk3
           obsidian
           zed-editor
           vesktop
