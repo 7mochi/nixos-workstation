@@ -77,8 +77,8 @@ _:
 
           theme = {
             mode = "dark";
-            source = "wallpaper";
-            wallpaper_scheme = "m3-tonal-spot";
+            source = "builtin";
+            builtin = "Tokyo-Night";
 
             templates = {
               enable_builtin_templates = true;

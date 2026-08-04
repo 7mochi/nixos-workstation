@@ -18,6 +18,7 @@
           # nixpkgs (pkgs.vscode-extensions)
           pkgs.vscode-extensions.biomejs.biome
           pkgs.vscode-extensions.eamodio.gitlens
+          pkgs.vscode-extensions.enkia.tokyo-night
           pkgs.vscode-extensions.gruntfuggly.todo-tree
           pkgs.vscode-extensions.ms-azuretools.vscode-containers
           pkgs.vscode-extensions.ms-azuretools.vscode-docker
@@ -30,6 +31,10 @@
           (marketplace "clemenspeters" "format-json")
           (marketplace "shakram02" "bash-beautify")
         ];
+
+        profiles.default.userSettings = {
+          "workbench.colorTheme" = "Tokyo Night";
+        };
       };
     };
 }
