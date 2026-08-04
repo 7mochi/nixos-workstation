@@ -23,7 +23,8 @@ jobs:
         id: update
         uses: DeterminateSystems/update-flake-lock@main
         with:
-          pr-title: "Update flake.lock"
+          pr-title: "chore(deps): update flake lock"
+          commit-msg: "chore(deps): update flake lock"
           pr-labels: |
             automated
 
