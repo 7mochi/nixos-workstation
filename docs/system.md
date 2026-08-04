@@ -66,6 +66,42 @@ Declare each secret in `modules/nixos/security/secrets.nix` (`sops.secrets`).
 Each one is decrypted at activation time to `/run/secrets/<name>` with the
 configured owner/group/mode.
 
+### Recipients
+
+Each machine derives its own age key from its SSH host key. Private keys are
+never shared or committed. A machine can decrypt a secret only if its age
+public key is listed in `.sops.yaml`.
+
+The VM is currently the only recipient, which makes it a single point of
+failure. If the VM is lost and its private key is gone, the secrets cannot be
+decrypted and must be recreated. To avoid this, back up the private key in a
+private location, or add another machine as a second recipient.
+
+Add a recipient to the same `key_groups` entry. Do not put a leading `-` before
+`age:`, that enables Shamir secret sharing and requires every key:
+
+```yaml
+keys:
+  - &vm_host age18xf6ltl7ramrew0ecqju725vzcr68rapsf7v842dt6hzhcrn4ersqrftz7
+  - &pc_real age1xxxx...
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *vm_host
+          - *pc_real
+```
+
+Re-encrypt the secrets for the new recipient from any machine that can still
+decrypt them:
+
+```sh
+nix-shell -p sops --run "sops updatekeys secrets/secrets.yaml"
+```
+
+Any backup of the private key is a copy of the decryption key. Keep backups of
+`/etc/ssh/ssh_host_ed25519_key` or `~/.config/sops/age/keys.txt` private.
+
 ## Containers
 
 Docker is enabled for workflow compatibility. The `docker` group is effectively
