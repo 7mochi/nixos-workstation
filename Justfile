@@ -1,7 +1,7 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
 flake := "path:$HOME/Documents/nixos-workstation"
-host := "7mochi-vm"
+host := env_var_or_default("NIXOS_HOST", "workstation")
 
 fmt:
     nix fmt

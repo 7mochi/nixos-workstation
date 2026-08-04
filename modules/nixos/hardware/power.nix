@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.workstation = {
+  flake.modules.nixos.shared = {
     services = {
       fwupd.enable = true;
       power-profiles-daemon.enable = true;

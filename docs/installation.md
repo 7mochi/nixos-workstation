@@ -1,27 +1,30 @@
 # Installation
 
-These notes cover installing hosts from scratch. The repo ships one host,
-`7mochi-vm` (a VirtualBox VM). A real machine uses the same steps with 
-its own hardware module.
+These notes cover installing hosts from scratch. The repo ships two hosts:
+`workstation` (the main PC) and `7mochi-vm` (a VirtualBox VM). A new machine
+follows the same steps with its own hardware module.
 
 ## Hosts
 
 The flake auto-discovers hosts under `modules/hosts/`. To add a new machine:
 
-- Create `modules/hosts/<name>.nix` by mirroring `7mochi-vm.nix`.
-- Create `modules/hosts/<name>/hardware.nix` by mirroring `7mochi-vm/hardware.nix`.
-  For a real PC, generate the base with `nixos-generate-config --root /mnt` and
-  adapt the bootloader and file systems.
-- Set the host name in the `Justfile` (`host := "<name>"`).
+- Create `modules/hosts/<name>.nix` by mirroring `workstation.nix` (or
+  `7mochi-vm.nix`); set `networking.hostName` to the machine name.
+- Create `modules/hosts/<name>/hardware.nix` by mirroring an existing host's
+  file. For a real PC, generate the base with `nixos-generate-config --root /mnt`
+  and adapt the bootloader and file systems.
+- No Justfile change needed: it defaults to `workstation` and can be overridden
+  with `NIXOS_HOST=<name> just rebuild`; the Fish aliases pick up `$hostname`
+  automatically.
 - Add the machine age key to `.sops.yaml` and re-encrypt the secrets:
   `nix-shell -p sops --run "sops updatekeys secrets/secrets.yaml"`.
 
 ## Fresh Install
 
-Boot the NixOS installer, partition the disk, and format it. The VM uses GRUB
-legacy on /dev/sda with a single btrfs volume. A real PC can use EFI and
-systemd-boot with its own layout. The exact VM steps are in the README Fresh
-Install section.
+Boot the NixOS installer, partition the disk, and format it. `7mochi-vm` uses
+GRUB legacy on /dev/sda with a single btrfs volume; `workstation` uses
+systemd-boot UEFI with a FAT32 ESP, btrfs root, and a swap partition. The exact
+steps are in the README Fresh Install section.
 
 Clone the repo into the mounted target and install:
 

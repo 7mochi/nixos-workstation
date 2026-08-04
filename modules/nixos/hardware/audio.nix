@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.workstation = {
+  flake.modules.nixos.shared = {
     security.rtkit.enable = true;
 
     services.pipewire = {

@@ -1,7 +1,7 @@
 { lib, ... }:
 
 {
-  flake.modules.nixos.nixosHardware =
+  flake.modules.nixos.virtualMachine =
     { modulesPath, ... }:
 
     {

@@ -8,8 +8,8 @@ the workstation.
 Boot modules live under `modules/nixos/boot/`.
 
 - `kernel.nix` enables the shared CachyOS BORE kernel. The bootloader is set
-  per-host in `modules/hosts/*/hardware.nix`; the VM uses GRUB in legacy mode
-  (no ESP).
+  per-host in `modules/hosts/*/hardware.nix`: the VM uses GRUB in legacy mode
+  (no ESP), the workstation uses systemd-boot UEFI with a FAT32 ESP at `/boot`.
 
 ## Storage
 
@@ -22,6 +22,9 @@ The host hardware module expects a single btrfs volume mounted by disk UUID:
 ```text
 <root-uuid>  btrfs mounted at / (top-level), /home (subvol home), /nix (subvol nix)
 ```
+
+The workstation additionally pins a swap partition and its ESP UUID in
+`modules/hosts/workstation/hardware.nix`; the VM has no swap.
 
 Use `nixos-rebuild boot` and reboot when changing mount options or filesystem
 devices.

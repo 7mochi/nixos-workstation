@@ -5,7 +5,8 @@
     { pkgs, ... }:
     {
       checks = {
-        nixos = config.flake.nixosConfigurations."7mochi-vm".config.system.build.toplevel;
+        "nixos-7mochi-vm" = config.flake.nixosConfigurations."7mochi-vm".config.system.build.toplevel;
+        "nixos-workstation" = config.flake.nixosConfigurations."workstation".config.system.build.toplevel;
 
         format =
           pkgs.runCommand "check-nix-format"

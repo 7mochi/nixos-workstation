@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.workstation = {
+  flake.modules.nixos.shared = {
     time.timeZone = "America/Lima";
     i18n.defaultLocale = "en_US.UTF-8";
 

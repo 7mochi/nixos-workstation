@@ -1,7 +1,7 @@
 { inputs, ... }:
 
 {
-  flake.modules.nixos.workstation =
+  flake.modules.nixos.shared =
     { pkgs, lib, ... }:
 
     let

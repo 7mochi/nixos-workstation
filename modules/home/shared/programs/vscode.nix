@@ -14,7 +14,7 @@
         package = pkgs.vscode;
         mutableExtensionsDir = false;
 
-        extensions = [
+        profiles.default.extensions = [
           # nixpkgs (pkgs.vscode-extensions)
           pkgs.vscode-extensions.biomejs.biome
           pkgs.vscode-extensions.eamodio.gitlens

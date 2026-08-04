@@ -21,6 +21,22 @@ Keep generated binding helpers simple. If a shortcut is a one-off, write it as a
 one-off. If it is part of a repeated family, add it through the small helpers in
 `bindings.nix`.
 
+## Monitors
+
+Outputs are declared per host, not in the shared Niri config. `workstation`
+pins its monitors in `modules/hosts/workstation/outputs.nix`
+(`flake.modules.nixos.workstation`, injected into home-manager's niri settings):
+
+- Xiaomi Mi Monitor (DP-2): 2560x1440@180 Hz, `focus-at-startup`, left.
+- GIGABYTE G24F (HDMI-A-1): 1920x1080@165 Hz, right.
+
+The VM has no output config and lets niri pick automatically. Outputs not
+listed in the config keep their automatic behavior, so per-host output config
+is safe on any machine.
+
+Get exact mode strings with `niri msg outputs`, refresh rates must match to
+three decimal digits (`2560x1440@180.000`).
+
 ## Noctalia
 
 Declarative Noctalia settings live in

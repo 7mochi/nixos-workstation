@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.workstation = {
+  flake.modules.nixos.shared = {
     hardware.sane.enable = true;
 
     programs.steam.enable = true;
