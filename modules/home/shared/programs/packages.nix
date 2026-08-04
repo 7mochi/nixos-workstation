@@ -153,6 +153,7 @@
           nix-index
           nix-output-monitor
           nvd
+          opencode
           procs
           python313
           ripgrep-all
