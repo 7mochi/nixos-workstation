@@ -159,6 +159,7 @@ nix flake init -t path:$HOME/Documents/nixos-workstation#local-services
 
 More notes:
 
+- `docs/installation.md`: hosts, fresh install, reinstall, post install.
 - `docs/desktop.md`: Niri, Noctalia, SDDM, portals, cursor handling.
 - `docs/system.md`: boot, storage, secrets.
 - `docs/dev-workflows.md`: daily development workflow.

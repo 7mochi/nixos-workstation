@@ -28,10 +28,10 @@ devices.
 
 ## Secrets
 
-Secrets are wired through `sops-nix`, but no plaintext secrets belong in this
-repo.
+Secrets are managed with `sops-nix`. Encrypted files live under `secrets/` and
+are committed to the repo; no plaintext secrets belong here.
 
-The default age key source is the host SSH key:
+The age identity is the host SSH key:
 
 ```nix
 sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -39,6 +39,32 @@ sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
 That means a fresh machine needs its host SSH key in place before secrets can be
 decrypted.
+
+```sh
+# 1. One-time: set up the age edit identity from the SSH key
+mkdir -p ~/.config/sops/age
+nix-shell -p ssh-to-age --run \
+  "ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key > ~/.config/sops/age/keys.txt"
+
+# 2. Get the public age key (used for .sops.yaml creation rules)
+nix-shell -p ssh-to-age --run "ssh-to-age -i /etc/ssh/ssh_host_ed25519_key.pub"
+
+# 3. Create or edit an encrypted secrets file
+cd ~/Documents/nixos-workstation
+nix-shell -p sops --run "sops secrets/secrets.yaml"
+#   each key becomes a secret, e.g.:
+#   opencode-api-key: <KEY>
+
+# 4. Commit the encrypted file, then rebuild
+just rebuild
+
+# 5. Verify a decrypted secret
+cat /run/secrets/opencode-api-key
+```
+
+Declare each secret in `modules/nixos/security/secrets.nix` (`sops.secrets`).
+Each one is decrypted at activation time to `/run/secrets/<name>` with the
+configured owner/group/mode.
 
 ## Containers
 

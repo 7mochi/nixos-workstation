@@ -1,0 +1,7 @@
+keys:
+  - &vm_host age18xf6ltl7ramrew0ecqju725vzcr68rapsf7v842dt6hzhcrn4ersqrftz7
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *vm_host
