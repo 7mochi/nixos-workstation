@@ -11,6 +11,7 @@ _:
           nil
           nixd
           nixfmt
+          nix-update
           statix
         ];
 

@@ -126,6 +126,7 @@
           # Games
           gamescope
           mangohud
+          inputs.self.packages.${pkgs.system}.osu-lazer-torii-appimage
 
           # Music
           pear-desktop

@@ -6,11 +6,12 @@ Personal NixOS config for a Niri desktop with Noctalia.
 
 ```text
 flake.nix               flake inputs and the import-tree entry point
-modules/flake/          flake-parts outputs, checks, formatter, templates
+modules/flake/          flake-parts outputs, checks, formatter, templates, packages
 modules/hosts/          host definitions and hardware config
 modules/nixos/          system modules for boot, hardware, desktop, storage, dev tools
 modules/home/shared/    shared Home Manager profile for the desktop and CLI
 modules/home/nanamochi/ personal user account module
+pkgs/                   custom package derivations (e.g. osu-lazer-torii-appimage)
 templates/              project templates exposed by the flake
 docs/                   workflow and template notes
 secrets/                sops-nix notes, no plaintext secrets
@@ -19,6 +20,11 @@ secrets/                sops-nix notes, no plaintext secrets
 The config uses a dendritic flake layout: files under `modules/` are imported by
 `import-tree` and merge into shared module outputs such as
 `flake.modules.nixos.shared` and `flake.modules.homeManager.shared`.
+
+Custom packages follow the same split: derivations live in `pkgs/<name>/default.nix`
+and are exposed as flake outputs by `modules/flake/packages.nix` (they cannot live
+under `modules/`, where `import-tree` treats every file as a flake-parts module).
+Run one with `nix run .#<name>` and update it with `nix-update <name> --flake`.
 
 ## Daily Use
 
