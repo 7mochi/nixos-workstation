@@ -129,7 +129,6 @@
 
           # Music
           pear-desktop
-          spicetify-cli
 
           # CLI
           atuin
