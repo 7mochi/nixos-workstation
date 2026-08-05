@@ -128,6 +128,7 @@
           mangohud
 
           # Music
+          pear-desktop
           spicetify-cli
 
           # CLI
