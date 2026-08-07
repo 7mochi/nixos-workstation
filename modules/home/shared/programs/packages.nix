@@ -147,6 +147,7 @@
           gh-dash
           hyperfine
           jq
+          p7zip
           just
           lsof
           mailpit
