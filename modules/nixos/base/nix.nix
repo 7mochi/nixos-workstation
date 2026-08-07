@@ -11,6 +11,7 @@
           "obsidian"
           "steam"
           "steam-unwrapped"
+          "stremio-linux-shell"
           "vscode"
         ];
 

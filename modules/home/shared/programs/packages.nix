@@ -122,6 +122,7 @@
           obs-studio
           resources
           mission-center
+          stremio-linux-shell
 
           # Games
           gamescope
