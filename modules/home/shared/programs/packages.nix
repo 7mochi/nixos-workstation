@@ -137,6 +137,7 @@
           bat
           btop
           comma
+          dotnet-sdk_10
           duf
           dust
           entr
@@ -146,6 +147,7 @@
           fzf
           gh-dash
           hyperfine
+          ilspycmd
           jq
           p7zip
           just
