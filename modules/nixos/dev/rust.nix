@@ -6,12 +6,8 @@ _:
 
     {
       environment.systemPackages = with pkgs; [
-        # Rust compiler, package manager, formatter, linter, and optional
-        # toolchain manager for projects that need a different channel.
-        rustc
-        cargo
-        rustfmt
-        clippy
+        # Toolchain manager: rustup shims provide rustc/cargo/rustfmt/clippy and
+        # let projects pin a channel with a rust-toolchain.toml file.
         rustup
 
         # Editor support and common cargo subcommands.
