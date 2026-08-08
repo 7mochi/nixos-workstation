@@ -19,6 +19,7 @@
           pkgs.vscode-extensions.biomejs.biome
           pkgs.vscode-extensions.eamodio.gitlens
           pkgs.vscode-extensions.enkia.tokyo-night
+          pkgs.vscode-extensions.golang.go
           pkgs.vscode-extensions.gruntfuggly.todo-tree
           pkgs.vscode-extensions.ms-azuretools.vscode-containers
           pkgs.vscode-extensions.ms-azuretools.vscode-docker
@@ -34,6 +35,7 @@
 
         profiles.default.userSettings = {
           "workbench.colorTheme" = "Tokyo Night";
+          "go.lintTool" = "golangci-lint";
         };
       };
     };
