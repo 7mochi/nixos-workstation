@@ -13,6 +13,10 @@ _:
           group = config.users.users.nanamochi.group;
           mode = "0440";
         };
+
+        secrets."mullvad-account" = {
+          owner = "root";
+        };
       };
     };
 }
