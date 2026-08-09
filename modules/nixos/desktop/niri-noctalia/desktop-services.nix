@@ -13,7 +13,19 @@ _:
         openFirewall = true;
       };
 
-      flatpak.enable = true;
+      flatpak = {
+        enable = true;
+
+        packages = [
+          "org.vinegarhq.Sober"
+        ];
+
+        update.auto = {
+          enable = true;
+          onCalendar = "daily";
+        };
+      };
+
       tumbler.enable = true;
     };
   };

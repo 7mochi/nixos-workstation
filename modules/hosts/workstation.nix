@@ -8,6 +8,7 @@
       inputs.niri.nixosModules.niri
       inputs.sops-nix.nixosModules.sops
       inputs.home-manager.nixosModules.home-manager
+      inputs.nix-flatpak.nixosModules.nix-flatpak
       config.flake.modules.nixos.workstation
       config.flake.modules.nixos.shared
 

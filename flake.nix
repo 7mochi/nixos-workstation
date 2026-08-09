@@ -44,6 +44,10 @@
       url = "github:xddxdd/nix-cachyos-kernel/release";
     };
 
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak?ref=v0.7.0";
+    };
+
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
