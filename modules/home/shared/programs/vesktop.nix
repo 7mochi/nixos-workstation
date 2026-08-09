@@ -8,6 +8,14 @@ _:
       programs.vesktop = {
         enable = true;
 
+        # Discord blocks Discord + VPN + Linux, so pretend we're on
+        # Windows until Discord stops being annoying
+        package = pkgs.vesktop.overrideAttrs (old: {
+          postFixup = old.postFixup + ''
+            wrapProgram $out/bin/vesktop --add-flags "--user-agent-os windows"
+          '';
+        });
+
         vencord = {
           themes = {
             "midnight-tokyo-night" = pkgs.fetchurl {
