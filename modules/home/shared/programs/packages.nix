@@ -108,6 +108,7 @@
           adw-gtk3
           obsidian
           zed-editor
+          virt-viewer
           bruno
           dbeaver-bin
 
