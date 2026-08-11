@@ -8,6 +8,7 @@
       nixpkgs.config.allowUnfreePredicate =
         pkg:
         builtins.elem (pkgs.lib.getName pkg) [
+          "idea"
           "obsidian"
           "steam"
           "steam-unwrapped"
