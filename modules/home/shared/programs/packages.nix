@@ -131,6 +131,7 @@
           mangohud
           inputs.self.packages.${pkgs.system}.osu-lazer-torii-appimage
           inputs.self.packages.${pkgs.system}.retrogecko
+          inputs.self.packages.${pkgs.system}.osu-wine
 
           # Music
           pear-desktop
