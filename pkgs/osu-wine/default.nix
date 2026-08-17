@@ -35,6 +35,7 @@
   zlib,
   gst_all_1,
   vulkan-loader,
+  zenity,
 }:
 
 let
@@ -139,7 +140,26 @@ let
     WINE=${wine-osu}/lib/wine-osu/bin/wine
     WINESERVER=${wine-osu}/lib/wine-osu/bin/wineserver
     export WINE_INSTALL_PATH=${wine-osu}/lib/wine-osu
+    OSUPATH="''${OSUPATH:-}"
+    [ -r "$XDG_DATA_HOME/osuconfig/osupath" ] && OSUPATH=$(<"$XDG_DATA_HOME/osuconfig/osupath")
     OSUPATH="''${OSUPATH:-$XDG_DATA_HOME/osu-wine}"
+
+    if [ "$1" = "--changedir" ]; then
+      dir="''${2:-}"
+      if [ -z "$dir" ]; then
+        dir="$(${zenity}/bin/zenity --file-selection --directory)"
+      fi
+      [ -n "$dir" ] && [ -d "$dir" ] || {
+        echo "No folder selected, please make sure zenity is installed..."
+        exit 1
+      }
+      [ ! -s "$dir/osu!.exe" ] && dir="$dir/osu!"
+      ${coreutils}/bin/mkdir -p "$XDG_DATA_HOME/osuconfig"
+      echo "$dir" > "$XDG_DATA_HOME/osuconfig/osupath"
+      [ -d "$WINEPREFIX/drive_c" ] && ${coreutils}/bin/ln -sfn "$dir" "$WINEPREFIX/dosdevices/d:"
+      echo "osu! path set to $dir"
+      exit 0
+    fi
 
     setup_prefix() {
       if [ ! -f "$WINEPREFIX/system.reg" ]; then
