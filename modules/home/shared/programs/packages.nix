@@ -116,6 +116,7 @@
           # Files/media
           celluloid
           file-roller
+          filezilla
           kdePackages.breeze-icons
           nautilus
           loupe
