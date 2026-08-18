@@ -144,6 +144,15 @@ let
     [ -r "$XDG_DATA_HOME/osuconfig/osupath" ] && OSUPATH=$(<"$XDG_DATA_HOME/osuconfig/osupath")
     OSUPATH="''${OSUPATH:-$XDG_DATA_HOME/osu-wine}"
 
+    if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+      echo "osu-wine: Runs osu! (stable) with wine-osu"
+      echo "Usage: osu-wine [osu! args...]"
+      echo "  --changedir [path]  Select osu! install folder (dialog if no path given)"
+      echo "  --wine <args...>    Run wine with the given arguments in osu!'s prefix"
+      echo "  --help, -h          Show this help"
+      exit 0
+    fi
+
     if [ "$1" = "--changedir" ]; then
       dir="''${2:-}"
       if [ -z "$dir" ]; then
