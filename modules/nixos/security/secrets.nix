@@ -14,6 +14,12 @@ _:
           mode = "0440";
         };
 
+        secrets."commandcode-api-key" = {
+          owner = config.users.users.nanamochi.name;
+          group = config.users.users.nanamochi.group;
+          mode = "0440";
+        };
+
         secrets."mullvad-account" = {
           owner = "root";
         };
