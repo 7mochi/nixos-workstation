@@ -35,6 +35,7 @@
   zlib,
   gst_all_1,
   vulkan-loader,
+  unzip,
   zenity,
 }:
 
@@ -84,6 +85,11 @@ let
   icon = fetchurl {
     url = "https://raw.githubusercontent.com/NelloKudo/osu-winello/main/stuff/osu-wine.png";
     hash = "sha256-kn3mKfwpeTRScvxbH7jKbo+7zGDIozFkNVW8BmbayvQ=";
+  };
+
+  dotnet-runtime = fetchurl {
+    url = "https://builds.dotnet.microsoft.com/dotnet/Runtime/8.0.30/dotnet-runtime-8.0.30-win-x64.zip";
+    hash = "sha256-txLTykRioEp9L4HlcjITX2OsIgJiS4y3qWVNJFGZAJ0=";
   };
 
   runtimeLibs = lib.makeLibraryPath [
@@ -217,6 +223,11 @@ let
     }
 
     setup_prefix
+    export DOTNET_ROOT="C:\Program Files\dotnet"
+    if [ ! -d "$WINEPREFIX/drive_c/Program Files/dotnet" ]; then
+      ${coreutils}/bin/mkdir -p "$WINEPREFIX/drive_c/Program Files/dotnet"
+      ${unzip}/bin/unzip -q -o ${dotnet-runtime} -d "$WINEPREFIX/drive_c/Program Files/dotnet"
+    fi
     if detect_abs_tablet_hack; then
       export WINE_ENABLE_ABS_TABLET_HACK=2
     fi
