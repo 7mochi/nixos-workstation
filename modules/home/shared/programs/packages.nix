@@ -170,6 +170,7 @@
           tree
           unzip
           watchexec
+          yt-dlp
           zoxide
 
           # Infra
