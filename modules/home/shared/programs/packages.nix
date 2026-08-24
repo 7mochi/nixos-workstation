@@ -130,9 +130,9 @@
           # Games
           gamescope
           mangohud
-          inputs.self.packages.${pkgs.system}.osu-lazer-torii-appimage
-          inputs.self.packages.${pkgs.system}.retrogecko
-          inputs.self.packages.${pkgs.system}.osu-wine
+          inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.osu-lazer-torii-appimage
+          inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.retrogecko
+          inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.osu-wine
 
           # Music
           pear-desktop
