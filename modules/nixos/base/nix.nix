@@ -49,10 +49,15 @@
           auto-optimise-store = true;
         };
 
-        gc = {
-          automatic = true;
-          dates = "weekly";
-          options = "--delete-older-than 7d";
+        gc.automatic = false;
+      };
+
+      programs.nh = {
+        enable = true;
+        clean = {
+          enable = true;
+          dates = "daily";
+          extraArgs = "--keep 5 --no-gcroots";
         };
       };
     };
