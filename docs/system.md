@@ -11,6 +11,21 @@ Boot modules live under `modules/nixos/boot/`.
   per-host in `modules/hosts/*/hardware.nix`: the VM uses GRUB in legacy mode
   (no ESP), the workstation uses systemd-boot UEFI with a FAT32 ESP at `/boot`.
 
+## Binary caches
+
+The CachyOS BORE kernel needs a binary cache: it is not on cache.nixos.org.
+
+The primary substituter is lantian's attic (`attic.xuyh0120.win/lantian`). Its
+backend CDN had an expired TLS certificate, so until that is fixed it is
+sreplaced by its backup, `cache.xinux.uz` (mirror Hydra of xinux):
+
+- `modules/nixos/base/nix.nix` — `nix.settings.substituters` /
+  `trusted-public-keys`
+- `flake.nix` — `nixConfig.extra-substituters` / `extra-trusted-public-keys`
+
+Once lantian is healthy again, restore it as the primary (keep xinux as the
+backup). Key: `lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=`.
+
 ## Storage
 
 Storage modules live under `modules/nixos/storage/`.
