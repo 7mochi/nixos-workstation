@@ -6,7 +6,8 @@
 
     let
       marketplace =
-        pub: name: inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system}.vscode-marketplace.${pub}.${name};
+        pub: name:
+        inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system}.vscode-marketplace.${pub}.${name};
     in
     {
       programs.vscode = {
