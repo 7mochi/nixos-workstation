@@ -14,6 +14,7 @@
           "steam-unwrapped"
           "stremio-linux-shell"
           "vscode"
+          "wootility"
         ];
 
       nix = {
