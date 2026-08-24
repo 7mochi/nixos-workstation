@@ -11,7 +11,12 @@
       _module.args.pkgs = import inputs.nixpkgs {
         inherit system;
         config = {
-          allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "retrogecko" ];
+          allowUnfreePredicate =
+            pkg:
+            builtins.elem (lib.getName pkg) [
+              "retrogecko"
+              "steam-unwrapped"
+            ];
         };
       };
 

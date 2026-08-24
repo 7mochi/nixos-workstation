@@ -10,7 +10,6 @@
   coreutils,
   gnutar,
   gnused,
-  gnugrep,
   nix-update-script,
   libGL,
   mesa,
@@ -37,6 +36,7 @@
   vulkan-loader,
   unzip,
   zenity,
+  steam-run,
 }:
 
 let
@@ -135,16 +135,22 @@ let
     '';
   };
 
+  wineRunner = writers.writeBashBin "osu-wine-run" ''
+    exec ${steam-run}/bin/steam-run ${wine-osu}/lib/wine-osu/bin/wine "$@"
+  '';
+
+  wineserverRunner = writers.writeBashBin "osu-wine-wineserver-run" ''
+    exec ${steam-run}/bin/steam-run ${wine-osu}/lib/wine-osu/bin/wineserver "$@"
+  '';
+
   launcher = writers.writeBashBin pname ''
     export XDG_DATA_HOME="''${XDG_DATA_HOME:-$HOME/.local/share}"
     export WINEPREFIX="''${WINEPREFIX:-$XDG_DATA_HOME/wineprefixes/osu-wineprefix}"
     export WINEDLLOVERRIDES="''${WINEDLLOVERRIDES:-winemenubuilder.exe=;}" # Blocks wine from creating .desktop files
     export LD_LIBRARY_PATH="${wineDirs}:${runtimeLibs}''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-    [ -n "''${WAYLAND_DISPLAY:-}" ] && unset DISPLAY
-
-    WINE=${wine-osu}/lib/wine-osu/bin/wine
-    WINESERVER=${wine-osu}/lib/wine-osu/bin/wineserver
+    WINE=${wineRunner}/bin/osu-wine-run
+    WINESERVER=${wineserverRunner}/bin/osu-wine-wineserver-run
     export WINE_INSTALL_PATH=${wine-osu}/lib/wine-osu
     OSUPATH="''${OSUPATH:-}"
     [ -r "$XDG_DATA_HOME/osuconfig/osupath" ] && OSUPATH=$(<"$XDG_DATA_HOME/osuconfig/osupath")
@@ -203,33 +209,11 @@ let
       ${coreutils}/bin/mkdir -p "$WINE_GST_REGISTRY_DIR"
     fi
 
-    detect_abs_tablet_hack() {
-      [ -n "''${WINE_ENABLE_ABS_TABLET_HACK+x}" ] && return 1
-      if [ "''${XDG_SESSION_TYPE:-}" != "wayland" ] && [ -z "''${WAYLAND_DISPLAY:-}" ]; then
-        return 1
-      fi
-      [ -r /proc/bus/input/devices ] || return 1
-      ${gnugrep}/bin/grep -q 'Name="OpenTabletDriver Virtual Tablet"' /proc/bus/input/devices || return 1
-      local settings_json
-      for settings_json in \
-        "$HOME/.config/OpenTabletDriver/settings.json" \
-        "$HOME/.var/app/net.opentabletdriver.OpenTabletDriver/config/OpenTabletDriver/settings.json"; do
-        [ -r "$settings_json" ] || continue
-        ${gnugrep}/bin/grep -Eq '"Enable"[[:space:]]*:[[:space:]]*true' "$settings_json" &&
-          ${gnugrep}/bin/grep -Eq '"Path"[[:space:]]*:[[:space:]]*".*\.AbsoluteMode"' "$settings_json" &&
-          return 0
-      done
-      return 1
-    }
-
     setup_prefix
     export DOTNET_ROOT="C:\Program Files\dotnet"
     if [ ! -d "$WINEPREFIX/drive_c/Program Files/dotnet" ]; then
       ${coreutils}/bin/mkdir -p "$WINEPREFIX/drive_c/Program Files/dotnet"
       ${unzip}/bin/unzip -q -o ${dotnet-runtime} -d "$WINEPREFIX/drive_c/Program Files/dotnet"
-    fi
-    if detect_abs_tablet_hack; then
-      export WINE_ENABLE_ABS_TABLET_HACK=2
     fi
 
     if [ "$1" = "--wine" ]; then

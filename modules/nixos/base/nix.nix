@@ -11,6 +11,7 @@
           "idea"
           "obsidian"
           "steam"
+          "steam-run"
           "steam-unwrapped"
           "stremio-linux-shell"
           "vscode"
