@@ -9,6 +9,7 @@
         pkg:
         builtins.elem (pkgs.lib.getName pkg) [
           "idea"
+          "idea-with-plugins"
           "obsidian"
           "steam"
           "steam-run"

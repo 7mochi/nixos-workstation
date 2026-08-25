@@ -57,6 +57,10 @@
       url = "github:nix-community/nix-vscode-extensions";
     };
 
+    nix-jetbrains-plugins = {
+      url = "github:nix-community/nix-jetbrains-plugins";
+    };
+
     qylock = {
       url = "github:Darkkal44/qylock";
       flake = false;
