@@ -161,7 +161,7 @@
           nix-index
           nix-output-monitor
           nvd
-          opencode
+          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
           procs
           python313
           ripgrep-all
