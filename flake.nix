@@ -65,7 +65,10 @@
       url = "github:nix-community/nix-jetbrains-plugins";
     };
 
-    llm-agents.url = "github:numtide/llm-agents.nix";
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     qylock = {
       url = "github:Darkkal44/qylock";
