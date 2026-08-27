@@ -1,11 +1,11 @@
 { inputs, ... }:
 
 {
-  flake.modules.nixos.workstation =
+  flake.modules.homeManager.shared =
     { pkgs, ... }:
 
     {
-      home-manager.users.nanamochi.home = {
+      home = {
         packages = [
           (inputs.nix-jetbrains-plugins.lib.buildIdeWithPlugins pkgs "idea" [
             "izhangzhihao.rainbow.brackets"
