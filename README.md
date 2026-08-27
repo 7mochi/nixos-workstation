@@ -50,20 +50,19 @@ just doctor
 
 The Fish aliases live in `modules/home/shared/programs/fish.nix` and pick the
 host from `$hostname` automatically. The repo commands live in `Justfile`,
-which defaults to host `workstation`; override with
-`NIXOS_HOST=7mochi-vm just rebuild`.
+which defaults to host `workstation` (override with `NIXOS_HOST=<name> just
+rebuild` if you add a machine).
 
 ## Fresh Install
 
-Both hosts mount a single btrfs volume by disk UUID. `/` lives on the btrfs
-top-level, `/home` and `/nix` are subvolumes:
+The workstation mounts a single btrfs volume by disk UUID. `/` lives on the
+btrfs top-level, `/home` and `/nix` are subvolumes:
 
 ```text
 <root-partition>  btrfs, mounted at / (top-level), /home (subvol home), /nix (subvol nix)
 ```
 
-`7mochi-vm` has no separate boot partition: GRUB runs in legacy mode (no ESP).
-`workstation` adds a FAT32 ESP at `/boot` (systemd-boot, UEFI) and a swap
+The workstation uses systemd-boot UEFI with a FAT32 ESP at `/boot` and a swap
 partition; its devices are pinned in `modules/hosts/workstation/hardware.nix`.
 
 Format the root partition and create the subvolumes:
@@ -92,9 +91,9 @@ Install:
 sudo nixos-install --flake /mnt/path/to/Documents/nixos-workstation#workstation
 ```
 
-The disk UUIDs are committed per host in `modules/hosts/<host>/hardware.nix`
-(`workstation` also pins its ESP and swap UUIDs). After formatting a new disk,
-capture its UUIDs with `blkid` and update that file:
+The disk UUIDs are committed in `modules/hosts/workstation/hardware.nix`
+(including the ESP and swap UUIDs). After formatting a new disk, capture its
+UUIDs with `blkid` and update that file:
 
 ```sh
 blkid -o value -s UUID <root-partition>
@@ -144,8 +143,9 @@ Noctalia has declarative config and runtime state:
 
 ## Monitors
 
-Outputs are declared per host. `workstation` pins its monitors in
-`modules/hosts/workstation/outputs.nix`, Xiaomi Mi Monitor at 2560x1440@180 Hz (primary, left) and GIGABYTE G24F at 1920x1080@165 Hz (right). The VM has no output config and lets niri pick automatically.
+Outputs are declared per host. The workstation pins its monitors in
+`modules/hosts/workstation/outputs.nix`: Xiaomi Mi Monitor at 2560x1440@180 Hz
+(primary, left) and GIGABYTE G24F at 1920x1080@165 Hz (right).
 
 Inspect connected outputs and their exact mode strings:
 

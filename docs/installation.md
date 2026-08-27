@@ -1,17 +1,18 @@
 # Installation
 
-These notes cover installing hosts from scratch. The repo ships two hosts:
-`workstation` (the main PC) and `7mochi-vm` (a VirtualBox VM). A new machine
-follows the same steps with its own hardware module.
+These notes cover installing the workstation from scratch. The repo ships one
+host: `workstation` (the main PC). A new machine follows the same steps with
+its own hardware module.
 
 ## Hosts
 
-The flake auto-discovers hosts under `modules/hosts/`. To add a new machine:
+The flake auto-discovers hosts under `modules/hosts/`. There is one host today;
+to add a new machine:
 
-- Create `modules/hosts/<name>.nix` by mirroring `workstation.nix` (or
-  `7mochi-vm.nix`); set `networking.hostName` to the machine name.
-- Create `modules/hosts/<name>/hardware.nix` by mirroring an existing host's
-  file. For a real PC, generate the base with `nixos-generate-config --root /mnt`
+- Create `modules/hosts/<name>.nix` by mirroring `workstation.nix`; set
+  `networking.hostName` to the machine name.
+- Create `modules/hosts/<name>/hardware.nix` by mirroring the workstation file.
+  For a real PC, generate the base with `nixos-generate-config --root /mnt`
   and adapt the bootloader and file systems.
 - No Justfile change needed: it defaults to `workstation` and can be overridden
   with `NIXOS_HOST=<name> just rebuild`; the Fish aliases pick up `$hostname`
@@ -21,33 +22,18 @@ The flake auto-discovers hosts under `modules/hosts/`. To add a new machine:
 
 ## Fresh Install
 
-Boot the NixOS installer, partition the disk, and format it. `7mochi-vm` uses
-GRUB legacy on /dev/sda with a single btrfs volume; `workstation` uses
-systemd-boot UEFI with a FAT32 ESP, btrfs root, and a swap partition. The exact
-steps are in the README Fresh Install section.
+Boot the NixOS installer, partition the disk, and format it. The workstation
+uses systemd-boot UEFI with a FAT32 ESP, btrfs root, and a swap partition. The
+exact steps are in the README Fresh Install section.
 
 Clone the repo into the mounted target and install:
 
 ```sh
-sudo nixos-install --flake /mnt/path/to/Documents/nixos-workstation#<host>
+sudo nixos-install --flake /mnt/path/to/Documents/nixos-workstation#workstation
 ```
 
 If the disk was reformatted, update the root UUID in
-`modules/hosts/<host>/hardware.nix` using `blkid`.
-
-## Reinstall the VM
-
-Same as Fresh Install, plus a backup step first. Save the state that Nix does
-not manage. The SSH host keys are the sops age identity, so restoring them keeps
-`secrets/secrets.yaml` decryptable:
-
-```sh
-sudo cp -a /etc/ssh/ssh_host_ed25519_key /etc/ssh/ssh_host_ed25519_key.pub <backup-dir>/
-cp -a ~/.config/sops/age/keys.txt <backup-dir>/
-```
-
-Wallpapers and the Zen profile are not Nix-managed. Back them up or re-create
-them after the install. Move the backup off the VM.
+`modules/hosts/workstation/hardware.nix` using `blkid`.
 
 ## Post Install
 

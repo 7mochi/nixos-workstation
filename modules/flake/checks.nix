@@ -5,7 +5,6 @@
     { pkgs, ... }:
     {
       checks = {
-        "nixos-7mochi-vm" = config.flake.nixosConfigurations."7mochi-vm".config.system.build.toplevel;
         "nixos-workstation" = config.flake.nixosConfigurations."workstation".config.system.build.toplevel;
 
         format =
@@ -52,7 +51,7 @@
           pkgs.runCommand "check-niri-no-app-workflows"
             {
               niriConfig =
-                config.flake.nixosConfigurations."7mochi-vm".config.home-manager.users.nanamochi.programs.niri.finalConfig;
+                config.flake.nixosConfigurations."workstation".config.home-manager.users.nanamochi.programs.niri.finalConfig;
               passAsFile = [ "niriConfig" ];
             }
             ''
@@ -88,7 +87,7 @@
 
         fwupd-refresh-polkit-ordering =
           let
-            fwupdRefresh = config.flake.nixosConfigurations."7mochi-vm".config.systemd.services.fwupd-refresh;
+            fwupdRefresh = config.flake.nixosConfigurations."workstation".config.systemd.services.fwupd-refresh;
           in
           pkgs.runCommand "check-fwupd-refresh-polkit-ordering" { } ''
             ${
