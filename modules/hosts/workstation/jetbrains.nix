@@ -15,26 +15,28 @@
           ])
         ];
 
-        file.".jdks/jdk25" = {
-          source = "${pkgs.jdk25.home}";
-          recursive = true;
+        file = {
+          ".jdks/jdk25" = {
+            source = "${pkgs.jdk25.home}";
+            recursive = true;
+          };
+
+          ".config/JetBrains/IntelliJIdea2026.2/options/colors.scheme.xml".text = ''
+            <application>
+              <component name="EditorColorsManagerImpl">
+                <global_color_scheme name="TokyoDark" />
+              </component>
+            </application>
+          '';
+
+          ".config/JetBrains/IntelliJIdea2026.2/options/laf.xml".text = ''
+            <application>
+              <component name="LafManager">
+                <laf themeId="com.junkfactory.tokyodark" />
+              </component>
+            </application>
+          '';
         };
-
-        file.".config/JetBrains/IntelliJIdea2026.2/options/colors.scheme.xml".text = ''
-          <application>
-            <component name="EditorColorsManagerImpl">
-              <global_color_scheme name="TokyoDark" />
-            </component>
-          </application>
-        '';
-
-        file.".config/JetBrains/IntelliJIdea2026.2/options/laf.xml".text = ''
-          <application>
-            <component name="LafManager">
-              <laf themeId="com.junkfactory.tokyodark" />
-            </component>
-          </application>
-        '';
       };
     };
 }
