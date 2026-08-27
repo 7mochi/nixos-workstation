@@ -82,24 +82,26 @@ Each machine derives its own age key from its SSH host key. Private keys are
 never shared or committed. A machine can decrypt a secret only if its age
 public key is listed in `.sops.yaml`.
 
-The repo has two recipients, the `vm` and `main_workstation`, so each machine can
-decrypt the secrets with its own private key. Keep the recipients in
-`.sops.yaml` up to date as machines change, and keep private backups of the keys
-so the secrets stay recoverable if a machine is lost.
+The repo currently has one recipient, the workstation's `main_workstation`, so
+only this machine can decrypt the secrets. Because it is the only key, keep a
+private backup of it: if the workstation is lost, `secrets/secrets.yaml` cannot
+be decrypted. Back up `/etc/ssh/ssh_host_ed25519_key` (and
+`~/.config/sops/age/keys.txt`) to a safe place outside the machine.
 
-Add a recipient to the same `key_groups` entry. Do not put a leading `-` before
-`age:`, that enables Shamir secret sharing and requires every key:
+To add a machine, add its recipient to the same `key_groups` entry. Do not put
+a leading `-` before `age:`, that enables Shamir secret sharing and requires
+every key:
 
 ```yaml
 keys:
-  - &vm age1xxxx...
   - &main_workstation age1xxxx...
+  - &new_machine age1xxxx...
 creation_rules:
   - path_regex: secrets/[^/]+\.yaml$
     key_groups:
       - age:
-          - *vm
           - *main_workstation
+          - *new_machine
 ```
 
 Re-encrypt the secrets for the new recipient from any machine that can still
