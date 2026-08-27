@@ -1,11 +1,11 @@
 { inputs, ... }:
 
 {
-  flake.modules.homeManager.shared =
+  flake.modules.nixos.workstation =
     { pkgs, ... }:
 
     {
-      home = {
+      home-manager.users.nanamochi.home = {
         packages = [
           (inputs.nix-jetbrains-plugins.lib.buildIdeWithPlugins pkgs "idea" [
             "izhangzhihao.rainbow.brackets"
@@ -14,6 +14,11 @@
             "com.github.copilot"
           ])
         ];
+
+        file.".jdks/jdk25" = {
+          source = "${pkgs.jdk25.home}";
+          recursive = true;
+        };
 
         file.".config/JetBrains/IntelliJIdea2026.2/options/colors.scheme.xml".text = ''
           <application>
