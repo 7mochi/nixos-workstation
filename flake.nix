@@ -74,6 +74,15 @@
       url = "github:Darkkal44/qylock";
       flake = false;
     };
+
+    agent-skills = {
+      url = "github:Kyure-A/agent-skills-nix";
+    };
+
+    quarkus-skills = {
+      url = "github:quarkusio/skills";
+      flake = false;
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);

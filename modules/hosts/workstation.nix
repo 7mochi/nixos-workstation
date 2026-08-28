@@ -26,7 +26,11 @@
           backupFileExtension = "backup";
           sharedModules = [
             inputs.noctalia.homeModules.default
+            inputs.agent-skills.homeManagerModules.default
           ];
+          extraSpecialArgs = {
+            inherit inputs;
+          };
           users.nanamochi = config.flake.modules.homeManager.nanamochi;
         };
       }
