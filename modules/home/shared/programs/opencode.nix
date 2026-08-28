@@ -2,10 +2,15 @@ _:
 
 {
   flake.modules.homeManager.shared = {
+    home.sessionVariables.SUPERPOWERS_DISABLE_TELEMETRY = "true";
+
     xdg.configFile = {
       "opencode/opencode.json".text = ''
         {
           "$schema": "https://opencode.ai/config.json",
+          "plugin": [
+            "superpowers@git+https://github.com/obra/superpowers.git"
+          ],
           "provider": {
             "opencode": {
               "options": { "apiKey": "{file:/run/secrets/opencode-api-key}" }
