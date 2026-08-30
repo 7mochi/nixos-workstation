@@ -360,6 +360,27 @@
         "type": "github"
       }
     },
+    "nix-osu-stable": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "offset-calc-osu-stable": "offset-calc-osu-stable"
+      },
+      "locked": {
+        "lastModified": 1788040711,
+        "narHash": "sha256-vBQizJ8pzyixS3wTt4wcnnrP4zz8KwKB/Ur1ca1eodA=",
+        "owner": "gaavin",
+        "repo": "nix-osu-stable",
+        "rev": "3d31ea6ffd47f5985a0b4abff5848286310c95cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gaavin",
+        "repo": "nix-osu-stable",
+        "type": "github"
+      }
+    },
     "nix-vscode-extensions": {
       "inputs": {
         "nixpkgs": "nixpkgs_5"
@@ -537,6 +558,27 @@
         "type": "github"
       }
     },
+    "offset-calc-osu-stable": {
+      "inputs": {
+        "nixpkgs": [
+          "nix-osu-stable",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787279683,
+        "narHash": "sha256-gHwz/G1J69Vs5DTVcyXYOktLyhMpN8SyoaCz5jyCrNM=",
+        "owner": "gaavin",
+        "repo": "offset-calc-osu-stable",
+        "rev": "ccb640f86f8c12e50356062168cb347fba12c174",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gaavin",
+        "repo": "offset-calc-osu-stable",
+        "type": "github"
+      }
+    },
     "quarkus-skills": {
       "flake": false,
       "locked": {
@@ -580,6 +622,7 @@
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-flatpak": "nix-flatpak",
         "nix-jetbrains-plugins": "nix-jetbrains-plugins",
+        "nix-osu-stable": "nix-osu-stable",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_6",
         "noctalia": "noctalia",

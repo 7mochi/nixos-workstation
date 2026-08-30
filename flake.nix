@@ -83,6 +83,11 @@
       url = "github:quarkusio/skills";
       flake = false;
     };
+
+    nix-osu-stable = {
+      url = "github:gaavin/nix-osu-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);

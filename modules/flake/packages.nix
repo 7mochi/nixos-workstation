@@ -23,7 +23,6 @@
       packages = {
         osu-lazer-torii-appimage = pkgs.callPackage ../../pkgs/osu-lazer-torii-appimage { };
         retrogecko = pkgs.callPackage ../../pkgs/retrogecko { };
-        osu-wine = pkgs.callPackage ../../pkgs/osu-wine { };
       };
     };
 }
