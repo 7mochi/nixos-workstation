@@ -12,12 +12,18 @@
             "com.junkfactory.tokyodark"
             "String Manipulation"
             "com.github.copilot"
+            "org.intellij.scala"
           ])
         ];
 
         file = {
           ".jdks/jdk25" = {
             source = "${pkgs.jdk25.home}";
+            recursive = true;
+          };
+
+          ".jdks/jdk8" = {
+            source = "${pkgs.jdk8.home}";
             recursive = true;
           };
 
