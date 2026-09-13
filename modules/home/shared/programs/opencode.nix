@@ -15,6 +15,19 @@ _:
             "opencode": {
               "options": { "apiKey": "{file:/run/secrets/opencode-api-key}" }
             },
+            "inferx": {
+              "npm": "@ai-sdk/openai-compatible",
+              "name": "InferX",
+              "options": {
+                "baseURL": "https://model.inferx.net/endpoints/v1",
+                "headers": {
+                  "Authorization": "Bearer {file:/run/secrets/inferx-api-key}"
+                }
+              },
+              "models": {
+                "deepseek-v4.1-flash": { "name": "DeepSeek V4.1 Flash" }
+              }
+            },
             "commandcode": {
               "npm": "@ai-sdk/openai-compatible",
               "name": "CommandCode AI",
