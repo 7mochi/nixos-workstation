@@ -28,6 +28,21 @@ _:
                 "deepseek-v4.1-flash": { "name": "DeepSeek V4.1 Flash" }
               }
             },
+            "radeon": {
+              "npm": "@ai-sdk/openai-compatible",
+              "name": "AMD Radeon Cloud",
+              "options": {
+                "baseURL": "https://developer.amd.com.cn/radeon/api/v1",
+                "headers": {
+                  "Authorization": "Bearer {file:/run/secrets/radeon-api-key}"
+                }
+              },
+              "models": {
+                "DeepSeek-V4-Flash": { "name": "DeepSeek V4 Flash (0731)" },
+                "DeepSeek-V4-Flash-Vision-Exp": { "name": "DeepSeek V4 Flash Vision Exp" },
+                "Qwen3.8-Flash-Next": { "name": "Qwen 3.8 Flash Next" }
+              }
+            },
             "commandcode": {
               "npm": "@ai-sdk/openai-compatible",
               "name": "CommandCode AI",
