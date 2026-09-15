@@ -5,18 +5,18 @@ _:
     { pkgs, ... }:
 
     {
-      programs.vesktop = {
+      programs.equibop = {
         enable = true;
 
         # Discord blocks Discord + VPN + Linux, so pretend we're on
         # Windows until Discord stops being annoying
-        package = pkgs.vesktop.overrideAttrs (old: {
+        package = pkgs.equibop.overrideAttrs (old: {
           postFixup = old.postFixup + ''
-            wrapProgram $out/bin/vesktop --add-flags "--user-agent-os windows"
+            wrapProgram $out/bin/equibop --add-flags "--user-agent-os windows"
           '';
         });
 
-        vencord = {
+        equicord = {
           themes = {
             "midnight-tokyo-night" = pkgs.fetchurl {
               url = "https://raw.githubusercontent.com/refact0r/midnight-discord/refs/heads/master/themes/flavors/midnight-tokyo-night.theme.css";
