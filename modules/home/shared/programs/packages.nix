@@ -181,19 +181,19 @@
           ocrRegion
           remind
           remindPrompt
-          inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
         ];
 
       xdg.mimeApps = {
         enable = true;
         defaultApplications = {
           "inode/directory" = "org.gnome.Nautilus.desktop";
-          "text/html" = "zen.desktop";
-          "text/xml" = "zen.desktop";
-          "application/xhtml+xml" = "zen.desktop";
-          "application/xml" = "zen.desktop";
-          "x-scheme-handler/http" = "zen.desktop";
-          "x-scheme-handler/https" = "zen.desktop";
+
+          "text/html" = "zen-beta.desktop";
+          "text/xml" = "zen-beta.desktop";
+          "application/xhtml+xml" = "zen-beta.desktop";
+          "application/xml" = "zen-beta.desktop";
+          "x-scheme-handler/http" = "zen-beta.desktop";
+          "x-scheme-handler/https" = "zen-beta.desktop";
 
           "application/pdf" = "org.gnome.Papers.desktop";
           "application/x-bzpdf" = "org.gnome.Papers.desktop";

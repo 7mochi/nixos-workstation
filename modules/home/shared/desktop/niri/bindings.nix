@@ -77,9 +77,9 @@
         {
           "Mod+Return" = spawn "kitty";
           "Mod+T" = spawn "kitty";
-          "Mod+B" = spawn "zen";
+          "Mod+B" = spawn "zen-beta";
           "Mod+Shift+B" = spawn [
-            "zen"
+            "zen-beta"
             "--private-window"
           ];
           "Mod+E" = spawn "nautilus";

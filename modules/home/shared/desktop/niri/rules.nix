@@ -14,8 +14,7 @@ _:
       }
       {
         matches = [
-          { app-id = "^zen$"; }
-          { app-id = "^zen-browser$"; }
+          { app-id = "^zen-beta$"; }
         ];
         draw-border-with-background = false;
       }

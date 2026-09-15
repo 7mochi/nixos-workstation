@@ -27,6 +27,7 @@
           sharedModules = [
             inputs.noctalia.homeModules.default
             inputs.agent-skills.homeManagerModules.default
+            inputs.zen-browser.homeModules.default
           ];
           extraSpecialArgs = {
             inherit inputs;
