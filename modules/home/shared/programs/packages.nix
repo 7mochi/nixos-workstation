@@ -111,6 +111,7 @@
           virt-viewer
           bruno
           dbeaver-bin
+          inputs.fluxer-nix.packages.${pkgs.stdenv.hostPlatform.system}.fluxer-canary
 
           # Files/media
           celluloid

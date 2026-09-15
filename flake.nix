@@ -88,6 +88,11 @@
       url = "github:gaavin/nix-osu-stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    fluxer-nix = {
+      url = "github:DeeKahy/fluxer-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
