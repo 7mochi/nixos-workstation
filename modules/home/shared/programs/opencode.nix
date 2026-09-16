@@ -40,7 +40,8 @@ _:
               "models": {
                 "DeepSeek-V4-Flash": { "name": "DeepSeek V4 Flash (0731)" },
                 "DeepSeek-V4-Flash-Vision-Exp": { "name": "DeepSeek V4 Flash Vision Exp" },
-                "Qwen3.8-Flash-Next": { "name": "Qwen 3.8 Flash Next" }
+                "Qwen3.8-Flash-Next": { "name": "Qwen 3.8 Flash Next" },
+                "Qwen3.8-27B": { "name": "Qwen 3.8 27B" }
               }
             },
             "commandcode": {
