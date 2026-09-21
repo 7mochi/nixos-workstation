@@ -133,6 +133,7 @@
           inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.osu-lazer-torii-appimage
           inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.retrogecko
           inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.power-bomberman
+          inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.citron-nextendo
 
           # Music
           pear-desktop
@@ -163,11 +164,13 @@
           nix-output-monitor
           nvd
           inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
+          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
           procs
           python313
           ripgrep-all
           tokei
           tree
+          unrar
           unzip
           watchexec
           yt-dlp
