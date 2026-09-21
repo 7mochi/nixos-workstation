@@ -16,6 +16,7 @@
           "steam-unwrapped"
           "stremio-linux-shell"
           "vscode"
+          "unrar"
           "wootility"
         ];
 
