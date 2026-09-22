@@ -7,7 +7,7 @@ _:
         name = "GitHub";
         genericName = "Code hosting";
         comment = "Open GitHub as a web app";
-        exec = "chromium --app=https://github.com";
+        exec = "zen-beta --app=https://github.com";
         icon = "chromium";
         terminal = false;
         categories = [
@@ -20,7 +20,7 @@ _:
         name = "ChatGPT";
         genericName = "AI assistant";
         comment = "Open ChatGPT as a web app";
-        exec = "chromium --app=https://chatgpt.com";
+        exec = "zen-beta --app=https://chatgpt.com";
         icon = "chromium";
         terminal = false;
         categories = [
@@ -33,7 +33,7 @@ _:
         name = "Reddit";
         genericName = "Social news";
         comment = "Open Reddit as a web app";
-        exec = "chromium --app=https://www.reddit.com";
+        exec = "zen-beta --app=https://www.reddit.com";
         icon = "chromium";
         terminal = false;
         categories = [
@@ -45,7 +45,7 @@ _:
         name = "Notion";
         genericName = "Workspace";
         comment = "Open Notion as a web app";
-        exec = "chromium --app=https://www.notion.so";
+        exec = "zen-beta --app=https://www.notion.so";
         icon = "chromium";
         terminal = false;
         categories = [
@@ -58,7 +58,7 @@ _:
         name = "Localhost 3000";
         genericName = "Local web app";
         comment = "Open localhost:3000 as a web app";
-        exec = "chromium --app=http://localhost:3000";
+        exec = "zen-beta --app=http://localhost:3000";
         icon = "chromium";
         terminal = false;
         categories = [
