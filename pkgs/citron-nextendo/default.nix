@@ -9,11 +9,11 @@
 
 let
   pname = "citron-nextendo";
-  version = "813b32e8b";
+  version = "ddfd42a1c";
 
   src = fetchurl {
     url = "https://github.com/NextendoNetwork/citron-nextendo/releases/download/nightly-linux/citron_nightly-${version}-linux-x86_64_v3.AppImage";
-    hash = "sha256-syQ/sr9+/O4OrTZQKYWR82xAc1MMY2afu3TQgqqizmo=";
+    hash = "sha256-XvGX02D8qMGwOu14otRFZbDEyfS6QoDy8XQtpxFoZeg=";
   };
 
   contents =
