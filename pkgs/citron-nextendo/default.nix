@@ -5,6 +5,8 @@
   runCommand,
   dwarfs,
   binutils-unwrapped,
+  makeDesktopItem,
+  symlinkJoin,
 }:
 
 let
@@ -36,22 +38,41 @@ let
     homepage = "https://github.com/NextendoNetwork/citron-nextendo";
     license = lib.licenses.gpl2Plus;
     platforms = [ "x86_64-linux" ];
-    mainProgram = "citron-nextendo";
+    mainProgram = pname;
+  };
+
+  desktopItem = makeDesktopItem {
+    name = pname;
+    exec = pname;
+    icon = pname;
+    desktopName = "Citron Nextendo";
+    comment = "Nintendo Switch video game console emulator";
+    categories = [
+      "Game"
+      "Emulator"
+    ];
+  };
+
+  wrapped = appimageTools.wrapAppImage {
+    inherit
+      pname
+      version
+      contents
+      meta
+      ;
+
+    extraInstallCommands = ''
+      for i in 16 32 48 64 96 128 256 512 1024; do
+        install -D ${contents}/org.citron_emu.citron.png \
+          $out/share/icons/hicolor/''${i}x$i/apps/${pname}.png
+      done
+    '';
   };
 in
-appimageTools.wrapAppImage {
-  inherit
-    pname
-    version
-    contents
-    meta
-    ;
-
-  extraInstallCommands = ''
-    install -Dm444 ${contents}/org.citron_emu.citron.desktop -t $out/share/applications
-    for i in 16 32 48 64 96 128 256 512 1024; do
-      install -D ${contents}/org.citron_emu.citron.png \
-        $out/share/icons/hicolor/''${i}x$i/apps/citron-nextendo.png
-    done
-  '';
+symlinkJoin {
+  name = "${pname}-${version}";
+  paths = [
+    wrapped
+    desktopItem
+  ];
 }
