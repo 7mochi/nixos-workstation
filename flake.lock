@@ -165,26 +165,6 @@
         "type": "github"
       }
     },
-    "fluxer-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1789387286,
-        "narHash": "sha256-qL/EhIp/aYeVLmfNeUF5rlDmbL/S4o1LqD1BdVF+rFw=",
-        "owner": "DeeKahy",
-        "repo": "fluxer-nix",
-        "rev": "fbd010c522769b82e425e0316b8704f9bb054b25",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DeeKahy",
-        "repo": "fluxer-nix",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -614,7 +594,6 @@
         "agent-skills": "agent-skills",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
-        "fluxer-nix": "fluxer-nix",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "llm-agents": "llm-agents",
