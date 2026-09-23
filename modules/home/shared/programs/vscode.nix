@@ -24,6 +24,8 @@
           pkgs.vscode-extensions.gruntfuggly.todo-tree
           pkgs.vscode-extensions.ms-azuretools.vscode-containers
           pkgs.vscode-extensions.ms-azuretools.vscode-docker
+          pkgs.vscode-extensions.llvm-vs-code-extensions.vscode-clangd
+          pkgs.vscode-extensions.ms-vscode.cmake-tools
           pkgs.vscode-extensions.rust-lang.rust-analyzer
           pkgs.vscode-extensions.timonwong.shellcheck
 
@@ -32,6 +34,7 @@
           (marketplace "abhinash" "amxxpawn-language")
           (marketplace "clemenspeters" "format-json")
           (marketplace "shakram02" "bash-beautify")
+          (marketplace "cschlosser" "doxdocgen")
         ];
 
         profiles.default.userSettings = {

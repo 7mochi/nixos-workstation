@@ -141,6 +141,9 @@
           atuin
           bat
           btop
+          clang
+          clang-tools
+          cmake
           comma
           dotnet-sdk_10
           duf
@@ -159,6 +162,7 @@
           lsof
           mailpit
           nh
+          ninja
           nix-index
           nix-output-monitor
           nvd
