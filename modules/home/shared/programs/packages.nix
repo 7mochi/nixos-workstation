@@ -166,6 +166,7 @@
           nix-index
           nix-output-monitor
           nvd
+          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.command-code
           inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
           inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
           procs
