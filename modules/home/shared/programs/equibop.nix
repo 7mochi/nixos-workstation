@@ -40,6 +40,7 @@ _:
               ClearURLs.enabled = true;
               CrashHandler.enabled = true;
               FakeNitro.enabled = true;
+              FixDiscordCss.enabled = true;
               FixImagesQuality.enabled = true;
               FriendInvites.enabled = true;
               GameActivityToggle.enabled = true;
