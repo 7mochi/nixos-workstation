@@ -8,8 +8,8 @@
       nixpkgs.config.allowUnfreePredicate =
         pkg:
         builtins.elem (pkgs.lib.getName pkg) [
-          "idea"
-          "idea-with-plugins"
+          "intellij-idea"
+          "intellij-idea-with-plugins"
           "obsidian"
           "steam"
           "steam-run"
