@@ -15,12 +15,14 @@ Boot modules live under `modules/nixos/boot/`.
 
 Storage modules live under `modules/nixos/storage/`.
 
-- `btrfs.nix` adds compression, `noatime`, scrub, and fstrim.
+- `btrfs.nix` sets compression, `noatime`, and weekly scrub on the btrfs data
+  disks (`/media/ssd`, `/media/hdd`), and enables `fstrim`.
 
-The host hardware module expects a single btrfs volume mounted by disk UUID:
+The host hardware module expects an ext4 root mounted by disk UUID; `/home` and
+`/nix` are plain directories on it. The data disks stay btrfs.
 
 ```text
-<root-uuid>  btrfs mounted at / (top-level), /home (subvol home), /nix (subvol nix)
+<root-uuid>  ext4 mounted at /
 ```
 
 The workstation additionally pins a swap partition and its ESP UUID in

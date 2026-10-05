@@ -23,7 +23,7 @@ to add a new machine:
 ## Fresh Install
 
 Boot the NixOS installer, partition the disk, and format it. The workstation
-uses systemd-boot UEFI with a FAT32 ESP, btrfs root, and a swap partition. The
+uses systemd-boot UEFI with a FAT32 ESP, an ext4 root, and a swap partition. The
 exact steps are in the README Fresh Install section.
 
 Clone the repo into the mounted target and install:
@@ -34,6 +34,24 @@ sudo nixos-install --flake /mnt/path/to/Documents/nixos-workstation#workstation
 
 If the disk was reformatted, update the root UUID in
 `modules/hosts/workstation/hardware.nix` using `blkid`.
+
+## Bootstrap From A Stock Install
+
+If you installed stock NixOS instead of `nixos-install --flake`, enable
+`nix-command`/`flakes` and install `git` before the first flake rebuild (niri
+fetches its `smithay` dependency with `git`):
+
+```nix
+nix.settings.experimental-features = [ "nix-command" "flakes" ];
+environment.systemPackages = with pkgs; [ git ];
+```
+
+```sh
+sudo nixos-rebuild switch
+sudo nixos-rebuild switch --flake path:$HOME/Documents/nixos-workstation#workstation
+```
+
+Restore the host SSH key and age identity first (see Post Install).
 
 ## Post Install
 

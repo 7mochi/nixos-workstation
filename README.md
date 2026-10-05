@@ -55,34 +55,29 @@ rebuild` if you add a machine).
 
 ## Fresh Install
 
-The workstation mounts a single btrfs volume by disk UUID. `/` lives on the
-btrfs top-level, `/home` and `/nix` are subvolumes:
+The root is a single ext4 partition mounted by disk UUID, `/home` and `/nix` are
+plain directories on it (no subvolumes). The data disks `/media/ssd` and
+`/media/hdd` stay btrfs.
 
 ```text
-<root-partition>  btrfs, mounted at / (top-level), /home (subvol home), /nix (subvol nix)
+<root-partition>  ext4, mounted at /
 ```
 
 The workstation uses systemd-boot UEFI with a FAT32 ESP at `/boot` and a swap
 partition; its devices are pinned in `modules/hosts/workstation/hardware.nix`.
 
-Format the root partition and create the subvolumes:
+Format the root partition:
 
 ```sh
-mkfs.btrfs <root-partition>
-
-mount /dev/disk/by-uuid/<root-uuid> /mnt
-btrfs subvolume create /mnt/home
-btrfs subvolume create /mnt/nix
-umount /mnt
+mkfs.ext4 <root-partition>
 ```
 
 Mount the target:
 
 ```sh
-mount -o compress=zstd,noatime /dev/disk/by-uuid/<root-uuid> /mnt
-mkdir -p /mnt/home /mnt/nix
-mount -o subvol=home,compress=zstd,noatime /dev/disk/by-uuid/<root-uuid> /mnt/home
-mount -o subvol=nix,compress=zstd,noatime /dev/disk/by-uuid/<root-uuid> /mnt/nix
+mount /dev/disk/by-uuid/<root-uuid> /mnt
+mkdir -p /mnt/boot
+mount /dev/disk/by-uuid/<esp-uuid> /mnt/boot
 ```
 
 Install:
