@@ -14,6 +14,12 @@
             "com.github.copilot"
             "org.intellij.scala"
           ])
+
+          (inputs.nix-jetbrains-plugins.lib.buildIdeWithPlugins pkgs "rider" [
+            "com.junkfactory.tokyodark"
+            "String Manipulation"
+            "com.github.copilot"
+          ])
         ];
 
         file = {

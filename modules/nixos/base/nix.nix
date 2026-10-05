@@ -11,6 +11,8 @@
           "intellij-idea"
           "intellij-idea-with-plugins"
           "obsidian"
+          "rider"
+          "rider-with-plugins"
           "steam"
           "steam-run"
           "steam-unwrapped"
