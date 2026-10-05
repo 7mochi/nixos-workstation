@@ -33,20 +33,8 @@
 
       fileSystems = {
         "/" = {
-          device = "/dev/disk/by-uuid/53308f0b-416b-432e-a8cc-d41dfe26fdae";
-          fsType = "btrfs";
-        };
-
-        "/home" = {
-          device = "/dev/disk/by-uuid/53308f0b-416b-432e-a8cc-d41dfe26fdae";
-          fsType = "btrfs";
-          options = [ "subvol=home" ];
-        };
-
-        "/nix" = {
-          device = "/dev/disk/by-uuid/53308f0b-416b-432e-a8cc-d41dfe26fdae";
-          fsType = "btrfs";
-          options = [ "subvol=nix" ];
+          device = "/dev/disk/by-uuid/bbc8abe1-1d3c-432f-99d4-34c03b505dfe";
+          fsType = "ext4";
         };
 
         "/boot" = {
