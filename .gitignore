@@ -6,3 +6,4 @@ docs/superpowers/
 hosts/*/hardware-configuration.nix
 hosts/*/hardware.local.nix
 /AGENTS.md
+.commandcode/
