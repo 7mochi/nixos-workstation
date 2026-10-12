@@ -10,6 +10,7 @@ _:
         description = name;
         extraGroups = [
           "docker"
+          "libvirtd"
           "networkmanager"
           "users"
           "wheel"

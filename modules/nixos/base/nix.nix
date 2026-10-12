@@ -19,6 +19,7 @@
           "stremio-linux-shell"
           "vscode"
           "unrar"
+          "vmware-workstation"
           "wootility"
         ];
 
