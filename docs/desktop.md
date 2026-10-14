@@ -24,11 +24,14 @@ one-off. If it is part of a repeated family, add it through the small helpers in
 ## Monitors
 
 Outputs are declared per host, not in the shared Niri config. The workstation
-pins its monitors in `modules/hosts/workstation/outputs.nix`
+pins its monitors in `modules/hosts/workstation/monitors.nix`
 (`flake.modules.nixos.workstation`, injected into home-manager's niri settings):
 
-- Xiaomi Mi Monitor (DP-2): 2560x1440@180 Hz, `focus-at-startup`, left.
-- GIGABYTE G24F (HDMI-A-1): 1920x1080@165 Hz, right.
+- Xiaomi Mi Monitor (primary, left): 2560x1440@180 Hz, `focus-at-startup`.
+- GIGABYTE G24F (right): 1920x1080@165 Hz.
+
+The file keys outputs by their full connector/EDID identifier as reported by
+`niri msg outputs`, not by a short port name.
 
 Outputs not listed in the config keep their automatic behavior, so per-host
 output config is safe on any machine.

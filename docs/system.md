@@ -13,10 +13,10 @@ Boot modules live under `modules/nixos/boot/`.
 
 ## Storage
 
-Storage modules live under `modules/nixos/storage/`.
-
-- `btrfs.nix` sets compression, `noatime`, and weekly scrub on the btrfs data
-  disks (`/media/ssd`, `/media/hdd`), and enables `fstrim`.
+The root filesystem and the btrfs data disks are declared per host in
+`modules/hosts/workstation/hardware.nix`. Weekly scrub on the btrfs data disks
+(`/media/ssd`, `/media/hdd`) and `fstrim` for the ext4 root live in
+`modules/hosts/workstation/btrfs.nix`.
 
 The host hardware module expects an ext4 root mounted by disk UUID; `/home` and
 `/nix` are plain directories on it. The data disks stay btrfs.
@@ -36,16 +36,23 @@ devices.
 Secrets are managed with `sops-nix`. Encrypted files live under `secrets/` and
 are committed to the repo; no plaintext secrets belong here.
 
-The age identity is the host SSH key:
+The age identity is the host SSH key. `modules/nixos/security/ssh.nix` sets
+`generateHostKeys = true` (with the sshd daemon kept disabled) so the key exists
+even though OpenSSH is off. `sops-nix` then defaults its age identity to that key
+(`age.sshKeyPaths` defaults to the ed25519 entry of
+`config.services.openssh.hostKeys`), so `secrets.nix` needs no explicit path:
 
 ```nix
-sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+# ssh.nix
+services.openssh.generateHostKeys = true;
 ```
 
 That means a fresh machine needs its host SSH key in place before secrets can be
-decrypted, and the edit identity derived from it once (sops looks for
-`~/.config/sops/age/keys.txt`; `ssh-to-age` and `sops` are already in the system
-profile, no `nix-shell` needed):
+decrypted. The key is generated on first boot by `sshd-keygen.service`; on a
+brand-new install, restore the backed-up key (see `docs/installation.md`) before
+the first rebuild so activation can decrypt. For the `sops` CLI, set up the edit
+identity once from the host SSH key (`ssh-to-age` and `sops` are already in the
+system profile, no `nix-shell` needed):
 
 ```sh
 # 1. One-time: set up the age edit identity from the host SSH key (sudo to

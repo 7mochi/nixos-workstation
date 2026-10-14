@@ -6,8 +6,10 @@ its own hardware module.
 
 ## Hosts
 
-The flake auto-discovers hosts under `modules/hosts/`. There is one host today;
-to add a new machine:
+Hosts live under `modules/hosts/`. `import-tree` imports every file under
+`modules/`, and each host file declares its own `flake.nixosConfigurations.<name>`,
+so there is no separate host registry. There is one host today; to add a new
+machine:
 
 - Create `modules/hosts/<name>.nix` by mirroring `workstation.nix`; set
   `networking.hostName` to the machine name.

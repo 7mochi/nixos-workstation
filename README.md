@@ -7,8 +7,8 @@ Personal NixOS config for a Niri desktop with Noctalia.
 ```text
 flake.nix               flake inputs and the import-tree entry point
 modules/flake/          flake-parts outputs, checks, formatter, templates, packages
-modules/hosts/          host definitions and hardware config
-modules/nixos/          system modules for boot, hardware, desktop, storage, dev tools
+modules/hosts/          host definitions, hardware, and host-only modules
+modules/nixos/          generic system modules (boot, hardware, desktop, security, dev)
 modules/home/shared/    shared Home Manager profile for the desktop and CLI
 modules/home/nanamochi/ personal user account module
 pkgs/                   custom package derivations (e.g. osu-lazer-torii-appimage)
@@ -139,7 +139,7 @@ Noctalia has declarative config and runtime state:
 ## Monitors
 
 Outputs are declared per host. The workstation pins its monitors in
-`modules/hosts/workstation/outputs.nix`: Xiaomi Mi Monitor at 2560x1440@180 Hz
+`modules/hosts/workstation/monitors.nix`: Xiaomi Mi Monitor at 2560x1440@180 Hz
 (primary, left) and GIGABYTE G24F at 1920x1080@165 Hz (right).
 
 Inspect connected outputs and their exact mode strings:
