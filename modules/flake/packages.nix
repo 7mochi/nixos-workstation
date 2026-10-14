@@ -1,26 +1,9 @@
-{
-  inputs,
-  lib,
-  ...
-}:
+_:
 
 {
   perSystem =
-    { system, pkgs, ... }:
+    { pkgs, ... }:
     {
-      _module.args.pkgs = import inputs.nixpkgs {
-        inherit system;
-        config = {
-          allowUnfreePredicate =
-            pkg:
-            builtins.elem (lib.getName pkg) [
-              "retrogecko"
-              "steam-unwrapped"
-              "power-bomberman"
-            ];
-        };
-      };
-
       packages = {
         citron-nextendo = pkgs.callPackage ../../pkgs/citron-nextendo { };
         osu-lazer-torii-appimage = pkgs.callPackage ../../pkgs/osu-lazer-torii-appimage { };

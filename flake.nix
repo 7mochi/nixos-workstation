@@ -66,10 +66,12 @@
 
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-jetbrains-plugins = {
       url = "github:nix-community/nix-jetbrains-plugins";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     llm-agents = {
@@ -84,6 +86,7 @@
 
     agent-skills = {
       url = "github:Kyure-A/agent-skills-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     quarkus-skills = {
