@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.shared = {
+  flake.modules.nixos.workstation = {
     services = {
       btrfs.autoScrub = {
         enable = true;

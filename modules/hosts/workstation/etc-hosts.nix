@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.shared = {
+  flake.modules.nixos.workstation = {
     networking.hosts = {
       "127.0.0.1" = [
         "bancho.local"

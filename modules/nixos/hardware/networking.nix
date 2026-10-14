@@ -24,7 +24,6 @@ _:
             ''
               while ! ${mullvad}/bin/mullvad status >/dev/null 2>&1; do sleep 1; done
               ${mullvad}/bin/mullvad auto-connect set on || true
-              ${mullvad}/bin/mullvad relay set location pe || true
               ${mullvad}/bin/mullvad lan set allow || true
               ${mullvad}/bin/mullvad lockdown-mode set on || true
               ${mullvad}/bin/mullvad dns set default --block-ads --block-trackers --block-malware || true
