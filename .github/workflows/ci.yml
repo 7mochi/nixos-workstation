@@ -34,3 +34,6 @@ jobs:
 
       - name: Statix check
         run: nix build .#checks.x86_64-linux.statix
+
+      - name: Secret scan
+        run: nix build .#checks.x86_64-linux.check-secrets
