@@ -45,6 +45,9 @@ in
 
           trusted-public-keys = nixSettings.trustedPublicKeys;
 
+          fallback = true;
+          connect-timeout = 5;
+
           auto-optimise-store = true;
         };
 
