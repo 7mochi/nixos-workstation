@@ -10,6 +10,8 @@ _:
         enable = true;
         arrpc = true;
 
+        environment.WINE_OSU_USE_X11 = "1";
+
         settings = {
           VolumeUniversal = 5;
           VolumeEffect = 50;
@@ -96,7 +98,11 @@ _:
 
       home.activation.osuStableLink = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p "$HOME/.local/share/nix-osu-stable"
-        ln -sfn "/media/ssd/other_games/osu!stable/osu!" "$HOME/.local/share/nix-osu-stable/osu"
+        if [ -e "/media/ssd/other_games/osu!stable/osu!" ]; then
+          ln -sfn "/media/ssd/other_games/osu!stable/osu!" "$HOME/.local/share/nix-osu-stable/osu"
+        else
+          echo "osu!stable source not found under /media/ssd; skipping symlink" >&2
+        fi
       '';
     };
 }

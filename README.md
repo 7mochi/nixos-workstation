@@ -25,6 +25,8 @@ Custom packages follow the same split: derivations live in `pkgs/<name>/default.
 and are exposed as flake outputs by `modules/flake/packages.nix` (they cannot live
 under `modules/`, where `import-tree` treats every file as a flake-parts module).
 Run one with `nix run .#<name>` and update it with `nix-update <name> --flake`.
+`updateScript` support is uneven across `pkgs/`: a few derivations provide
+`passthru.updateScript`, the rest do not and must be bumped by hand.
 
 ## Daily Use
 
