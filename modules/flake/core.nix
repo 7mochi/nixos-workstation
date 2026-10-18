@@ -1,11 +1,12 @@
 { inputs, ... }:
 
+let
+  nixSettings = import ../../lib/nix-settings.nix;
+in
 {
   imports = [
     inputs.flake-parts.flakeModules.modules
   ];
 
-  systems = [
-    "x86_64-linux"
-  ];
+  systems = [ nixSettings.system ];
 }

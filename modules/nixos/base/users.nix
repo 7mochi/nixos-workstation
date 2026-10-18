@@ -5,6 +5,8 @@ _:
     { pkgs, ... }:
 
     let
+      identity = import ../../../lib/identity.nix;
+
       normalUser = name: {
         isNormalUser = true;
         description = name;
@@ -21,8 +23,8 @@ _:
     {
       users.mutableUsers = false;
 
-      users.users.nanamochi = normalUser "nanamochi" // {
-        uid = 1000;
+      users.users.${identity.username} = normalUser identity.username // {
+        inherit (identity) uid;
         hashedPassword = "$6$U8BFYn0uRr9YVvoO$nZg4.eDjSaHyZo1wYlxjfylSj0qHFr4kVNSEdBtzahWHdqeBFou/Xck/0KYnzoZLuYXNewHQqpH0fYqYTOS9b1";
       };
 

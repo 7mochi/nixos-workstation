@@ -3,7 +3,8 @@ _:
 {
   flake.modules.nixos.workstation =
     let
-      sharePath = "/home/nanamochi/Shared";
+      identity = import ../../../lib/identity.nix;
+      sharePath = "${identity.homeDirectory}/Shared";
     in
     {
       services.samba = {
@@ -22,7 +23,7 @@ _:
             browseable = "yes";
             "read only" = "no";
             "guest ok" = "yes";
-            "force user" = "nanamochi";
+            "force user" = identity.username;
             "force group" = "users";
             "create mask" = "0644";
             "directory mask" = "0755";
@@ -41,6 +42,6 @@ _:
         ];
       };
 
-      systemd.tmpfiles.rules = [ "d ${sharePath} 0755 nanamochi users -" ];
+      systemd.tmpfiles.rules = [ "d ${sharePath} 0755 ${identity.username} users -" ];
     };
 }

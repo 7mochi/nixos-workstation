@@ -1,8 +1,12 @@
 { config, inputs, ... }:
 
+let
+  nixSettings = import ../../lib/nix-settings.nix;
+  identity = import ../../lib/identity.nix;
+in
 {
   flake.nixosConfigurations."workstation" = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
+    inherit (nixSettings) system;
 
     modules = [
       inputs.niri.nixosModules.niri
@@ -28,7 +32,7 @@
           extraSpecialArgs = {
             inherit inputs;
           };
-          users.nanamochi = config.flake.modules.homeManager.nanamochi;
+          users.${identity.username} = config.flake.modules.homeManager.nanamochi;
         };
       }
     ];

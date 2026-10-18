@@ -1,5 +1,8 @@
 { config, ... }:
 
+let
+  identity = import ../../../lib/identity.nix;
+in
 {
   flake.modules.homeManager.nanamochi = {
     imports = [
@@ -7,8 +10,7 @@
     ];
 
     home = {
-      username = "nanamochi";
-      homeDirectory = "/home/nanamochi";
+      inherit (identity) username homeDirectory;
       stateVersion = "26.05";
     };
 

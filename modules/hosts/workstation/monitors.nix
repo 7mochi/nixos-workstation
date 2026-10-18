@@ -1,6 +1,9 @@
+let
+  identity = import ../../../lib/identity.nix;
+in
 {
   flake.modules.nixos.workstation = {
-    home-manager.users.nanamochi.programs.niri.settings.outputs = {
+    home-manager.users.${identity.username}.programs.niri.settings.outputs = {
       "Xiaomi Corporation Mi Monitor 5745300008782" = {
         mode = {
           width = 2560;

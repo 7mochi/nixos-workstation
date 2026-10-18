@@ -1,5 +1,8 @@
 _:
 
+let
+  identity = import ../../../../lib/identity.nix;
+in
 {
   flake.modules.homeManager.shared = {
     programs = {
@@ -7,8 +10,8 @@ _:
         enable = true;
 
         settings = {
-          user.name = "7mochi";
-          user.email = "flyingcatdm@gmail.com";
+          user.name = identity.gitName;
+          user.email = identity.email;
 
           alias = {
             a = "add";
