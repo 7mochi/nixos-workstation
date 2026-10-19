@@ -129,6 +129,7 @@
           # Games
           gamescope
           mangohud
+          inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.ctr-nitro-fueled-appimage
           inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.osu-lazer-torii-appimage
           inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.retrogecko
           inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.power-bomberman
