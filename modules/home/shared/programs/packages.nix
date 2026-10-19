@@ -172,6 +172,7 @@
           inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
           procs
           python313
+          ripgrep
           ripgrep-all
           tokei
           tree
