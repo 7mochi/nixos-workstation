@@ -12,7 +12,7 @@ permissions:
 jobs:
   checks:
     name: Nix checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
