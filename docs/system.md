@@ -91,11 +91,20 @@ Each machine derives its own age key from its SSH host key. Private keys are
 never shared or committed. A machine can decrypt a secret only if its age
 public key is listed in `.sops.yaml`.
 
-The repo currently has one recipient, the workstation's `main_workstation`, so
-only this machine can decrypt the secrets. Because it is the only key, keep a
-private backup of it: if the workstation is lost, `secrets/secrets.yaml` cannot
-be decrypted. Back up `/etc/ssh/ssh_host_ed25519_key` (and
-`~/.config/sops/age/keys.txt`) to a safe place outside the machine.
+The repo has two recipients: the workstation's `main_workstation` and a
+dedicated `offline_recovery` key. Either one can decrypt `secrets/secrets.yaml`;
+the recovery key is what makes a lost host key or a reinstall survivable. Keep
+its private half outside the machine, encrypted with a passphrase, and test it
+periodically:
+
+```sh
+SOPS_AGE_KEY_FILE=/path/to/age-recovery.key sops -d secrets/secrets.yaml >/dev/null && echo OK
+```
+
+Also back up `/etc/ssh/ssh_host_ed25519_key` (and
+`~/.config/sops/age/keys.txt`) to a safe place outside the machine. The host key
+should be owned by `root:root` with mode `0600`; if it is readable by the
+desktop user, that user can decrypt every secret.
 
 To add a machine, add its recipient to the same `key_groups` entry. Do not put
 a leading `-` before `age:`, that enables Shamir secret sharing and requires

@@ -1,7 +1,9 @@
 keys:
   - &main_workstation age1zdvyc7f5953tvnw266z7799n43vk8kq58ykkudgkp704e05qs3hsc93gu7
+  - &offline_recovery age1yc2drturh2d9qssp377fxs8ne45rctvlc2ez59mfjl7ke8892ctsqhp79e
 creation_rules:
   - path_regex: secrets/[^/]+\.yaml$
     key_groups:
       - age:
           - *main_workstation
+          - *offline_recovery
