@@ -37,3 +37,12 @@ jobs:
 
       - name: Secret scan
         run: nix build .#checks.x86_64-linux.check-secrets
+
+      - name: Niri design check
+        run: nix build .#checks.x86_64-linux.niri-no-app-workflows
+
+      - name: fwupd/polkit ordering check
+        run: nix build .#checks.x86_64-linux.fwupd-refresh-polkit-ordering
+
+      - name: Evaluate the workstation toplevel
+        run: nix build --dry-run --no-link .#nixosConfigurations.workstation.config.system.build.toplevel
