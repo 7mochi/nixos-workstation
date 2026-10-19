@@ -48,11 +48,21 @@ in
           fallback = true;
           connect-timeout = 5;
 
-          auto-optimise-store = true;
+          auto-optimise-store = false;
+          max-jobs = 4;
+          cores = 0;
+          keep-outputs = true;
         };
 
         gc.automatic = false;
+
+        optimise = {
+          automatic = true;
+          dates = [ "03:45" ];
+        };
       };
+
+      documentation.nixos.enable = false;
 
       programs.nh = {
         enable = true;
