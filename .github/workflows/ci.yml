@@ -26,14 +26,8 @@ jobs:
       - name: Flake check
         run: nix flake check --no-build
 
-      - name: Format check
-        run: nix build .#checks.x86_64-linux.format
-
-      - name: Deadnix check
-        run: nix build .#checks.x86_64-linux.deadnix
-
-      - name: Statix check
-        run: nix build .#checks.x86_64-linux.statix
+      - name: Format and lint check
+        run: nix build .#checks.x86_64-linux.treefmt
 
       - name: Secret scan
         run: nix build .#checks.x86_64-linux.check-secrets
@@ -44,5 +38,14 @@ jobs:
       - name: fwupd/polkit ordering check
         run: nix build .#checks.x86_64-linux.fwupd-refresh-polkit-ordering
 
-      - name: Evaluate the workstation toplevel
-        run: nix build --dry-run --no-link .#nixosConfigurations.workstation.config.system.build.toplevel
+      - name: Build custom packages
+        run: |
+          nix build --no-link \
+            .#checks.x86_64-linux.citron-nextendo \
+            .#checks.x86_64-linux.ctr-nitro-fueled-appimage \
+            .#checks.x86_64-linux.osu-lazer-torii-appimage \
+            .#checks.x86_64-linux.power-bomberman \
+            .#checks.x86_64-linux.retrogecko
+
+      - name: Build the workstation toplevel
+        run: nix build --no-link .#nixosConfigurations.workstation.config.system.build.toplevel

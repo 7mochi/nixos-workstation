@@ -1,5 +1,8 @@
 { inputs, lib, ... }:
 
+let
+  pkgsPolicy = import ../../lib/pkgs-policy.nix { inherit lib; };
+in
 {
   # This override replaces the `pkgs` argument for EVERY perSystem module
   # (packages, checks, formatter, devShells), not only `packages`, and it does
@@ -12,12 +15,7 @@
       _module.args.pkgs = import inputs.nixpkgs {
         inherit system;
         config = {
-          allowUnfreePredicate =
-            pkg:
-            builtins.elem (lib.getName pkg) [
-              "retrogecko"
-              "power-bomberman"
-            ];
+          allowUnfreePredicate = pkgsPolicy.predicate pkgsPolicy.perSystem;
         };
       };
     };

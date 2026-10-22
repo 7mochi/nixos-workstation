@@ -3,29 +3,14 @@
 let
   nixSettings = import ../../../lib/nix-settings.nix;
   identity = import ../../../lib/identity.nix;
+  pkgsPolicy = import ../../../lib/pkgs-policy.nix { lib = inputs.nixpkgs.lib; };
 in
 {
   flake.modules.nixos.shared =
-    { pkgs, ... }:
+    _:
 
     {
-      nixpkgs.config.allowUnfreePredicate =
-        pkg:
-        builtins.elem (pkgs.lib.getName pkg) [
-          "intellij-idea"
-          "intellij-idea-with-plugins"
-          "obsidian"
-          "rider"
-          "rider-with-plugins"
-          "steam"
-          "steam-run"
-          "steam-unwrapped"
-          "stremio-linux-shell"
-          "vscode"
-          "unrar"
-          "vmware-workstation"
-          "wootility"
-        ];
+      nixpkgs.config.allowUnfreePredicate = pkgsPolicy.predicate pkgsPolicy.system;
 
       nix = {
         registry.nixpkgs.flake = inputs.nixpkgs;

@@ -7,7 +7,16 @@
     treefmt = {
       projectRootFile = "flake.nix";
 
-      programs.nixfmt.enable = true;
+      programs = {
+        nixfmt.enable = true;
+        deadnix = {
+          enable = true;
+          no-lambda-pattern-names = true;
+        };
+        statix.enable = true;
+        fish_indent.enable = true;
+        kdlfmt.enable = true;
+      };
     };
   };
 }
