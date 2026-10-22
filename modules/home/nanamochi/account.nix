@@ -1,24 +1,24 @@
 { config, ... }:
 
-let
-  identity = import ../../../lib/identity.nix;
-in
 {
-  flake.modules.homeManager.nanamochi = {
-    imports = [
-      config.flake.modules.homeManager.shared
-    ];
+  flake.modules.homeManager.nanamochi =
+    { identity, ... }:
 
-    home = {
-      inherit (identity) username homeDirectory;
-      stateVersion = "26.05";
+    {
+      imports = [
+        config.flake.modules.homeManager.shared
+      ];
+
+      home = {
+        inherit (identity) username homeDirectory;
+        stateVersion = "26.05";
+      };
+
+      programs.home-manager.enable = true;
+
+      xdg.userDirs = {
+        enable = true;
+        createDirectories = true;
+      };
     };
-
-    programs.home-manager.enable = true;
-
-    xdg.userDirs = {
-      enable = true;
-      createDirectories = true;
-    };
-  };
 }

@@ -8,6 +8,8 @@ in
   flake.nixosConfigurations."workstation" = inputs.nixpkgs.lib.nixosSystem {
     inherit (nixSettings) system;
 
+    specialArgs = { inherit identity; };
+
     modules = [
       inputs.niri.nixosModules.niri
       inputs.sops-nix.nixosModules.sops
@@ -31,7 +33,7 @@ in
             inputs.zen-browser.homeModules.default
           ];
           extraSpecialArgs = {
-            inherit inputs;
+            inherit inputs identity;
           };
           users.${identity.username} = config.flake.modules.homeManager.nanamochi;
         };

@@ -2,9 +2,8 @@ _:
 
 {
   flake.modules.nixos.shared =
-    { config, ... }:
+    { config, identity, ... }:
     let
-      identity = import ../../../lib/identity.nix;
       user = config.users.users.${identity.username};
     in
     {

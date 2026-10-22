@@ -2,12 +2,11 @@
 
 let
   nixSettings = import ../../../lib/nix-settings.nix;
-  identity = import ../../../lib/identity.nix;
   pkgsPolicy = import ../../../lib/pkgs-policy.nix { lib = inputs.nixpkgs.lib; };
 in
 {
   flake.modules.nixos.shared =
-    _:
+    { identity, ... }:
 
     {
       nixpkgs.config.allowUnfreePredicate = pkgsPolicy.predicate pkgsPolicy.system;

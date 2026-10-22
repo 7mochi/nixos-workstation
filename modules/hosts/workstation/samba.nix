@@ -1,9 +1,8 @@
-_:
-
 {
   flake.modules.nixos.workstation =
+    { identity, ... }:
+
     let
-      identity = import ../../../lib/identity.nix;
       sharePath = "${identity.homeDirectory}/Shared";
     in
     {

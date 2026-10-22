@@ -2,11 +2,9 @@ _:
 
 {
   flake.modules.nixos.shared =
-    { pkgs, ... }:
+    { identity, pkgs, ... }:
 
     let
-      identity = import ../../../lib/identity.nix;
-
       normalUser = name: {
         isNormalUser = true;
         description = name;
