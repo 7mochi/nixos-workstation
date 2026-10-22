@@ -11,11 +11,11 @@
 
 let
   pname = "ctr-nitro-fueled-appimage";
-  version = "0.5.2";
+  version = "0.6";
 
   src = fetchurl {
     url = "https://github.com/Ryu7w7/OCTR-NitroFueled-PC/releases/download/v${version}/SacredFire-v${version}-x86_64.AppImage";
-    hash = "sha256-1MmW848JRLGOm/QUuoPnm6lpfy2CNctgdPCPAVP7JjM=";
+    hash = "sha256-rFxjNsvBFHsQ/QaUJMWxIhrY9n8r02SXOBouBujkLuY=";
   };
 
   iconName = "io.github.sacredfire.Launcher";
