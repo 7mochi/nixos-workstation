@@ -13,6 +13,7 @@ in
       inputs.sops-nix.nixosModules.sops
       inputs.home-manager.nixosModules.home-manager
       inputs.nix-flatpak.nixosModules.nix-flatpak
+      inputs.deadband.nixosModules.default
       config.flake.modules.nixos.workstation
       config.flake.modules.nixos.shared
 

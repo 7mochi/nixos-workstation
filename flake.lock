@@ -54,6 +54,46 @@
         "type": "github"
       }
     },
+    "deadband": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "upstream-src": [
+          "deadband-src"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788391522,
+        "narHash": "sha256-gwCv/WyX9/aqS96dl4FrHWHhJNeOhEYlSjsja3APi10=",
+        "ref": "refs/heads/master",
+        "rev": "69801573f26436ecd1e24b077489142c217c761b",
+        "revCount": 7,
+        "type": "git",
+        "url": "https://codeberg.org/Epaphroditus/gamesir-linux-tools-nix"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/Epaphroditus/gamesir-linux-tools-nix"
+      }
+    },
+    "deadband-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791945560,
+        "narHash": "sha256-jvM3SXYkegz8HMk4wEWdvCCbTHhZfDf1qKydOmGtvAo=",
+        "owner": "broroeror",
+        "repo": "gamesir-linux-tools",
+        "rev": "02c5810c6fe0c1014971ec7d25df4791777a8e5c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "broroeror",
+        "ref": "v0.5.0",
+        "repo": "gamesir-linux-tools",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -539,6 +579,8 @@
     "root": {
       "inputs": {
         "agent-skills": "agent-skills",
+        "deadband": "deadband",
+        "deadband-src": "deadband-src",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",

@@ -101,6 +101,17 @@
       url = "github:gaavin/nix-osu-stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    deadband = {
+      url = "git+https://codeberg.org/Epaphroditus/gamesir-linux-tools-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.upstream-src.follows = "deadband-src";
+    };
+
+    deadband-src = {
+      url = "github:broroeror/gamesir-linux-tools/v0.5.0";
+      flake = false;
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
