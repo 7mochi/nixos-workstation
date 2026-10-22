@@ -10,11 +10,11 @@
 
 let
   pname = "osu-lazer-torii-appimage";
-  version = "2026.1017.1-nova";
+  version = "2026.1020.1-nova";
 
   src = fetchurl {
     url = "https://github.com/ShikkesoraSIM/torii-osu/releases/download/v${version}/torii-linux-x64.AppImage";
-    hash = "sha256-cL6fvmeHpPtOMMXc3orUQ0DPjoMeJtjaG9DW4O8PQYo=";
+    hash = "sha256-C+4fswLiTgwrRCWIxxaumGnX6HTUKPl6PxjWH5ui35E=";
   };
 
   icon =
