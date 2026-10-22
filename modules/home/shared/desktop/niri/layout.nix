@@ -4,7 +4,10 @@ _:
   flake.modules.homeManager.shared = {
     programs.niri.settings = {
       input = {
-        keyboard.xkb.layout = "pl";
+        keyboard.xkb = {
+          layout = "us";
+          variant = "intl";
+        };
         touchpad = {
           tap = true;
           natural-scroll = true;
