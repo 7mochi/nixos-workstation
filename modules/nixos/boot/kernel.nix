@@ -1,7 +1,7 @@
 { inputs, ... }:
 
 {
-  flake.modules.nixos.shared =
+  flake.modules.nixos.kernel =
     { pkgs, ... }:
 
     {

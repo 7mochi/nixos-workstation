@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.shared = {
+  flake.modules.nixos.polkit = {
     networking.firewall.enable = true;
     security.polkit.enable = true;
   };

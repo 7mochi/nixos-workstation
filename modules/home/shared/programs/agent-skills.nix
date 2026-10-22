@@ -1,7 +1,9 @@
-_:
+{ inputs, ... }:
 
 {
-  flake.modules.homeManager.shared = {
+  flake.modules.homeManager.agent-skills = {
+    imports = [ inputs.agent-skills.homeManagerModules.default ];
+
     programs.agent-skills = {
       enable = true;
 

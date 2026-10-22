@@ -5,7 +5,7 @@ let
   pkgsPolicy = import ../../../lib/pkgs-policy.nix { lib = inputs.nixpkgs.lib; };
 in
 {
-  flake.modules.nixos.shared =
+  flake.modules.nixos.nix =
     { identity, ... }:
 
     {

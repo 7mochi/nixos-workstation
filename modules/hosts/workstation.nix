@@ -8,35 +8,15 @@ in
   flake.nixosConfigurations."workstation" = inputs.nixpkgs.lib.nixosSystem {
     inherit (nixSettings) system;
 
-    specialArgs = { inherit identity; };
+    specialArgs = { inherit identity inputs; };
 
     modules = [
-      inputs.niri.nixosModules.niri
-      inputs.sops-nix.nixosModules.sops
-      inputs.home-manager.nixosModules.home-manager
-      inputs.nix-flatpak.nixosModules.nix-flatpak
-      inputs.deadband.nixosModules.default
       config.flake.modules.nixos.workstation
       config.flake.modules.nixos.shared
 
       {
         networking.hostName = "workstation";
         system.stateVersion = "26.05";
-
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          backupFileExtension = "backup";
-          sharedModules = [
-            inputs.noctalia.homeModules.default
-            inputs.agent-skills.homeManagerModules.default
-            inputs.zen-browser.homeModules.default
-          ];
-          extraSpecialArgs = {
-            inherit inputs identity;
-          };
-          users.${identity.username} = config.flake.modules.homeManager.nanamochi;
-        };
       }
     ];
   };

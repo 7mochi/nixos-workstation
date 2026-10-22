@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.homeManager.shared = {
+  flake.modules.homeManager.niri-rules = {
     programs.niri.settings.window-rules = [
       {
         geometry-corner-radius = {

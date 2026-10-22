@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.shared =
+  flake.modules.nixos.networking =
     { config, pkgs, ... }:
 
     {

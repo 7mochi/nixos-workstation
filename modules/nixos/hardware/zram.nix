@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.shared = {
+  flake.modules.nixos.zram = {
     boot.kernel.sysctl = {
       "vm.page-cluster" = 0;
       "vm.swappiness" = 180;

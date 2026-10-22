@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.homeManager.shared =
+  flake.modules.homeManager.niri-animations =
     let
       windowOpenShader = ''
         vec4 open_color(vec3 coords_geo, vec3 size_geo) {

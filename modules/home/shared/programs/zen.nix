@@ -1,13 +1,15 @@
 { inputs, ... }:
 
 {
-  flake.modules.homeManager.shared =
+  flake.modules.homeManager.zen =
     { pkgs, ... }:
 
     let
       firefox-addons = inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
     in
     {
+      imports = [ inputs.zen-browser.homeModules.default ];
+
       programs.zen-browser = {
         enable = true;
         setAsDefaultBrowser = true;

@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.homeManager.shared = {
+  flake.modules.homeManager.fish = {
     programs.fish = {
       enable = true;
 

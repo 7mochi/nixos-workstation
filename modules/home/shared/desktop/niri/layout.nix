@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.homeManager.shared = {
+  flake.modules.homeManager.niri-layout = {
     programs.niri.settings = {
       input = {
         keyboard.xkb = {

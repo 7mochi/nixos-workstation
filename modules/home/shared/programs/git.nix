@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.shared =
+  flake.modules.homeManager.git =
     { identity, ... }:
 
     {

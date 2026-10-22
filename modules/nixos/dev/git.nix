@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.shared = {
+  flake.modules.nixos.git = {
     programs.git.enable = true;
   };
 }

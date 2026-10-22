@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.homeManager.shared =
+  flake.modules.homeManager.osu-stable =
     { inputs, lib, ... }:
     {
       imports = [ inputs.nix-osu-stable.homeModules.osu-stable ];

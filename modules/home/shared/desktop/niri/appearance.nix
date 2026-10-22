@@ -1,7 +1,7 @@
 { inputs, ... }:
 
 {
-  flake.modules.homeManager.shared =
+  flake.modules.homeManager.niri-appearance =
     { lib, ... }:
 
     let

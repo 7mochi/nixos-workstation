@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.homeManager.shared =
+  flake.modules.homeManager.equibop =
     { pkgs, ... }:
 
     {

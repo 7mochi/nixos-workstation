@@ -1,7 +1,7 @@
 { lib, ... }:
 
 {
-  flake.modules.nixos.workstation =
+  flake.modules.nixos.mullvad =
     { config, ... }:
 
     {

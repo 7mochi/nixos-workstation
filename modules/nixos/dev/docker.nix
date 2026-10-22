@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.shared = {
+  flake.modules.nixos.docker = {
     # Membership in the docker group is root-equivalent. Keep Docker for current
     # workflow compatibility; prefer project-local services and consider Podman
     # once the workflow no longer depends on Docker socket semantics.

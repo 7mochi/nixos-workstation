@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.nixos.workstation = {
+  flake.modules.nixos.vm = {
     virtualisation.vmVariant = {
       virtualisation = {
         memorySize = 8192;

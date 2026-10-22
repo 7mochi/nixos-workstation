@@ -1,7 +1,7 @@
-_:
+{ inputs, ... }:
 
 {
-  flake.modules.homeManager.shared =
+  flake.modules.homeManager.noctalia =
     { config, pkgs, ... }:
 
     let
@@ -31,6 +31,8 @@ _:
     in
 
     {
+      imports = [ inputs.noctalia.homeModules.default ];
+
       qt = {
         enable = true;
         platformTheme.name = "qtct";

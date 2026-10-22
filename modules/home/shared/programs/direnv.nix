@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.homeManager.shared = {
+  flake.modules.homeManager.direnv = {
     programs.direnv = {
       enable = true;
       nix-direnv.enable = true;

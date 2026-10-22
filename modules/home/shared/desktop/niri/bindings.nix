@@ -1,7 +1,7 @@
 { lib, ... }:
 
 {
-  flake.modules.homeManager.shared =
+  flake.modules.homeManager.niri-bindings =
     let
       noArg = action: {
         action.${action} = [ ];

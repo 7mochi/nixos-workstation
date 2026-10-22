@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.homeManager.shared = {
+  flake.modules.homeManager.fastfetch = {
     xdg.configFile."fastfetch/config.jsonc".text = ''
       {
         "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",

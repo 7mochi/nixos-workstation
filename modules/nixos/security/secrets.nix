@@ -1,12 +1,14 @@
-_:
+{ inputs, ... }:
 
 {
-  flake.modules.nixos.shared =
+  flake.modules.nixos.sops =
     { config, identity, ... }:
     let
       user = config.users.users.${identity.username};
     in
     {
+      imports = [ inputs.sops-nix.nixosModules.sops ];
+
       sops = {
         defaultSopsFile = ../../../secrets/secrets.yaml;
         secrets = {

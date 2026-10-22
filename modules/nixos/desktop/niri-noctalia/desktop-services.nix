@@ -1,7 +1,9 @@
-_:
+{ inputs, ... }:
 
 {
-  flake.modules.nixos.shared = {
+  flake.modules.nixos.desktop-services = {
+    imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
+
     hardware.sane.enable = true;
 
     programs.steam.enable = true;

@@ -1,7 +1,7 @@
 _:
 
 {
-  flake.modules.homeManager.shared = {
+  flake.modules.homeManager.opencode = {
     home.sessionVariables.SUPERPOWERS_DISABLE_TELEMETRY = "true";
 
     xdg.configFile = {
