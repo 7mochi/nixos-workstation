@@ -26,6 +26,9 @@ jobs:
       - name: Flake check
         run: nix flake check --no-build
 
+      - name: Generated flake check
+        run: nix build .#checks.x86_64-linux.check-flake-file
+
       - name: Format and lint check
         run: nix build .#checks.x86_64-linux.treefmt
 
