@@ -2,7 +2,12 @@ _:
 
 {
   flake.modules.nixos.users =
-    { identity, pkgs, ... }:
+    {
+      config,
+      identity,
+      pkgs,
+      ...
+    }:
 
     let
       normalUser = name: {
@@ -23,7 +28,7 @@ _:
 
       users.users.${identity.username} = normalUser identity.username // {
         inherit (identity) uid;
-        hashedPassword = "$6$U8BFYn0uRr9YVvoO$nZg4.eDjSaHyZo1wYlxjfylSj0qHFr4kVNSEdBtzahWHdqeBFou/Xck/0KYnzoZLuYXNewHQqpH0fYqYTOS9b1";
+        hashedPasswordFile = config.sops.secrets.password.path;
       };
 
       programs.fish.enable = true;

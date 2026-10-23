@@ -10,6 +10,7 @@
       imports = [ inputs.sops-nix.nixosModules.sops ];
 
       sops = {
+        validateSopsFiles = true;
         defaultSopsFile = ../../../secrets/secrets.yaml;
         secrets = {
           "opencode-api-key" = {
@@ -35,6 +36,7 @@
           "mullvad-account" = {
             owner = "root";
           };
+          password.neededForUsers = true;
         };
       };
     };
