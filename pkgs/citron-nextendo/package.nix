@@ -6,16 +6,16 @@
   dwarfs,
   binutils-unwrapped,
   makeDesktopItem,
-  symlinkJoin,
+  nix-update-script,
 }:
 
 let
   pname = "citron-nextendo";
-  version = "8f75499d6";
+  version = "d96b6beed";
 
   src = fetchurl {
     url = "https://github.com/NextendoNetwork/citron-nextendo/releases/download/nightly-linux/citron_nightly-${version}-linux-x86_64_v3.AppImage";
-    hash = "sha256-i8mi5ng5rOYWEdfUAigW/9yiior1FE8NdS4zoCxMXMU=";
+    hash = "sha256-9fFem/f/KaAXxNEZht4cFf7xm32VZ7hgkKzcj/sn/Mc=";
   };
 
   contents =
@@ -53,26 +53,29 @@ let
     ];
   };
 
-  wrapped = appimageTools.wrapAppImage {
-    inherit
-      pname
-      version
-      contents
-      meta
-      ;
+  wrapped =
+    (appimageTools.wrapAppImage {
+      inherit
+        pname
+        version
+        contents
+        meta
+        ;
 
-    extraInstallCommands = ''
-      for i in 16 32 48 64 96 128 256 512 1024; do
-        install -D ${contents}/org.citron_emu.citron.png \
-          $out/share/icons/hicolor/''${i}x$i/apps/${pname}.png
-      done
-    '';
-  };
+      extraInstallCommands = ''
+        for i in 16 32 48 64 96 128 256 512 1024; do
+          install -D ${contents}/org.citron_emu.citron.png \
+            $out/share/icons/hicolor/''${i}x$i/apps/${pname}.png
+        done
+
+        install -Dm444 ${desktopItem}/share/applications/${pname}.desktop \
+          $out/share/applications/${pname}.desktop
+      '';
+
+      passthru.updateScript = nix-update-script { };
+    })
+    // {
+      inherit src;
+    };
 in
-symlinkJoin {
-  name = "${pname}-${version}";
-  paths = [
-    wrapped
-    desktopItem
-  ];
-}
+wrapped
