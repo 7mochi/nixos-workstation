@@ -8,6 +8,7 @@
       "etc-hosts"
       "hardware"
       "workstation-home-manager"
+      "workstation-system"
       "monitors"
       "mullvad"
       "samba"

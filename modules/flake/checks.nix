@@ -8,6 +8,11 @@
       hostName = builtins.head (builtins.attrNames hosts);
       host = hosts.${hostName};
       homeUser = builtins.head (builtins.attrNames host.config.home-manager.users);
+      allPackages =
+        host.config.environment.systemPackages ++ host.config.home-manager.users.${homeUser}.home.packages;
+      unavailable = builtins.filter (
+        pkg: !(pkgs.lib.meta.availableOn pkgs.stdenv.hostPlatform pkg)
+      ) allPackages;
     in
     {
       checks = {
@@ -112,6 +117,13 @@
             }
             touch $out
           '';
+        package-platforms =
+          if unavailable == [ ] then
+            pkgs.runCommand "check-package-platforms" { } "touch $out"
+          else
+            throw "packages unavailable on ${pkgs.stdenv.hostPlatform.system}: ${
+              pkgs.lib.concatMapStringsSep ", " (pkg: pkg.name or "unknown") unavailable
+            }";
       }
       // self'.packages;
     };
