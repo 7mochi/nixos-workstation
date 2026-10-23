@@ -19,8 +19,8 @@ _:
         equicord = {
           themes = {
             "midnight-tokyo-night" = pkgs.fetchurl {
-              url = "https://raw.githubusercontent.com/refact0r/midnight-discord/refs/heads/master/themes/flavors/midnight-tokyo-night.theme.css";
-              sha256 = "0lyfqnf76fwpd5f2qgg1xzgdd4j9s0fvjaj2wxwhcqkc0bs7syvg";
+              url = "https://raw.githubusercontent.com/refact0r/midnight-discord/842f3189d295265a17ad56df73326f74d40fbd19/themes/flavors/midnight-tokyo-night.theme.css";
+              sha256 = "sha256-sRVvBcpqa7szUlwaPruXixozDdw4EPyAIgAKhJ2xEnk=";
             };
           };
 
