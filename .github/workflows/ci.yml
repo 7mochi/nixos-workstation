@@ -32,6 +32,9 @@ jobs:
       - name: Format and lint check
         run: nix build .#checks.x86_64-linux.treefmt
 
+      - name: Pre-commit hooks
+        run: nix build .#checks.x86_64-linux.pre-commit
+
       - name: Secret scan
         run: nix build .#checks.x86_64-linux.check-secrets
 
