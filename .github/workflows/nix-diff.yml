@@ -1,0 +1,30 @@
+name: Nix diff
+
+on:
+  pull_request:
+
+jobs:
+  nix-diff:
+    name: NixOS closure diff
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31.11.2
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+
+      - name: Diff the workstation closure
+        uses: natsukium/nix-diff-action@v1.1.1
+        with:
+          attributes: |
+            - displayName: workstation
+              attribute: nixosConfigurations.workstation.config.system.build.toplevel
