@@ -12,7 +12,13 @@ in
       nixpkgs.config.allowUnfreePredicate = pkgsPolicy.predicate pkgsPolicy.system;
 
       nix = {
-        registry.nixpkgs.flake = inputs.nixpkgs;
+        registry = builtins.mapAttrs (_name: value: { flake = value; }) (
+          removeAttrs inputs [
+            "deadband-src"
+            "qylock"
+            "quarkus-skills"
+          ]
+        );
 
         settings = {
           experimental-features = [

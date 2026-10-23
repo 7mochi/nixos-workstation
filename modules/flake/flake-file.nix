@@ -13,6 +13,8 @@
 
       nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+      pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
+
       flake-parts = {
         url = "github:hercules-ci/flake-parts";
         inputs.nixpkgs-lib.follows = "nixpkgs";

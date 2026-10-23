@@ -21,12 +21,13 @@ The config uses a dendritic flake layout: files under `modules/` are imported by
 `import-tree` and merge into shared module outputs such as
 `flake.modules.nixos.shared` and `flake.modules.homeManager.shared`.
 
-Custom packages follow the same split: derivations live in `pkgs/<name>/default.nix`
-and are exposed as flake outputs by `modules/flake/packages.nix` (they cannot live
-under `modules/`, where `import-tree` treats every file as a flake-parts module).
-Run one with `nix run .#<name>` and update it with `nix-update <name> --flake`.
-`updateScript` support is uneven across `pkgs/`: a few derivations provide
-`passthru.updateScript`, the rest do not and must be bumped by hand.
+Custom packages live in `pkgs/<name>/package.nix` and are exposed automatically
+by `pkgs-by-name-for-flake-parts`, they cannot live under `modules/`, where
+`import-tree` treats every file as a flake-parts module. Run one with
+`nix run .#<name>`, reference it as `pkgs.local.<name>` inside the flake, and
+update it with `nix-update <name> --flake`. `updateScript` support is uneven
+across `pkgs/`: a few derivations provide `passthru.updateScript`, the rest do
+not and must be bumped by hand.
 
 ## Daily Use
 
@@ -66,7 +67,7 @@ plain directories on it (no subvolumes). The data disks `/media/ssd` and
 ```
 
 The workstation uses systemd-boot UEFI with a FAT32 ESP at `/boot` and a swap
-partition; its devices are pinned in `modules/hosts/workstation/hardware.nix`.
+partition, its devices are pinned in `modules/hosts/workstation/hardware.nix`.
 
 Format the root partition:
 

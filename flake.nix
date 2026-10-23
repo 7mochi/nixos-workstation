@@ -78,6 +78,7 @@
       url = "github:noctalia-dev/noctalia/cachix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
     quarkus-skills = {
       url = "github:quarkusio/skills";
       flake = false;

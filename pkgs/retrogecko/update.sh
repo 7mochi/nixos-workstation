@@ -3,7 +3,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-FILE="$ROOT_DIR/default.nix"
+FILE="$ROOT_DIR/package.nix"
 
 new_version="$(curl -fsSL "https://jvyden.xyz/gex/retro/" | grep -oE 'retrogecko-b[0-9]+-linux-x64\.zip' | sort -Vu | tail -1 | sed -E 's/retrogecko-(b[0-9]+)-linux-x64\.zip/\1/')"
 
