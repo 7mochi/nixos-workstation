@@ -23,6 +23,12 @@ jobs:
           extra_nix_config: |
             accept-flake-config = true
 
+      - name: Allow unprivileged user namespaces
+        run: |
+          if [[ -e /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]]; then
+            echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+          fi
+
       - name: Flake check
         run: nix flake check --no-build
 
