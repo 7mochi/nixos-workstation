@@ -26,6 +26,7 @@ _:
       shellAliases = {
         rebuild = "nh os switch path:$HOME/Documents/nixos-workstation#$hostname";
         update = "nix flake update --flake path:$HOME/Documents/nixos-workstation && nh os switch path:$HOME/Documents/nixos-workstation#$hostname";
+        update-pkgs = "just --justfile $HOME/Documents/nixos-workstation/Justfile update-pkgs";
         check = "nix flake check --no-build path:$HOME/Documents/nixos-workstation";
         drybuild = "nix build path:$HOME/Documents/nixos-workstation#nixosConfigurations.$hostname.config.system.build.toplevel --dry-run";
         diff = "nix build path:$HOME/Documents/nixos-workstation#nixosConfigurations.$hostname.config.system.build.toplevel && nvd diff /run/current-system result";

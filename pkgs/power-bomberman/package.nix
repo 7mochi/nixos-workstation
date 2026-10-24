@@ -13,11 +13,58 @@
   gmp,
   libgpg-error,
   e2fsprogs,
+  writeShellApplication,
+  curl,
+  git,
+  jq,
+  nix,
+  gnused,
+  coreutils,
+  gnugrep,
+  gawk,
 }:
 
 let
   pname = "power-bomberman";
   version = "0.7.8c";
+
+  meta = {
+    description = "Power Bomberman ${version}";
+    homepage = "https://www.bombermanboard.com/viewtopic.php?t=1925";
+    license = lib.licenses.unfree;
+    platforms = [ "x86_64-linux" ];
+    mainProgram = pname;
+  };
+
+  updateScriptBin = writeShellApplication {
+    name = "update-power-bomberman";
+    runtimeInputs = [
+      coreutils
+      curl
+      gawk
+      git
+      gnugrep
+      gnused
+      jq
+      nix
+    ];
+    text = ''
+      cd "$(git rev-parse --show-toplevel)"
+      FILE="pkgs/power-bomberman/package.nix"
+      PAGE="$(curl -fsSL "https://www.bombermanboard.com/viewtopic.php?t=1925")"
+
+      version="$(printf '%s\n' "$PAGE" | grep -oE 'FULL GAME \([^)]+\)' | head -1 | sed -E 's/.*\((.*)\)/\1/')"
+      drive_id="$(printf '%s\n' "$PAGE" | grep -oE 'https://drive\.google\.com/file/d/[A-Za-z0-9_-]+' | awk '!seen[$0]++' | sed -n '3p' | sed 's|.*/d/||')"
+      src_url="https://drive.usercontent.google.com/download?id=$drive_id&export=download&confirm=t"
+      hash="$(nix store prefetch-file --json --hash-type sha256 "$src_url" | jq -r .hash)"
+
+      sed -i -E "s|version = \"[^\"]+\"|version = \"$version\"|" "$FILE"
+      sed -i -E "s|id=[A-Za-z0-9_-]+|id=$drive_id|" "$FILE"
+      sed -i -E "s|hash = \"[^\"]+\"|hash = \"$hash\"|" "$FILE"
+    '';
+  };
+
+  updateScript = [ "${updateScriptBin}/bin/update-power-bomberman" ];
 
   # https://www.bombermanboard.com/viewtopic.php?t=1925
   src = fetchurl {
@@ -30,7 +77,7 @@ let
     exec = pname;
     icon = "power-bomberman";
     desktopName = "Power Bomberman";
-    comment = "Power Bomberman 0.7.8c";
+    comment = "Power Bomberman ${version}";
     categories = [ "Game" ];
   };
 
@@ -52,6 +99,7 @@ let
       pname
       version
       src
+      meta
       ;
 
     nativeBuildInputs = [ autoPatchelfHook ];
@@ -86,21 +134,22 @@ let
       install -Dm644 assets/icon.png $out/share/icons/hicolor/256x256/apps/power-bomberman.png
       runHook postInstall
     '';
-
-    meta = {
-      description = "Power Bomberman 0.7.8c";
-      homepage = "https://www.bombermanboard.com/viewtopic.php?t=1925";
-      license = lib.licenses.unfree;
-      platforms = [ "x86_64-linux" ];
-      mainProgram = pname;
-    };
   };
 in
-symlinkJoin {
+(symlinkJoin {
   name = "${pname}-${version}";
   paths = [
     drv
     launcher
     desktopItem
   ];
+})
+// {
+  inherit
+    version
+    src
+    updateScript
+    meta
+    ;
+  passthru.updateScript = updateScript;
 }

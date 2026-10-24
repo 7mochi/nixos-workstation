@@ -25,9 +25,9 @@ Custom packages live in `pkgs/<name>/package.nix` and are exposed automatically
 by `pkgs-by-name-for-flake-parts`, they cannot live under `modules/`, where
 `import-tree` treats every file as a flake-parts module. Run one with
 `nix run .#<name>`, reference it as `pkgs.local.<name>` inside the flake, and
-update it with `nix-update <name> --flake`. `updateScript` support is uneven
-across `pkgs/`: a few derivations provide `passthru.updateScript`, the rest do
-not and must be bumped by hand.
+update it with `nix-update <name> --flake`. `just update-pkgs` discovers every
+package with a `passthru.updateScript` and runs `nix-update --use-update-script`;
+packages without one are reported and must be bumped by hand.
 
 ## Daily Use
 
@@ -49,6 +49,7 @@ just dry-build
 just rebuild
 just diff
 just doctor
+just update-pkgs
 ```
 
 The Fish aliases live in `modules/home/shared/programs/fish.nix` and pick the

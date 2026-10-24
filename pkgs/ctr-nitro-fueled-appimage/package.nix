@@ -13,6 +13,16 @@ let
   pname = "ctr-nitro-fueled-appimage";
   version = "0.6.4";
 
+  meta = {
+    description = "SacredFire launcher for your own copy of Crash Team Racing: Nitro-Fueled (Online CTR)";
+    homepage = "https://github.com/Ryu7w7/OCTR-NitroFueled-PC";
+    license = lib.licenses.gpl2Only;
+    platforms = [ "x86_64-linux" ];
+    mainProgram = "sacredfire";
+  };
+
+  updateScript = nix-update-script { extraArgs = [ "--flake" ]; };
+
   src = fetchurl {
     url = "https://github.com/Ryu7w7/OCTR-NitroFueled-PC/releases/download/v${version}/SacredFire-v${version}-x86_64.AppImage";
     hash = "sha256-mvbYi1JzU2cCmRBHJXGzAFYc1+FhfaHTZ0JJU28Vjy4=";
@@ -49,6 +59,7 @@ stdenv.mkDerivation {
     pname
     version
     src
+    meta
     ;
 
   dontUnpack = true;
@@ -68,13 +79,5 @@ stdenv.mkDerivation {
     runHook postInstall
   '';
 
-  meta = {
-    description = "SacredFire launcher for your own copy of Crash Team Racing: Nitro-Fueled (Online CTR)";
-    homepage = "https://github.com/Ryu7w7/OCTR-NitroFueled-PC";
-    license = lib.licenses.gpl2Only;
-    platforms = [ "x86_64-linux" ];
-    mainProgram = "sacredfire";
-  };
-
-  passthru.updateScript = nix-update-script { };
+  passthru.updateScript = updateScript;
 }

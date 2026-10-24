@@ -19,6 +19,9 @@ update:
     nix flake update --flake {{flake}}
     nh os switch {{flake}}#{{host}}
 
+update-pkgs:
+    nix run {{flake}}#update-pkgs
+
 diff:
     nix build {{flake}}#nixosConfigurations.{{host}}.config.system.build.toplevel
     nvd diff /run/current-system result

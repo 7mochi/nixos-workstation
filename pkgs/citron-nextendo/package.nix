@@ -6,16 +6,46 @@
   dwarfs,
   binutils-unwrapped,
   makeDesktopItem,
-  nix-update-script,
+  writeShellApplication,
+  curl,
+  jq,
+  nix-update,
 }:
 
 let
   pname = "citron-nextendo";
-  version = "d96b6beed";
+  version = "fe86634e1";
+
+  meta = {
+    description = "Citron Nextendo - Nintendo Switch emulator with Nextendo Network online support (nightly)";
+    homepage = "https://github.com/NextendoNetwork/citron-nextendo";
+    license = lib.licenses.gpl2Plus;
+    platforms = [ "x86_64-linux" ];
+    mainProgram = pname;
+  };
+
+  updateScriptBin = writeShellApplication {
+    name = "update-citron-nextendo";
+    runtimeInputs = [
+      curl
+      jq
+      nix-update
+    ];
+    text = ''
+      version="$(
+        curl -fsSL "https://api.github.com/repos/NextendoNetwork/citron-nextendo/releases/tags/nightly-linux" \
+          | jq -er '[.assets[].name | select(test("^citron_nightly-[0-9a-f]+-linux-x86_64_v3\\.AppImage$")) | capture("^citron_nightly-(?<version>[0-9a-f]+)-").version] | first'
+      )"
+
+      exec nix-update citron-nextendo --flake --version="$version"
+    '';
+  };
+
+  updateScript = [ "${updateScriptBin}/bin/update-citron-nextendo" ];
 
   src = fetchurl {
     url = "https://github.com/NextendoNetwork/citron-nextendo/releases/download/nightly-linux/citron_nightly-${version}-linux-x86_64_v3.AppImage";
-    hash = "sha256-9fFem/f/KaAXxNEZht4cFf7xm32VZ7hgkKzcj/sn/Mc=";
+    hash = "sha256-X+O+86STVLTB41NVtyyfwQCP9/YL7KhqFIeBIIuoSOk=";
   };
 
   contents =
@@ -32,14 +62,6 @@ let
         dwarfsextract -i ${src} -o $out -O $offset
         chmod -R u+w $out
       '';
-
-  meta = {
-    description = "Citron Nextendo - Nintendo Switch emulator with Nextendo Network online support (nightly)";
-    homepage = "https://github.com/NextendoNetwork/citron-nextendo";
-    license = lib.licenses.gpl2Plus;
-    platforms = [ "x86_64-linux" ];
-    mainProgram = pname;
-  };
 
   desktopItem = makeDesktopItem {
     name = pname;
@@ -72,7 +94,7 @@ let
           $out/share/applications/${pname}.desktop
       '';
 
-      passthru.updateScript = nix-update-script { };
+      passthru.updateScript = updateScript;
     })
     // {
       inherit src;

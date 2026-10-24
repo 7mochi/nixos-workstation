@@ -24,11 +24,54 @@
   openssl,
   libudev-zero,
   libgdiplus,
+  writeShellApplication,
+  curl,
+  git,
+  jq,
+  nix,
+  gnused,
+  coreutils,
+  gnugrep,
 }:
 
 let
   pname = "retrogecko";
   version = "b1135";
+
+  meta = {
+    description = "RetroGecko osu! client (titanic.sh)";
+    homepage = "https://osu.titanic.sh/forum/23/t/1290/";
+    license = lib.licenses.unfree;
+    platforms = [ "x86_64-linux" ];
+    mainProgram = "retrogecko";
+  };
+
+  updateScriptBin = writeShellApplication {
+    name = "update-retrogecko";
+    runtimeInputs = [
+      coreutils
+      curl
+      git
+      gnugrep
+      gnused
+      jq
+      nix
+    ];
+    text = ''
+      cd "$(git rev-parse --show-toplevel)"
+      FILE="pkgs/retrogecko/package.nix"
+
+      new_version="$(curl -fsSL "https://jvyden.xyz/gex/retro/" | grep -oE 'retrogecko-b[0-9]+-linux-x64\.zip' | sort -Vu | tail -1 | sed -E 's/retrogecko-(b[0-9]+)-linux-x64\.zip/\1/')"
+
+      new_url="https://jvyden.xyz/gex/retro/retrogecko-$new_version-linux-x64.zip"
+      sri_hash="$(nix-prefetch-url --unpack "$new_url" | xargs nix hash convert --hash-algo sha256 --to sri)"
+
+      sed -i -e "s|version = \".*\"|version = \"$new_version\"|g" "$FILE"
+      sed -i -e "s|hash = \".*\"|hash = \"$sri_hash\"|g" "$FILE"
+    '';
+  };
+
+  updateScript = [ "${updateScriptBin}/bin/update-retrogecko" ];
 
   src = fetchzip {
     inherit version;
@@ -85,7 +128,12 @@ let
   '';
 
   drv = stdenv.mkDerivation {
-    inherit pname version src;
+    inherit
+      pname
+      version
+      src
+      meta
+      ;
 
     nativeBuildInputs = [ patchelf ];
 
@@ -110,22 +158,22 @@ let
       runHook postInstall
     '';
 
-    meta = {
-      description = "RetroGecko osu! client (titanic.sh)";
-      homepage = "https://osu.titanic.sh/forum/23/t/1290/";
-      license = lib.licenses.unfree;
-      platforms = [ "x86_64-linux" ];
-      mainProgram = "retrogecko";
-    };
-
-    passthru.updateScript = ./update.sh;
   };
 in
-symlinkJoin {
+(symlinkJoin {
   name = "${pname}-${version}";
   paths = [
     drv
     launcher
     desktopItem
   ];
+})
+// {
+  inherit
+    version
+    src
+    updateScript
+    meta
+    ;
+  passthru.updateScript = updateScript;
 }

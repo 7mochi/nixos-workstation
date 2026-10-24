@@ -10,11 +10,21 @@
 
 let
   pname = "osu-lazer-torii-appimage";
-  version = "2026.1020.1-nova";
+  version = "2026.1022.0-nova";
+
+  meta = {
+    description = "Torii osu! client (osu!lazer fork)";
+    homepage = "https://github.com/ShikkesoraSIM/torii-osu";
+    license = lib.licenses.mit;
+    platforms = [ "x86_64-linux" ];
+    mainProgram = "torii";
+  };
+
+  updateScript = nix-update-script { extraArgs = [ "--flake" ]; };
 
   src = fetchurl {
     url = "https://github.com/ShikkesoraSIM/torii-osu/releases/download/v${version}/torii-linux-x64.AppImage";
-    hash = "sha256-C+4fswLiTgwrRCWIxxaumGnX6HTUKPl6PxjWH5ui35E=";
+    hash = "sha256-aNZXC5mtI/KNImoJgsXEXbh7/kSFrq+FPVlvwc9zaeY=";
   };
 
   icon =
@@ -29,14 +39,6 @@ let
         mkdir -p $out
         magick "ICO:${extracted}/.DirIcon[6]" -resize 256x256 png:$out/torii.png
       '';
-
-  meta = {
-    description = "Torii osu! client (osu!lazer fork)";
-    homepage = "https://github.com/ShikkesoraSIM/torii-osu";
-    license = lib.licenses.mit;
-    platforms = [ "x86_64-linux" ];
-    mainProgram = "torii";
-  };
 in
 appimageTools.wrapType2 (finalAttrs: {
   inherit
@@ -58,5 +60,5 @@ appimageTools.wrapType2 (finalAttrs: {
     done
   '';
 
-  passthru.updateScript = nix-update-script { };
+  passthru.updateScript = updateScript;
 })
