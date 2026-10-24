@@ -6,7 +6,7 @@ _:
       input = {
         keyboard.xkb = {
           layout = "us";
-          variant = "intl";
+          variant = "altgr-intl";
         };
         touchpad = {
           tap = true;
