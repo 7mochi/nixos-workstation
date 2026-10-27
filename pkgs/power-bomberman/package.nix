@@ -2,6 +2,7 @@
   lib,
   stdenv,
   fetchurl,
+  patchelf,
   autoPatchelfHook,
   makeDesktopItem,
   writers,
@@ -102,7 +103,22 @@ let
       meta
       ;
 
-    nativeBuildInputs = [ autoPatchelfHook ];
+    nativeBuildInputs = [
+      # patchelf 0.19.2 aborts with `splitIndex == -1` on this ELF after
+      # changing the interpreter and RPATH. Pin 0.15.2 until
+      # https://github.com/NixOS/patchelf/issues/674 is fixed, same workaround
+      # as https://github.com/NixOS/nixpkgs/pull/576879
+      (patchelf.overrideAttrs (
+        finalAttrs: _: {
+          version = "0.15.2";
+          src = fetchurl {
+            url = "https://github.com/NixOS/patchelf/releases/download/${finalAttrs.version}/patchelf-${finalAttrs.version}.tar.bz2";
+            hash = "sha256-F3RfVkFZyOIo/EEtplogSLhGxLa0Igt3y/IkFuAvLXw=";
+          };
+        }
+      ))
+      autoPatchelfHook
+    ];
 
     buildInputs = [
       libGL
