@@ -7,7 +7,7 @@ _:
     {
       environment.systemPackages = with pkgs; [
         # JavaScript runtimes and package managers.
-        nodejs_24
+        nodejs_26
         corepack
         mise
         usage

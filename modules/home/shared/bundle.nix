@@ -4,6 +4,7 @@
   flake.modules.homeManager.shared = {
     imports = map (name: config.flake.modules.homeManager.${name}) [
       "agent-skills"
+      "commandcode"
       "cursor"
       "direnv"
       "equibop"
@@ -22,6 +23,7 @@
       "opencode"
       "osu-stable"
       "packages"
+      "rea"
       "starship"
       "vscode"
       "web-apps"
