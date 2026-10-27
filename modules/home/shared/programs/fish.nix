@@ -190,6 +190,111 @@ _:
         lip = ''
           command ls "$XDG_RUNTIME_DIR"/ssh-fwd-* 2>/dev/null
         '';
+
+        hlds = ''
+          set -l conf /var/lib/hlds/launch.conf
+
+          if test (count $argv) -eq 0
+            systemctl status docker-hlds
+            return
+          end
+
+          switch $argv[1]
+            case status
+              systemctl status docker-hlds
+            case start
+              sudo systemctl start docker-hlds
+            case stop
+              sudo systemctl stop docker-hlds
+            case restart
+              sudo systemctl restart docker-hlds
+            case logs
+              journalctl CONTAINER_NAME=hlds -f $argv[2..-1]
+            case game
+              if test (count $argv) -lt 2
+                echo "usage: hlds game <name> [map]"
+                return 1
+              end
+
+              set -l game $argv[2]
+              if not string match -qr '^[A-Za-z0-9_-]+$' -- $game
+                echo "hlds: invalid game name: $game"
+                return 1
+              end
+
+              set -l map crossfire
+              if test (count $argv) -ge 3
+                set map $argv[3]
+              else if test "$game" = ag
+                set map ag_crossfire
+              end
+
+              set -l args (sed -n 's/^ARGS=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$args"; or set args "+sv_lan 1 +maxplayers 12"
+
+              mkdir -p /var/lib/hlds/config/$game
+              ln -sfn /var/lib/hlds/config/$game /var/lib/hlds/config-active
+              printf 'GAME=%s\nMAP=%s\nARGS=%s\n' $game $map "$args" > $conf
+              sudo systemctl restart docker-hlds
+              echo "hlds: $game / $map"
+            case map
+              if test (count $argv) -ne 2
+                echo "usage: hlds map <map>"
+                return 1
+              end
+
+              set -l game (sed -n 's/^GAME=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$game"; or set game valve
+              set -l args (sed -n 's/^ARGS=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$args"; or set args "+sv_lan 1 +maxplayers 12"
+
+              printf 'GAME=%s\nMAP=%s\nARGS=%s\n' $game $argv[2] "$args" > $conf
+              sudo systemctl restart docker-hlds
+              echo "hlds: $game / $argv[2]"
+            case args
+              if test (count $argv) -lt 2
+                echo "usage: hlds args <arg> [arg...]"
+                return 1
+              end
+
+              set -l game (sed -n 's/^GAME=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$game"; or set game valve
+              set -l map (sed -n 's/^MAP=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$map"; or set map crossfire
+
+              set -l args (string join ' ' $argv[2..-1])
+              printf 'GAME=%s\nMAP=%s\nARGS=%s\n' $game $map "$args" > $conf
+              sudo systemctl restart docker-hlds
+              echo "hlds: $game / $map"
+            case mods
+              cd /var/lib/hlds/mods
+            case config
+              set -l game (sed -n 's/^GAME=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$game"; or set game valve
+              cd /var/lib/hlds/config/$game
+            case info
+              set -l game (sed -n 's/^GAME=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$game"; or set game valve
+              set -l map (sed -n 's/^MAP=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$map"; or set map crossfire
+              set -l args (sed -n 's/^ARGS=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$args"; or set args "+sv_lan 1 +maxplayers 12"
+              echo "GAME=$game"
+              echo "MAP=$map"
+              echo "ARGS=$args"
+            case ip
+              ip -brief addr show enp6s0
+            case console
+              docker attach hlds
+            case shell
+              docker exec -it hlds sh
+            case help
+              echo "usage: hlds <status|start|stop|restart|logs|game|map|args|mods|config|info|ip|console|shell>"
+            case "*"
+              echo "usage: hlds <status|start|stop|restart|logs|game|map|args|mods|config|info|ip|console|shell>"
+              return 1
+          end
+        '';
       };
     };
   };

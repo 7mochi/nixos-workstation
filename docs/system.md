@@ -139,3 +139,132 @@ root-equivalent, so do not add users to it casually.
 
 Podman is present as a disabled default. Enable it only when the workflow no
 longer depends on Docker socket semantics.
+
+### HLDS Server
+
+The workstation runs a LAN-only Half-Life dedicated server as the
+`docker-hlds` systemd unit. The definition lives in
+`modules/hosts/workstation/hlds.nix`. The image is pinned by digest and uses
+host networking so the NixOS firewall, not Docker, controls exposure.
+
+The server is intentionally LAN-only: the default `ARGS` includes `+sv_lan 1`
+and firewall access is only on `enp6s0`. Do not replace host networking with
+Docker `ports`; published ports bypass the NixOS firewall.
+
+Game, map, and extra launch arguments are runtime state in
+`/var/lib/hlds/launch.conf`:
+
+```sh
+GAME=valve
+MAP=crossfire
+ARGS=+sv_lan 1 +maxplayers 12
+```
+
+A small entrypoint wrapper reads this file on every container start, exports
+`GAME`, and runs the upstream `entrypoint.sh` with `+map "$MAP" $ARGS`.
+Changing the file only needs a unit restart; it does not require `just rebuild`.
+
+The `hlds` Fish function wraps the common operations:
+
+```sh
+hlds              # status
+hlds start
+hlds stop
+hlds restart
+hlds logs         # follow container output; extra args go to journalctl
+hlds game valve
+hlds game ag ag_crossfire
+hlds map crossfire
+hlds args +sv_lan 1 +maxplayers 16
+hlds mods         # cd /var/lib/hlds/mods
+hlds config       # cd the active game's config directory
+hlds info         # show GAME, MAP and ARGS from launch.conf
+hlds ip           # show the enp6s0 address
+hlds console      # attach to the HLDS console
+hlds shell        # shell inside the running container
+```
+
+`hlds game` writes `GAME`/`MAP`, switches `config-active` to
+`/var/lib/hlds/config/<game>`, and restarts the unit. `hlds map` and
+`hlds args` preserve the other fields. These commands work from another shell
+too: edit `launch.conf` and run `sudo systemctl restart docker-hlds`.
+
+`hlds logs` uses `journalctl CONTAINER_NAME=hlds -f $argv[2..-1]`, so
+`hlds logs -n 200` shows recent output before following. These are Fish
+helpers; from another shell use the systemd commands directly.
+
+`hlds console` uses `docker attach hlds`; the container runs with `-i` so
+the HLDS console accepts commands. Detach with `Ctrl-P`, `Ctrl-Q`; do not press
+`Ctrl-C`, which stops the server.
+
+Manage it with systemd:
+
+```sh
+systemctl status docker-hlds
+sudo systemctl start docker-hlds
+sudo systemctl stop docker-hlds
+sudo systemctl restart docker-hlds
+journalctl -u docker-hlds -n 100 --no-pager
+docker logs -f hlds
+journalctl CONTAINER_NAME=hlds -f
+```
+
+The container is recreated on every start (`docker rm -f hlds` plus `--rm`), so
+changes made inside the container are lost. Keep changes on the host:
+
+- `/var/lib/hlds/config/valve` and `/var/lib/hlds/config/ag` hold per-game
+  configs. `/var/lib/hlds/config-active` points at the active one.
+- `/var/lib/hlds/mods` is shared by all games. Put the AG mod under
+  `/var/lib/hlds/mods/ag`.
+
+Both trees are writable by `root:users`. Files left directly under
+`/var/lib/hlds/config` are no longer used; move them into
+`/var/lib/hlds/config/valve` or `/var/lib/hlds/config/ag`. Do not edit files
+under `/opt/steam/hlds` inside the container; they disappear on the next start.
+
+For mod development, put the mod directory under `/var/lib/hlds/mods`, then
+switch with `hlds game <mod> <map>` and restart. The startup sync copies it into
+the container before HLDS starts. If `GAME=ag` but the mod directory or map is
+missing, HLDS fails to start; check `hlds logs` or
+`journalctl CONTAINER_NAME=hlds -n 100`.
+
+Docker-level commands:
+
+```sh
+docker ps
+docker logs -f hlds
+docker stats hlds
+docker inspect hlds
+docker exec -it hlds sh
+```
+
+`docker exec` is useful for inspecting the running container, but it is not a
+place to make persistent changes. The unit journal (`journalctl -u
+docker-hlds`) records systemd events; the container's own output is under
+`CONTAINER_NAME=hlds` because Docker uses the journald log driver.
+
+Connect from another machine on the LAN with the workstation address:
+
+```sh
+ip -brief addr show enp6s0
+```
+
+Then in the game console:
+
+```text
+connect <workstation-lan-ip>:27015
+```
+
+The server listens on UDP `27015`; TCP `27015` and UDP `26900` are also allowed
+for the upstream image. `sv_lan 1` means it is not announced to the internet.
+
+To update the image, resolve the current digest, update `image` in the module,
+and rebuild:
+
+```sh
+nix run nixpkgs#skopeo -- inspect --format '{{.Digest}}' docker://docker.io/jives/hlds:valve
+just rebuild
+```
+
+After changing Nix configuration, use `just rebuild`. After changing
+`launch.conf`, configs, or mods, `sudo systemctl restart docker-hlds` is enough.

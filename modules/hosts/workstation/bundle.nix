@@ -7,6 +7,7 @@
       "databases"
       "etc-hosts"
       "hardware"
+      "hlds"
       "workstation-home-manager"
       "workstation-system"
       "monitors"

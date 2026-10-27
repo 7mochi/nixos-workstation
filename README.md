@@ -152,6 +152,35 @@ Inspect connected outputs and their exact mode strings:
 niri msg outputs
 ```
 
+## HLDS Server
+
+The workstation runs a LAN-only Half-Life Dedicated Server as an OCI container
+through `virtualisation.oci-containers`, using Docker and host networking. It
+runs with `+sv_lan 1`, is reachable only on the LAN interface `enp6s0`, and the
+NixOS firewall allows TCP/UDP `27015` and UDP `26900` there, so it is not
+exposed through the WAN or Mullvad.
+
+- Module: `modules/hosts/workstation/hlds.nix`
+- Runtime state: `/var/lib/hlds/launch.conf` (`GAME`, `MAP`, `ARGS`)
+- Config: `/var/lib/hlds/config/<game>`, active via `/var/lib/hlds/config-active`
+- Mods: `/var/lib/hlds/mods` (AG lives in `mods/ag`)
+- Switch: `hlds game ag ag_crossfire`, `hlds map <map>`, `hlds args ...`
+- Manage: `hlds <status|start|stop|restart|logs|game|map|args|mods|config|info|ip|console|shell>`
+  (`hlds` with no argument shows the service status)
+- Console: `hlds console` (detach with `Ctrl-P`, `Ctrl-Q`)
+- Logs: `hlds logs` or `journalctl CONTAINER_NAME=hlds -f`
+- Detailed operations: `docs/system.md#hlds-server`
+
+Switching game, map, or arguments does not require a rebuild; `hlds` updates
+`launch.conf` and restarts the unit.
+
+The image is pinned by digest. To update it, resolve the current digest and
+change the `image` value:
+
+```sh
+nix run nixpkgs#skopeo -- inspect --format '{{.Digest}}' docker://docker.io/jives/hlds:valve
+```
+
 ## Development
 
 Use `mise` for per-project runtime versions:
@@ -183,7 +212,7 @@ More notes:
 
 - `docs/installation.md`: hosts, fresh install, reinstall, post install.
 - `docs/desktop.md`: Niri, Noctalia, SDDM, portals, cursor handling.
-- `docs/system.md`: boot, storage, secrets.
+- `docs/system.md`: boot, storage, secrets, HLDS server.
 - `docs/dev-workflows.md`: daily development workflow.
 - `docs/dev-templates.md`: project templates.
 
