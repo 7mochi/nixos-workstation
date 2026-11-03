@@ -11,6 +11,7 @@
       "fastfetch"
       "fish"
       "git"
+      "godot"
       "jetbrains"
       "kitty"
       "niri-animations"
