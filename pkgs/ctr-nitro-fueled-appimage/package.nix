@@ -11,7 +11,7 @@
 
 let
   pname = "ctr-nitro-fueled-appimage";
-  version = "0.6.4";
+  version = "0.8.1";
 
   meta = {
     description = "SacredFire launcher for your own copy of Crash Team Racing: Nitro-Fueled (Online CTR)";
@@ -25,7 +25,7 @@ let
 
   src = fetchurl {
     url = "https://github.com/Ryu7w7/OCTR-NitroFueled-PC/releases/download/v${version}/SacredFire-v${version}-x86_64.AppImage";
-    hash = "sha256-mvbYi1JzU2cCmRBHJXGzAFYc1+FhfaHTZ0JJU28Vjy4=";
+    hash = "sha256-qAPpzqoii7qUvHAJNLGSZYwWEYcPk+Yoa1w5UVXHqvQ=";
   };
 
   iconName = "io.github.sacredfire.Launcher";
