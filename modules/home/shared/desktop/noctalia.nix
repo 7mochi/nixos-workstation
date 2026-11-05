@@ -139,7 +139,6 @@
               "notifications"
               "clipboard"
               "network"
-              "bluetooth"
               "volume"
               "brightness"
               "battery"
