@@ -74,6 +74,7 @@
 
       hardware = {
         enableRedistributableFirmware = lib.mkDefault true;
+        amdgpu.initrd.enable = true;
         cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
         opentabletdriver.enable = true;
         wooting.enable = true;
