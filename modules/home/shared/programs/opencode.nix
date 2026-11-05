@@ -6,6 +6,8 @@ _:
     {
       home.sessionVariables.SUPERPOWERS_DISABLE_TELEMETRY = "true";
 
+      home.packages = [ pkgs.mcp-nixos ];
+
       xdg.configFile = {
         "opencode/opencode.json".text = ''
           {
@@ -21,6 +23,11 @@ _:
                   "GHIDRA_INSTALL_DIR": "${pkgs.ghidra}/lib/ghidra"
                 },
                 "timeout": 1800000,
+                "enabled": true
+              },
+              "nixos": {
+                "type": "local",
+                "command": ["mcp-nixos"],
                 "enabled": true
               }
             },
