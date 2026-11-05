@@ -142,27 +142,40 @@ longer depends on Docker socket semantics.
 
 ### HLDS Server
 
-The workstation runs a LAN-only Half-Life dedicated server as the
+The workstation hosts a LAN-only Half-Life dedicated server as the
 `docker-hlds` systemd unit. The definition lives in
-`modules/hosts/workstation/hlds.nix`. The image is pinned by digest and uses
-host networking so the NixOS firewall, not Docker, controls exposure.
+`modules/hosts/workstation/hlds.nix`. Both branch images are pinned by digest
+and use host networking so the NixOS firewall, not Docker, controls exposure.
 
 The server is intentionally LAN-only: the default `ARGS` includes `+sv_lan 1`
 and firewall access is only on `enp6s0`. Do not replace host networking with
 Docker `ports`; published ports bypass the NixOS firewall.
 
-Game, map, and extra launch arguments are runtime state in
+The unit is not enabled at boot (`autoStart = false`); start it with
+`hlds start` or `sudo systemctl start docker-hlds`.
+
+Game, map, branch, engine, and extra launch arguments are runtime state in
 `/var/lib/hlds/launch.conf`:
 
 ```sh
 GAME=valve
 MAP=crossfire
+BRANCH=public
+ENGINE=stock
 ARGS=+sv_lan 1 +maxplayers 12
 ```
 
 A small entrypoint wrapper reads this file on every container start, exports
 `GAME`, and runs the upstream `entrypoint.sh` with `+map "$MAP" $ARGS`.
-Changing the file only needs a unit restart; it does not require `just rebuild`.
+`BRANCH=legacy` selects the pre-25th Anniversary Steam build; `BRANCH=public`
+uses the current build. Changing the file only needs a unit restart; it does
+not require `just rebuild`.
+
+`ENGINE=stock` uses the engine shipped by the image. `ENGINE=rehlds` replaces
+`engine_i486.so` with the pinned ReHLDS build before HLDS starts. ReHLDS only
+supports the pre-25th Anniversary HLDS engine, so it requires
+`BRANCH=legacy`; `hlds engine rehlds` sets both. ReHLDS is only the engine:
+Metamod-R, ReGameDLL, AMX Mod X, and plugins are separate layers.
 
 The `hlds` Fish function wraps the common operations:
 
@@ -174,28 +187,49 @@ hlds restart
 hlds logs         # follow container output; extra args go to journalctl
 hlds game valve
 hlds game ag ag_crossfire
+hlds branch legacy
+hlds branch public
+hlds engine rehlds
+hlds engine stock
 hlds map crossfire
 hlds args +sv_lan 1 +maxplayers 16
 hlds mods         # cd /var/lib/hlds/mods
 hlds config       # cd the active game's config directory
-hlds info         # show GAME, MAP and ARGS from launch.conf
+hlds info         # show GAME, MAP, BRANCH, ENGINE and ARGS from launch.conf
 hlds ip           # show the enp6s0 address
 hlds console      # attach to the HLDS console
 hlds shell        # shell inside the running container
 ```
 
 `hlds game` writes `GAME`/`MAP`, switches `config-active` to
-`/var/lib/hlds/config/<game>`, and restarts the unit. `hlds map` and
-`hlds args` preserve the other fields. These commands work from another shell
-too: edit `launch.conf` and run `sudo systemctl restart docker-hlds`.
+`/var/lib/hlds/config/<game>`, and restarts the unit. `hlds branch` writes
+`BRANCH`; `hlds engine` writes `ENGINE`; `hlds map` and `hlds args` preserve the
+other fields. These commands work from another shell too: edit `launch.conf`
+and run `sudo systemctl restart docker-hlds`.
+
+`BRANCH=legacy` uses `jives/hlds:valve-legacy`, built from the
+`steam_legacy` Steam branch (pre-25th Anniversary). `BRANCH=public` uses the
+normal `valve` image. Both are pinned; the systemd pre-start step pulls the
+selected image if needed and retags it locally, so switching branches does not
+require a Nix rebuild. The branch affects the base game; configs and mods are
+shared as before. With `GAME=ag`, the legacy branch uses the legacy Valve
+engine as the base for the AG mod.
+
+`hlds engine rehlds` forces `BRANCH=legacy` and copies the pinned ReHLDS
+`engine_i486.so` over the image's engine in the container before startup.
+`hlds branch public` with ReHLDS active switches back to `ENGINE=stock` so the
+configuration stays valid. ReHLDS is packaged in `pkgs/rehlds`; `just
+update-pkgs` updates it, or edit the version and hash there and rebuild.
+ReHLDS has no effect on configs or mods.
 
 `hlds logs` uses `journalctl CONTAINER_NAME=hlds -f $argv[2..-1]`, so
 `hlds logs -n 200` shows recent output before following. These are Fish
 helpers; from another shell use the systemd commands directly.
 
-`hlds console` uses `docker attach hlds`; the container runs with `-i` so
-the HLDS console accepts commands. Detach with `Ctrl-P`, `Ctrl-Q`; do not press
-`Ctrl-C`, which stops the server.
+`hlds console` uses the `hlds-console` helper. It follows `docker logs` and
+forwards input to the container's PID 1 stdin with `docker exec`; it does not
+use `docker attach`. `Ctrl-C` exits the console client without stopping the
+server, and the next `hlds console` can send commands again.
 
 Manage it with systemd:
 
@@ -258,11 +292,12 @@ connect <workstation-lan-ip>:27015
 The server listens on UDP `27015`; TCP `27015` and UDP `26900` are also allowed
 for the upstream image. `sv_lan 1` means it is not announced to the internet.
 
-To update the image, resolve the current digest, update `image` in the module,
-and rebuild:
+To update the images, resolve the current digests, update the `images` attr in
+the module, and rebuild:
 
 ```sh
 nix run nixpkgs#skopeo -- inspect --format '{{.Digest}}' docker://docker.io/jives/hlds:valve
+nix run nixpkgs#skopeo -- inspect --format '{{.Digest}}' docker://docker.io/jives/hlds:valve-legacy
 just rebuild
 ```
 

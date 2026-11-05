@@ -231,12 +231,71 @@ _:
 
               set -l args (sed -n 's/^ARGS=//p' $conf 2>/dev/null | tail -n 1)
               test -n "$args"; or set args "+sv_lan 1 +maxplayers 12"
+              set -l branch (sed -n 's/^BRANCH=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$branch"; or set branch public
+              set -l engine (sed -n 's/^ENGINE=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$engine"; or set engine stock
 
               mkdir -p /var/lib/hlds/config/$game
               ln -sfn /var/lib/hlds/config/$game /var/lib/hlds/config-active
-              printf 'GAME=%s\nMAP=%s\nARGS=%s\n' $game $map "$args" > $conf
+              printf 'GAME=%s\nMAP=%s\nBRANCH=%s\nENGINE=%s\nARGS=%s\n' $game $map $branch $engine "$args" > $conf
               sudo systemctl restart docker-hlds
-              echo "hlds: $game / $map"
+              echo "hlds: $game / $map ($branch, $engine)"
+            case branch
+              if test (count $argv) -ne 2
+                echo "usage: hlds branch <public|legacy>"
+                return 1
+              end
+
+              set -l branch $argv[2]
+              if not string match -qr '^(public|legacy)$' -- $branch
+                echo "hlds: invalid branch: $branch"
+                return 1
+              end
+
+              set -l game (sed -n 's/^GAME=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$game"; or set game valve
+              set -l map (sed -n 's/^MAP=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$map"; or set map crossfire
+              set -l engine (sed -n 's/^ENGINE=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$engine"; or set engine stock
+              if test "$branch" = public -a "$engine" = rehlds
+                set engine stock
+                echo "hlds: ReHLDS requires legacy; using stock engine"
+              end
+              set -l args (sed -n 's/^ARGS=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$args"; or set args "+sv_lan 1 +maxplayers 12"
+
+              printf 'GAME=%s\nMAP=%s\nBRANCH=%s\nENGINE=%s\nARGS=%s\n' $game $map $branch $engine "$args" > $conf
+              sudo systemctl restart docker-hlds
+              echo "hlds: $game / $map ($branch, $engine)"
+            case engine
+              if test (count $argv) -ne 2
+                echo "usage: hlds engine <stock|rehlds>"
+                return 1
+              end
+
+              set -l engine $argv[2]
+              if not string match -qr '^(stock|rehlds)$' -- $engine
+                echo "hlds: invalid engine: $engine"
+                return 1
+              end
+
+              set -l game (sed -n 's/^GAME=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$game"; or set game valve
+              set -l map (sed -n 's/^MAP=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$map"; or set map crossfire
+              set -l branch (sed -n 's/^BRANCH=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$branch"; or set branch public
+              if test "$engine" = rehlds
+                set branch legacy
+              end
+              set -l args (sed -n 's/^ARGS=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$args"; or set args "+sv_lan 1 +maxplayers 12"
+
+              printf 'GAME=%s\nMAP=%s\nBRANCH=%s\nENGINE=%s\nARGS=%s\n' $game $map $branch $engine "$args" > $conf
+              sudo systemctl restart docker-hlds
+              echo "hlds: $game / $map ($branch, $engine)"
             case map
               if test (count $argv) -ne 2
                 echo "usage: hlds map <map>"
@@ -247,10 +306,14 @@ _:
               test -n "$game"; or set game valve
               set -l args (sed -n 's/^ARGS=//p' $conf 2>/dev/null | tail -n 1)
               test -n "$args"; or set args "+sv_lan 1 +maxplayers 12"
+              set -l branch (sed -n 's/^BRANCH=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$branch"; or set branch public
+              set -l engine (sed -n 's/^ENGINE=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$engine"; or set engine stock
 
-              printf 'GAME=%s\nMAP=%s\nARGS=%s\n' $game $argv[2] "$args" > $conf
+              printf 'GAME=%s\nMAP=%s\nBRANCH=%s\nENGINE=%s\nARGS=%s\n' $game $argv[2] $branch $engine "$args" > $conf
               sudo systemctl restart docker-hlds
-              echo "hlds: $game / $argv[2]"
+              echo "hlds: $game / $argv[2] ($branch, $engine)"
             case args
               if test (count $argv) -lt 2
                 echo "usage: hlds args <arg> [arg...]"
@@ -261,11 +324,15 @@ _:
               test -n "$game"; or set game valve
               set -l map (sed -n 's/^MAP=//p' $conf 2>/dev/null | tail -n 1)
               test -n "$map"; or set map crossfire
+              set -l branch (sed -n 's/^BRANCH=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$branch"; or set branch public
+              set -l engine (sed -n 's/^ENGINE=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$engine"; or set engine stock
 
               set -l args (string join ' ' $argv[2..-1])
-              printf 'GAME=%s\nMAP=%s\nARGS=%s\n' $game $map "$args" > $conf
+              printf 'GAME=%s\nMAP=%s\nBRANCH=%s\nENGINE=%s\nARGS=%s\n' $game $map $branch $engine "$args" > $conf
               sudo systemctl restart docker-hlds
-              echo "hlds: $game / $map"
+              echo "hlds: $game / $map ($branch, $engine)"
             case mods
               cd /var/lib/hlds/mods
             case config
@@ -277,21 +344,27 @@ _:
               test -n "$game"; or set game valve
               set -l map (sed -n 's/^MAP=//p' $conf 2>/dev/null | tail -n 1)
               test -n "$map"; or set map crossfire
+              set -l branch (sed -n 's/^BRANCH=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$branch"; or set branch public
+              set -l engine (sed -n 's/^ENGINE=//p' $conf 2>/dev/null | tail -n 1)
+              test -n "$engine"; or set engine stock
               set -l args (sed -n 's/^ARGS=//p' $conf 2>/dev/null | tail -n 1)
               test -n "$args"; or set args "+sv_lan 1 +maxplayers 12"
               echo "GAME=$game"
               echo "MAP=$map"
+              echo "BRANCH=$branch"
+              echo "ENGINE=$engine"
               echo "ARGS=$args"
             case ip
               ip -brief addr show enp6s0
             case console
-              docker attach hlds
+              hlds-console
             case shell
               docker exec -it hlds sh
             case help
-              echo "usage: hlds <status|start|stop|restart|logs|game|map|args|mods|config|info|ip|console|shell>"
+              echo "usage: hlds <status|start|stop|restart|logs|game|branch|engine|map|args|mods|config|info|ip|console|shell>"
             case "*"
-              echo "usage: hlds <status|start|stop|restart|logs|game|map|args|mods|config|info|ip|console|shell>"
+              echo "usage: hlds <status|start|stop|restart|logs|game|branch|engine|map|args|mods|config|info|ip|console|shell>"
               return 1
           end
         '';

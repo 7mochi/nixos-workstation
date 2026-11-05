@@ -154,31 +154,40 @@ niri msg outputs
 
 ## HLDS Server
 
-The workstation runs a LAN-only Half-Life Dedicated Server as an OCI container
+The workstation hosts a LAN-only Half-Life Dedicated Server as an OCI container
 through `virtualisation.oci-containers`, using Docker and host networking. It
 runs with `+sv_lan 1`, is reachable only on the LAN interface `enp6s0`, and the
 NixOS firewall allows TCP/UDP `27015` and UDP `26900` there, so it is not
 exposed through the WAN or Mullvad.
 
+The unit is not enabled at boot (`autoStart = false`); start it with
+`hlds start` or `sudo systemctl start docker-hlds`.
+
 - Module: `modules/hosts/workstation/hlds.nix`
-- Runtime state: `/var/lib/hlds/launch.conf` (`GAME`, `MAP`, `ARGS`)
+- Runtime state: `/var/lib/hlds/launch.conf` (`GAME`, `MAP`, `BRANCH`, `ENGINE`, `ARGS`)
 - Config: `/var/lib/hlds/config/<game>`, active via `/var/lib/hlds/config-active`
 - Mods: `/var/lib/hlds/mods` (AG lives in `mods/ag`)
-- Switch: `hlds game ag ag_crossfire`, `hlds map <map>`, `hlds args ...`
-- Manage: `hlds <status|start|stop|restart|logs|game|map|args|mods|config|info|ip|console|shell>`
+- Switch: `hlds game ag ag_crossfire`, `hlds map <map>`, `hlds args ...`,
+  `hlds branch legacy|public`, `hlds engine stock|rehlds`
+- Manage: `hlds <status|start|stop|restart|logs|game|branch|engine|map|args|mods|config|info|ip|console|shell>`
   (`hlds` with no argument shows the service status)
-- Console: `hlds console` (detach with `Ctrl-P`, `Ctrl-Q`)
+- Console: `hlds console` (`Ctrl-C` closes the console without stopping the server)
 - Logs: `hlds logs` or `journalctl CONTAINER_NAME=hlds -f`
 - Detailed operations: `docs/system.md#hlds-server`
 
-Switching game, map, or arguments does not require a rebuild; `hlds` updates
-`launch.conf` and restarts the unit.
+Switching game, map, branch, engine, or arguments does not require a rebuild;
+`hlds` updates `launch.conf` and restarts the unit. `hlds branch legacy` selects
+the pre-25th Anniversary Steam branch, and `hlds branch public` returns to the
+current build. `hlds engine rehlds` uses the ReHLDS engine on the legacy base;
+`hlds engine stock` returns to the stock engine. ReHLDS requires the legacy
+branch, so `hlds engine rehlds` also sets `BRANCH=legacy`.
 
-The image is pinned by digest. To update it, resolve the current digest and
-change the `image` value:
+Both images are pinned by digest. To update them, resolve the current digests
+and change the values in `modules/hosts/workstation/hlds.nix`:
 
 ```sh
 nix run nixpkgs#skopeo -- inspect --format '{{.Digest}}' docker://docker.io/jives/hlds:valve
+nix run nixpkgs#skopeo -- inspect --format '{{.Digest}}' docker://docker.io/jives/hlds:valve-legacy
 ```
 
 ## Development

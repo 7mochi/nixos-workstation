@@ -90,6 +90,31 @@
         '';
       };
 
+      hldsConsole = pkgs.writeShellApplication {
+        name = "hlds-console";
+        runtimeInputs = with pkgs; [
+          coreutils
+          docker
+        ];
+        text = ''
+          container="''${HLDS_CONTAINER:-hlds}"
+
+          cleanup() {
+            if [ -n "''${log_pid:-}" ]; then
+              kill "$log_pid" 2>/dev/null || true
+              wait "$log_pid" 2>/dev/null || true
+            fi
+          }
+
+          trap cleanup EXIT INT TERM
+
+          docker logs --tail 0 -f "$container" &
+          log_pid=$!
+
+          docker exec -i "$container" sh -c 'cat > /proc/1/fd/0'
+        '';
+      };
+
       noticeNow = pkgs.writeShellApplication {
         name = "notice-now";
         runtimeInputs = with pkgs; [
@@ -186,6 +211,7 @@
           lazydocker
         ])
         ++ [
+          hldsConsole
           noticeNow
           ocrRegion
           remind
