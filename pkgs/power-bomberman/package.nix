@@ -110,10 +110,10 @@ let
       # as https://github.com/NixOS/nixpkgs/pull/576879
       (patchelf.overrideAttrs (
         finalAttrs: _: {
-          version = "0.15.2";
+          version = "0.7.8c";
           src = fetchurl {
             url = "https://github.com/NixOS/patchelf/releases/download/${finalAttrs.version}/patchelf-${finalAttrs.version}.tar.bz2";
-            hash = "sha256-F3RfVkFZyOIo/EEtplogSLhGxLa0Igt3y/IkFuAvLXw=";
+            hash = "sha256-6G9Ac9Dl6kiFxQFrVRXD9NweEZNZ8kROVxH4/TxYqL4=";
           };
         }
       ))
