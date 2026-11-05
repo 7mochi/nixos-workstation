@@ -5,6 +5,7 @@
     imports = map (name: config.flake.modules.homeManager.${name}) [
       "agent-skills"
       "commandcode"
+      "concord"
       "cursor"
       "direnv"
       "equibop"
