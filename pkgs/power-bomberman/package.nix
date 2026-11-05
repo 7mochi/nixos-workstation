@@ -59,9 +59,9 @@ let
       src_url="https://drive.usercontent.google.com/download?id=$drive_id&export=download&confirm=t"
       hash="$(nix store prefetch-file --json --hash-type sha256 "$src_url" | jq -r .hash)"
 
-      sed -i -E "s|version = \"[^\"]+\"|version = \"$version\"|" "$FILE"
+      sed -i -E "s|^  version = \"[^\"]+\";|  version = \"$version\";|" "$FILE"
       sed -i -E "s|id=[A-Za-z0-9_-]+|id=$drive_id|" "$FILE"
-      sed -i -E "s|hash = \"[^\"]+\"|hash = \"$hash\"|" "$FILE"
+      sed -i -E "s|^    hash = \"[^\"]+\";|    hash = \"$hash\";|" "$FILE"
     '';
   };
 
@@ -110,10 +110,10 @@ let
       # as https://github.com/NixOS/nixpkgs/pull/576879
       (patchelf.overrideAttrs (
         finalAttrs: _: {
-          version = "0.7.8c";
+          version = "0.15.2";
           src = fetchurl {
             url = "https://github.com/NixOS/patchelf/releases/download/${finalAttrs.version}/patchelf-${finalAttrs.version}.tar.bz2";
-            hash = "sha256-6G9Ac9Dl6kiFxQFrVRXD9NweEZNZ8kROVxH4/TxYqL4=";
+            hash = "sha256-F3RfVkFZyOIo/EEtplogSLhGxLa0Igt3y/IkFuAvLXw=";
           };
         }
       ))
