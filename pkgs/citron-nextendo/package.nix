@@ -14,7 +14,7 @@
 
 let
   pname = "citron-nextendo";
-  version = "fe86634e1";
+  version = "d3df71e55";
 
   meta = {
     description = "Citron Nextendo - Nintendo Switch emulator with Nextendo Network online support (nightly)";
@@ -45,7 +45,7 @@ let
 
   src = fetchurl {
     url = "https://github.com/NextendoNetwork/citron-nextendo/releases/download/nightly-linux/citron_nightly-${version}-linux-x86_64_v3.AppImage";
-    hash = "sha256-X+O+86STVLTB41NVtyyfwQCP9/YL7KhqFIeBIIuoSOk=";
+    hash = "sha256-Z0qXQ3o1twWsud/tdtkeBJkJG//scfUTt+5gbLIAUPI=";
   };
 
   contents =
