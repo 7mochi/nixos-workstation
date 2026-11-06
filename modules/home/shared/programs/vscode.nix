@@ -27,6 +27,7 @@
           pkgs.vscode-extensions.llvm-vs-code-extensions.vscode-clangd
           pkgs.vscode-extensions.ms-vscode.cmake-tools
           pkgs.vscode-extensions.rust-lang.rust-analyzer
+          pkgs.vscode-extensions.svelte.svelte-vscode
           pkgs.vscode-extensions.timonwong.shellcheck
 
           # marketplace (not in nixpkgs)
