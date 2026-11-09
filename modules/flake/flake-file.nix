@@ -99,6 +99,11 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
+      yapfast = {
+        url = "github:yapfast/yapfast";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+
       deadband = {
         url = "git+https://codeberg.org/Epaphroditus/gamesir-linux-tools-nix";
         inputs.nixpkgs.follows = "nixpkgs";

@@ -668,7 +668,29 @@
         "qylock": "qylock",
         "sops-nix": "sops-nix",
         "treefmt-nix": "treefmt-nix_2",
+        "yapfast": "yapfast",
         "zen-browser": "zen-browser"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "yapfast",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792133817,
+        "narHash": "sha256-LivT78KkZ18adR5daoXj2nlIOxuLw6B96nvW4FOl4d0=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "ec07af44be2e0ce4e1a17e00a97d44232607c1ec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "sops-nix": {
@@ -792,6 +814,27 @@
       "original": {
         "owner": "Supreeeme",
         "repo": "xwayland-satellite",
+        "type": "github"
+      }
+    },
+    "yapfast": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1794115886,
+        "narHash": "sha256-loX1uKb6eI3QfQiJOxQpcNA4cipmvZwdeO8OyRlXJZo=",
+        "owner": "yapfast",
+        "repo": "yapfast",
+        "rev": "76dc6090dbf540cce46b07f0d7aa1d04d28465bc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yapfast",
+        "repo": "yapfast",
         "type": "github"
       }
     },
