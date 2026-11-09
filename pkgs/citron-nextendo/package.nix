@@ -18,7 +18,7 @@ let
 
   meta = {
     description = "Citron Nextendo - Nintendo Switch emulator with Nextendo Network online support (nightly)";
-    homepage = "https://github.com/NextendoNetwork/citron-nextendo";
+    homepage = "https://git.nextendo.network/NextendoNetwork/citron-nextendo";
     license = lib.licenses.gpl2Plus;
     platforms = [ "x86_64-linux" ];
     mainProgram = pname;
@@ -33,7 +33,7 @@ let
     ];
     text = ''
       version="$(
-        curl -fsSL "https://api.github.com/repos/NextendoNetwork/citron-nextendo/releases/tags/nightly-linux" \
+        curl -fsSL "https://git.nextendo.network/api/v1/repos/NextendoNetwork/citron-nextendo/releases/tags/nightly-linux" \
           | jq -er '[.assets[].name | select(test("^citron_nightly-[0-9a-f]+-linux-x86_64_v3\\.AppImage$")) | capture("^citron_nightly-(?<version>[0-9a-f]+)-").version] | first'
       )"
 
@@ -44,7 +44,7 @@ let
   updateScript = [ "${updateScriptBin}/bin/update-citron-nextendo" ];
 
   src = fetchurl {
-    url = "https://github.com/NextendoNetwork/citron-nextendo/releases/download/nightly-linux/citron_nightly-${version}-linux-x86_64_v3.AppImage";
+    url = "https://git.nextendo.network/NextendoNetwork/citron-nextendo/releases/download/nightly-linux/citron_nightly-${version}-linux-x86_64_v3.AppImage";
     hash = "sha256-Z0qXQ3o1twWsud/tdtkeBJkJG//scfUTt+5gbLIAUPI=";
   };
 
