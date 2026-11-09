@@ -13,6 +13,7 @@
             "String Manipulation"
             "com.github.copilot"
             "org.intellij.scala"
+            "org.mvnsearch.plugins.justPlugin"
           ])
 
           (inputs.nix-jetbrains-plugins.lib.buildIdeWithPlugins pkgs "rider" [
