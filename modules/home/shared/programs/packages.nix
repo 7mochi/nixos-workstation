@@ -205,6 +205,7 @@
           unrar
           unzip
           watchexec
+          xmake
           yt-dlp
           zoxide
 

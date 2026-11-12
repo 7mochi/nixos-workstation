@@ -36,6 +36,7 @@
           (marketplace "clemenspeters" "format-json")
           (marketplace "shakram02" "bash-beautify")
           (marketplace "cschlosser" "doxdocgen")
+          (marketplace "tboox" "xmake-vscode")
         ];
 
         profiles.default.userSettings = {
