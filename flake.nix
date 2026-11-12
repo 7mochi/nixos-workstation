@@ -36,6 +36,10 @@
       url = "github:broroeror/gamesir-linux-tools/v0.5.0";
       flake = false;
     };
+    deslop-text = {
+      url = "github:adamdunkels/deslop-text";
+      flake = false;
+    };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -85,6 +89,10 @@
     };
     qylock = {
       url = "github:Darkkal44/qylock";
+      flake = false;
+    };
+    rea-skills = {
+      url = "https://registry.npmjs.org/rea-agents/-/rea-agents-6.8.0.tgz";
       flake = false;
     };
     sops-nix = {

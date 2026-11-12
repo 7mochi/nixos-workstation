@@ -94,6 +94,16 @@
         flake = false;
       };
 
+      deslop-text = {
+        url = "github:adamdunkels/deslop-text";
+        flake = false;
+      };
+
+      rea-skills = {
+        url = "https://registry.npmjs.org/rea-agents/-/rea-agents-6.8.0.tgz";
+        flake = false;
+      };
+
       nix-osu-stable = {
         url = "github:gaavin/nix-osu-stable";
         inputs.nixpkgs.follows = "nixpkgs";

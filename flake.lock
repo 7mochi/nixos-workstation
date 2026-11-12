@@ -94,6 +94,22 @@
         "type": "github"
       }
     },
+    "deslop-text": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777821558,
+        "narHash": "sha256-QCUerJPt73mPkerWblWZTDi5fsi+hhKmpqf5ntowJo0=",
+        "owner": "adamdunkels",
+        "repo": "deslop-text",
+        "rev": "1441f226752529efd9e7c92d03f3ae92ee5da994",
+        "type": "github"
+      },
+      "original": {
+        "owner": "adamdunkels",
+        "repo": "deslop-text",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -643,11 +659,25 @@
         "type": "github"
       }
     },
+    "rea-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 499162500,
+        "narHash": "sha256-Zbi8ttwO9SjVAB0FXs4dFIe1ifQxNbmZ/Su9MJ7OBVE=",
+        "type": "tarball",
+        "url": "https://registry.npmjs.org/rea-agents/-/rea-agents-6.8.0.tgz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://registry.npmjs.org/rea-agents/-/rea-agents-6.8.0.tgz"
+      }
+    },
     "root": {
       "inputs": {
         "agent-skills": "agent-skills",
         "deadband": "deadband",
         "deadband-src": "deadband-src",
+        "deslop-text": "deslop-text",
         "firefox-addons": "firefox-addons",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
@@ -666,6 +696,7 @@
         "pkgs-by-name-for-flake-parts": "pkgs-by-name-for-flake-parts",
         "quarkus-skills": "quarkus-skills",
         "qylock": "qylock",
+        "rea-skills": "rea-skills",
         "sops-nix": "sops-nix",
         "treefmt-nix": "treefmt-nix_2",
         "yapfast": "yapfast",

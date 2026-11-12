@@ -12,12 +12,24 @@
         subdir = "skills";
       };
 
+      sources.deslop = {
+        input = "deslop-text";
+        subdir = "skills";
+      };
+
+      sources.rea = {
+        input = "rea-skills";
+        subdir = "skills";
+      };
+
       skills.enable = [
+        "deslop-text"
         "migrate-spring-to-quarkus"
         "quarkus-update"
+        "reverse-engineer-anything"
       ];
 
-      targets.opencode.enable = true;
+      targets.agents.enable = true;
     };
   };
 }
