@@ -136,7 +136,7 @@
           virt-viewer
           bruno
           dbeaver-bin
-          inputs.yapfast.packages.${pkgs.stdenv.hostPlatform.system}.yapfast
+          inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.yapfast
 
           # Files/media
           celluloid
