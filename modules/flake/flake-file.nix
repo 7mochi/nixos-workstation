@@ -11,7 +11,7 @@
     inputs = {
       flake-file.url = "github:denful/flake-file";
 
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+      nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
 
       pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
 
@@ -39,10 +39,7 @@
 
       niri.url = "github:sodiboo/niri-flake";
 
-      noctalia = {
-        url = "github:noctalia-dev/noctalia/cachix";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
+      noctalia.url = "github:noctalia-dev/noctalia/cachix";
 
       sops-nix = {
         url = "github:Mic92/sops-nix";
@@ -74,10 +71,7 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      llm-agents = {
-        url = "github:numtide/llm-agents.nix";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
+      llm-agents.url = "github:numtide/llm-agents.nix";
 
       qylock = {
         url = "github:Darkkal44/qylock";
@@ -109,10 +103,7 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      yapfast = {
-        url = "github:yapfast/yapfast";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
+      yapfast.url = "github:yapfast/yapfast";
 
       deadband = {
         url = "git+https://codeberg.org/Epaphroditus/gamesir-linux-tools-nix";
@@ -132,12 +123,16 @@
         "https://noctalia.cachix.org"
         "https://cache.xinux.uz"
         "https://cache.numtide.com"
+        "https://cache.lantian.pub/lantian"
+        "https://nix-community.cachix.org"
       ];
       extra-trusted-public-keys = [
         "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
         "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
         "cache.xinux.uz:BXCrtqejFjWzWEB9YuGB7X2MV4ttBur1N8BkwQRdH+0="
         "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+        "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
   };
