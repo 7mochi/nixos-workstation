@@ -48,17 +48,20 @@ let
     hash = "sha256-Z0qXQ3o1twWsud/tdtkeBJkJG//scfUTt+5gbLIAUPI=";
   };
 
-  dwarfsextract = runCommand "dwarfs-dwarfsextract-0.15.10" {
-    src = fetchurl {
-      url = "https://github.com/mhx/dwarfs/releases/download/v0.15.10/dwarfs-0.15.10-Linux-x86_64.tar.xz";
-      hash = "sha256-z5DG/KOwoGm/XworZsphPtePU/Cp0bxKc8CDMEks1LM=";
-    };
-    nativeBuildInputs = [ xz ];
-  } ''
-    mkdir -p $out/bin
-    tar -xJf $src
-    install -m755 dwarfs-0.15.10-Linux-x86_64/bin/dwarfsextract $out/bin/
-  '';
+  dwarfsextract =
+    runCommand "dwarfs-dwarfsextract-0.15.10"
+      {
+        src = fetchurl {
+          url = "https://github.com/mhx/dwarfs/releases/download/v0.15.10/dwarfs-0.15.10-Linux-x86_64.tar.xz";
+          hash = "sha256-z5DG/KOwoGm/XworZsphPtePU/Cp0bxKc8CDMEks1LM=";
+        };
+        nativeBuildInputs = [ xz ];
+      }
+      ''
+        mkdir -p $out/bin
+        tar -xJf $src
+        install -m755 dwarfs-0.15.10-Linux-x86_64/bin/dwarfsextract $out/bin/
+      '';
 
   contents =
     runCommand "${pname}-${version}-extracted"
