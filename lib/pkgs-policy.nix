@@ -10,7 +10,6 @@ let
     "steam"
     "steam-run"
     "steam-unwrapped"
-    "stremio-linux-shell"
     "vscode"
     "unrar"
     "vmware-workstation"
