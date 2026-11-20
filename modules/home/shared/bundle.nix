@@ -14,6 +14,7 @@
       "git"
       "godot"
       "jetbrains"
+      "keepassxc"
       "kitty"
       "niri-animations"
       "niri-appearance"
