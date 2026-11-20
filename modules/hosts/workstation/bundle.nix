@@ -13,6 +13,7 @@
       "monitors"
       "mullvad"
       "samba"
+      "syncthing"
       "vm"
     ];
   };
